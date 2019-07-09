@@ -7,51 +7,46 @@ public class Service {
 
     private Dao dao = new Dao();
 
-    public void addByUsername(User user){
+    public boolean addByUsername(User user) {
 
-        if(!compareUser(user))
-            System.out.println("This user is already in list");
+        if (!compareUser(user))
+            return false;
         else
             dao.addToList(user);
-    }
-
-    public boolean printList(){
-
-        if (dao.getSize() == 0) {
-            System.out.println("List is empty");
-            return false;
-        }
-        else {
-
-            System.out.printf("%-20s %-20s %-20s %-20s\n\n", "Username", "Taskname", "ID", "Deadline");
-            for (int i = 0; i < dao.getSize(); i++)
-                System.out.printf("%-20s %-20s %-20s %-20s\n", dao.getUserByIndex(i).getUsername(), dao.getUserByIndex(i).getTask().getTaskName(),
-                        dao.getUserByIndex(i).getTask().getTaskId(), dao.getUserByIndex(i).getTask().getDeadline());
-        }
         return true;
-
     }
-    public boolean compareUser(User user){    //compare 2 users
-        if(dao.getSize() == 0)
+
+    public boolean isEmpty() {
+
+        if (dao.getSize() == 0)
             return true;
-        else{
-            for(int i = 0; i < dao.getSize(); i++){
-                if(dao.getUserByIndex(i).getUsername().equals(user.getUsername()))
+        else
+            return false;
+    }
+
+    public boolean compareUser(User user) {    //compare 2 users
+        if (dao.getSize() == 0)
+            return true;
+        else {
+            for (int i = 0; i < dao.getSize(); i++) {
+                if (dao.getUserByIndex(i).getUsername().equals(user.getUsername()))
                     return false;
             }
             return true;
         }
     }
 
-    public void deleteData(int index){
-        if(dao.getSize() == 0)
-            System.out.println("List is empty");
-        else if (index > dao.getSize() || index < 0)
-            System.out.println("You enter uncorrect index");
+    public boolean deleteData(int index) {
+        if (index > dao.getSize() || index < 0)
+            return false;
         else {
             dao.deleteByIndex(index);
-            System.out.println("Element was succesfuly deleted");
+            return true;
         }
+    }
+
+    public User getUser(int index) {        //return Users for print
+        return dao.getUserByIndex(index);
     }
 
 }

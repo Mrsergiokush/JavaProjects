@@ -1,6 +1,8 @@
 package by.exadel.application.model;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
     private int taskId;
     private String taskName;
     private String deadline;

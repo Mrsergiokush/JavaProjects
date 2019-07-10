@@ -3,12 +3,13 @@ package by.exadel.application.service;
 import by.exadel.application.dao.Dao;
 import by.exadel.application.model.User;
 
+import java.io.IOException;
+
 public class Service {
 
     private Dao dao = new Dao();
 
-    public boolean addByUsername(User user) {
-
+    public boolean addByUsername(User user) throws IOException {
         if (!compareUser(user))
             return false;
         else
@@ -16,15 +17,14 @@ public class Service {
         return true;
     }
 
-    public boolean isEmpty() {
-
+    public boolean isEmpty() throws IOException{
         if (dao.getSize() == 0)
             return true;
         else
             return false;
     }
 
-    public boolean compareUser(User user) {    //compare 2 users
+    public boolean compareUser(User user) throws IOException{    //compare 2 users
         if (dao.getSize() == 0)
             return true;
         else {
@@ -36,7 +36,7 @@ public class Service {
         }
     }
 
-    public boolean deleteData(int index) {
+    public boolean deleteData(int index) throws IOException{
         if (index > dao.getSize() || index < 0)
             return false;
         else {
@@ -45,8 +45,12 @@ public class Service {
         }
     }
 
-    public User getUser(int index) {        //return Users for print
+    public User getUserByIndex(int index) throws IOException{        //return Users for print
         return dao.getUserByIndex(index);
+    }
+
+    public int getQuantity() throws IOException{
+        return dao.getSize();
     }
 
 }

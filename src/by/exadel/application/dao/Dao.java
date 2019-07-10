@@ -3,25 +3,32 @@ package by.exadel.application.dao;
 import by.exadel.application.model.User;
 import by.exadel.application.store.Store;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Dao {
 
     private Store store = new Store();
 
-    public void addToList(User user) {
-        store.list.add(user);
+    public void addToList(User user) throws IOException{
+            List<User> list = new ArrayList<>(store.getAllUsers()); //Think about better decision!
+            list.add(user);
+            store.setAllUsers(list);
     }
 
 
-    public User getUserByIndex(int i) {
-        return store.list.get(i);
+    public User getUserByIndex(int i) throws IOException {
+        return store.getAllUsers().get(i);
     }
 
-    public int getSize() {
-        return store.list.size();
+    public int getSize() throws IOException {
+        return store.getAllUsers().size();
     }
 
-    public void deleteByIndex(int i) {
-        store.list.remove(i);
+    public void deleteByIndex(int index) throws IOException {
+        List<User> list = new ArrayList<>(store.getAllUsers());
+        list.remove(index);
+        store.setAllUsers(list);
     }
-
 }

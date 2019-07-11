@@ -27,7 +27,7 @@ public class User {
     public int getTasksSize() {
         return tasks.size();
     }
-    public void addTask(String taskName, String deadline){
+    public void addTask(String taskName, String deadline){ //add new task in list of task of user
         tasks.add(new Task(taskName, deadline));
     }
 

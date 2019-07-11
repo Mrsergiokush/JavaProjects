@@ -11,13 +11,13 @@ import java.util.List;
 
 public class UserStore {
 
-    private final String USER_NAME = "Users.txt";
+    private final String USER_NAME = "Users.txt"; //name of file
 
     public List<User> getAllUsers() throws IOException{
         ArrayList<User> users = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(USER_NAME));
         while((reader.read()) != -1){
-            String[] string = reader.readLine().split(",");
+            String[] string = reader.readLine().split(","); //devide string
             int i = 0;
             String username = string[i++];
             User user = new User(username);

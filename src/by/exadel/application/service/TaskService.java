@@ -13,7 +13,7 @@ public class TaskService {
         taskDao.addTask(username, taskname, newDeadline);
         return true;
     }
-     public int getTaskQuantity(int index) throws IOException{
+     public int getTaskQuantity(int index) throws IOException{ //get list size of tasks of user
         return taskDao.getTaskSize(index);
      }
 }

@@ -10,10 +10,10 @@ public class UserService {
     private UserDao dao = new UserDao();
 
     public boolean addByUsername(User user) throws IOException {
-        if (!compareUser(user))
+        if (!compareUser(user)) //if user is already in list
             return false;
         else
-            dao.addToList(user);
+            dao.addToList(user); //add new user in list
         return true;
     }
 
@@ -36,7 +36,7 @@ public class UserService {
         }
     }
 
-    public boolean deleteData(int index) throws IOException{
+    public boolean deleteData(int index) throws IOException {
         if (index > dao.getSize() || index < 0)
             return false;
         else {
@@ -45,12 +45,12 @@ public class UserService {
         }
     }
 
-    public User getUserByIndex(int index) throws IOException{        //return Users for print
+    public User getUserByIndex(int index) throws IOException{  //return Users by index in list
         return dao.getUserByIndex(index);
     }
 
     public int getQuantity() throws IOException{
-        return dao.getSize();
+        return dao.getSize(); //get size
     }
 
     public boolean thereIsUser(String username) throws IOException{

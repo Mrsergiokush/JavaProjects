@@ -14,8 +14,8 @@ public class TaskDao {
     public void addTask(String username, String taskname, String deadline) throws IOException {
         List<User> list = new ArrayList<>(store.getAllUsers());
         for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getUsername().equals(username))
-                list.get(i).addTask(taskname, deadline);
+            if(list.get(i).getUsername().equals(username)) //if names of user is equals
+                list.get(i).addTask(taskname, deadline); //add new task in list
         }
         store.setAllUsers(list);
     }

@@ -32,9 +32,9 @@ public class Main {
                 + "AFTER CHOOSING AN OPTION PLEASE PRESS ENTER");
     }
 
-    private static void menu() throws IOException {
-        UserService service = new UserService();
-        TaskService taskService = new TaskService();
+    private static void menu() throws IOException { //Menu for users
+        UserService service = new UserService(); //service for users
+        TaskService taskService = new TaskService(); //service for tasks
         int item = scanner.nextInt();
         while (item != 0) {
             switch (item) {
@@ -48,27 +48,27 @@ public class Main {
                     System.out.println("Please, enter a deadline");
                     String deadline = inputDeadLine();
 
-                    if (!service.addByUsername(new User(taskname, deadline, username)))
-                    System.out.println("User is already in list");
+                    if (!service.addByUsername(new User(taskname, deadline, username))) //If user is in list
+                        System.out.println("User is already in list");
                     else
                         System.out.println("User was succesfully added...\n");
-
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
                     break;
 
                 case 2:
-                   if(service.isEmpty())
-                       System.out.println("List is emty");
-                   else {
-                       for (int i = 0; i < service.getQuantity(); i++) {
-                           System.out.printf("%-20s %-20s %-20s\n\n", "Username", "Taskname", "Deadline");
+                    if (service.isEmpty()) //if list is empty
+                        System.out.println("List is empty");
+                    else {
+                        for (int i = 0; i < service.getQuantity(); i++) { //output users and their tasks
+                            System.out.printf("%-20s %-20s %-20s\n\n", "Username", "Taskname", "Deadline");
 
-                           for (int j = 0; j < taskService.getTaskQuantity(i); j++)
-                               System.out.printf("%-20s %-20s %-20s\n", service.getUserByIndex(i).getUsername(), service.getUserByIndex(i).getTasks().get(j).getTaskName(), service.getUserByIndex(i).getTasks().get(j).getDeadline());
-                           System.out.println("\n\n");
-                       }
-                   }
+                            for (int j = 0; j < taskService.getTaskQuantity(i); j++)
+                                System.out.printf("%-20s %-20s %-20s\n", service.getUserByIndex(i).getUsername(), service.getUserByIndex(i).getTasks().get(j).getTaskName(),
+                                        service.getUserByIndex(i).getTasks().get(j).getDeadline());
+                            System.out.println("\n\n");
+                        }
+                    }
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
                     break;
@@ -76,7 +76,7 @@ public class Main {
                 case 3:
                     System.out.println("Please, choose index of element to delete");
                     int index;
-                    if (!service.deleteData(index = scanner.nextInt()))
+                    if (!service.deleteData(index = scanner.nextInt())) //delete user with all his tasks
                         System.out.println("Incorrect index to delete");
                     else
                         System.out.println("Element was deleted\n");
@@ -87,15 +87,14 @@ public class Main {
                 case 4:
                     System.out.println("Please, enter name of user to add the task");
                     scanner.nextLine();
-                    String userName = inputUsername();
-                    if(service.thereIsUser(userName)) {     //if user is in list
+                    String userName = inputUsername(); //Add task to user
+                    if (service.thereIsUser(userName)) {     //if user is in list
                         System.out.println("Please, enter a name of task and deadline to add the task");
                         String newTask = inputTaskname();
                         System.out.println("Please, enter a deadline");
                         String newDeadline = inputDeadLine();
                         taskService.AddTaskToUser(userName, newTask, newDeadline);
-                    }
-                    else {
+                    } else {  //If user is not in list we can't add new task for him
                         System.out.println("There is not user in the List");
                     }
                     System.out.println("Please, choose the next action");
@@ -108,7 +107,7 @@ public class Main {
         }
     }
 
-    private static String inputDeadLine() {
+    private static String inputDeadLine() { //input methods
         String deadLine = scanner.nextLine();
         return deadLine;
     }

@@ -10,11 +10,6 @@ public class Task {
         this.deadline = deadline;
     }
 
-
-    public Task(String taskName) {
-        this.taskName = taskName;
-    }
-
     public String getTaskName() {
         return taskName;
     }

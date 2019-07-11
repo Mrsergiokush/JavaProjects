@@ -1,25 +1,35 @@
 package by.exadel.application.model;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 
-public class User implements Serializable {
+public class User {
     private String username;
-    private Task task;
+    private ArrayList<Task> tasks = new ArrayList<>();
 
-    public User(Task task, String username) {
+    public User(String taskname, String deadline, String username) {
         this.username = username;
-        this.task = task;
+        Task task = new Task(taskname, deadline);
+        tasks.add(task);
+        }
+
+    public User(String username) {
+        this.username = username;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public Task getTask() {
-        return task;
+    public ArrayList<Task> getTasks() {
+        return this.tasks;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public int getTasksSize() {
+        return tasks.size();
     }
+    public void addTask(String taskName, String deadline){
+        tasks.add(new Task(taskName, deadline));
+    }
+
+
 }

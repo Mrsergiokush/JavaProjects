@@ -1,15 +1,15 @@
 package by.exadel.application.dao;
 
 import by.exadel.application.model.User;
-import by.exadel.application.store.Store;
+import by.exadel.application.store.UserStore;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dao {
+public class UserDao {
 
-    private Store store = new Store();
+    private UserStore store = new UserStore();
 
     public void addToList(User user) throws IOException{
             List<User> list = new ArrayList<>(store.getAllUsers()); //Think about better decision!
@@ -31,4 +31,5 @@ public class Dao {
         list.remove(index);
         store.setAllUsers(list);
     }
+
 }

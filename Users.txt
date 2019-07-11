@@ -1,9 +1,2 @@
-sh the cae
-12.03.2018
-Alex
-lean the room
-29.04.2020
-Lionel Messi
-Buy some food
-Today
-Jenifer
+ Sergio,Have a dinner,13.06,Wash a car,12.23
+ Alex,Sleep,14.05,Sleep,24.09,Do some exercise,26.06

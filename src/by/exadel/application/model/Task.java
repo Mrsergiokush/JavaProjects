@@ -1,20 +1,18 @@
 package by.exadel.application.model;
 
-import java.io.Serializable;
+public class Task {
 
-public class Task implements Serializable {
-    private int taskId;
     private String taskName;
     private String deadline;
 
     public Task(String taskName, String deadline) {
-        this.taskId = generateId();
         this.taskName = taskName;
         this.deadline = deadline;
     }
 
-    public int getTaskId() {
-        return taskId;
+
+    public Task(String taskName) {
+        this.taskName = taskName;
     }
 
     public String getTaskName() {
@@ -25,10 +23,5 @@ public class Task implements Serializable {
         return deadline;
     }
 
-    public static int generateId() {
-
-        int id = (int) (Math.random() * 1000);
-        return id;
-    }
 
 }

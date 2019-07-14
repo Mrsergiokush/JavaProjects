@@ -1,2 +1,3 @@
- Sergio,Have a dinner,13.06,Wash a car,12.23
- Alex,Sleep,14.05,Sleep,24.09,Do some exercise,26.06
+ Feduk,Realise rap album,12.08,Create track,14.08
+ leh,Wash a car,12.08
+ Sanya,Earn some money,15.07.2019

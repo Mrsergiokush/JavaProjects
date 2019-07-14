@@ -31,5 +31,4 @@ public class User {
         tasks.add(new Task(taskName, deadline));
     }
 
-
 }

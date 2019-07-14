@@ -60,13 +60,12 @@ public class Main {
                     if (service.isEmpty()) //if list is empty
                         System.out.println("List is empty");
                     else {
+                        System.out.printf("%-20s %-20s %-20s\n\n", "Username", "Taskname", "Deadline");
                         for (int i = 0; i < service.getQuantity(); i++) { //output users and their tasks
-                            System.out.printf("%-20s %-20s %-20s\n\n", "Username", "Taskname", "Deadline");
-
                             for (int j = 0; j < taskService.getTaskQuantity(i); j++)
                                 System.out.printf("%-20s %-20s %-20s\n", service.getUserByIndex(i).getUsername(), service.getUserByIndex(i).getTasks().get(j).getTaskName(),
                                         service.getUserByIndex(i).getTasks().get(j).getDeadline());
-                            System.out.println("\n\n");
+                            System.out.println("\n");
                         }
                     }
                     System.out.println("Please, choose the next action");
@@ -93,7 +92,7 @@ public class Main {
                         String newTask = inputTaskname();
                         System.out.println("Please, enter a deadline");
                         String newDeadline = inputDeadLine();
-                        taskService.AddTaskToUser(userName, newTask, newDeadline);
+                        taskService.addTaskToUser(userName, newTask, newDeadline);
                     } else {  //If user is not in list we can't add new task for him
                         System.out.println("There is not user in the List");
                     }

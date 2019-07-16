@@ -34,7 +34,7 @@ public class UserStore {
     public void setAllUsers(List<User> users) throws IOException {
         FileWriter writer = new FileWriter(USER_NAME);
         for (int i = 0; i < users.size(); i++){
-            writer.write(" " + users.get(i).getUsername());
+            writer.write(" " + users.get(i).getUserName());
             for (int j = 0; j < users.get(i).getTasksSize(); j++){
                 writer.write("," + users.get(i).getTasks().get(j).getTaskName() + "," + users.get(i).getTasks().get(j).getDeadline());
             }

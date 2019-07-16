@@ -29,7 +29,7 @@ public class UserService {
             return true;
         else {
             for (int i = 0; i < dao.getSize(); i++) {
-                if (dao.getUserByIndex(i).getUsername().equals(user.getUsername()))
+                if (dao.getUserByIndex(i).getUserName().equals(user.getUserName()))
                     return false;
             }
             return true;
@@ -55,11 +55,10 @@ public class UserService {
 
     public boolean thereIsUser(String username) throws IOException{
         for(int i = 0; i < dao.getSize(); i++){
-            if(dao.getUserByIndex(i).getUsername().equals(username))
+            if(dao.getUserByIndex(i).getUserName().equals(username))
                 return true;
         }
         return false;
     }
-
 
 }

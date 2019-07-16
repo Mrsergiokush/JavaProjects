@@ -11,7 +11,7 @@ public class UserDao {
 
     private UserStore store = new UserStore();
 
-    public void addToList(User user) throws IOException{
+    public void addToList(User user) throws IOException {
             List<User> list = new ArrayList<>(store.getAllUsers()); //Think about better decision!
             list.add(user);
             store.setAllUsers(list);

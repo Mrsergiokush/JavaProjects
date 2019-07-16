@@ -16,8 +16,6 @@ public class UserDaoJDBC implements DaoJDBC<User>{
 
     public List<User> getAll() throws Exception{
 
-        DriverManager.registerDriver(new Driver()); //Load driver
-
         Connection connection = getConnection(); //get connecion
 
         Statement statement = createStatement(connection);
@@ -39,8 +37,6 @@ public class UserDaoJDBC implements DaoJDBC<User>{
     }
 
     public int add(User user) throws Exception{
-
-        DriverManager.registerDriver(new Driver()); //Load driver
 
         Connection connection = getConnection(); //get connecion
 
@@ -70,8 +66,6 @@ public class UserDaoJDBC implements DaoJDBC<User>{
 
     public User getUserByName(String username) throws Exception{
 
-        DriverManager.registerDriver(new Driver());
-
         Connection connection = getConnection();
 
         Statement statement = createStatement(connection);
@@ -92,6 +86,7 @@ public class UserDaoJDBC implements DaoJDBC<User>{
     }
 
     public static Connection getConnection() throws SQLException{
+            DriverManager.registerDriver(new Driver());
             return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 

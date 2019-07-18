@@ -3,6 +3,8 @@ package by.exadel.application.service;
 import by.exadel.application.dao.TaskDaoJDBC;
 import by.exadel.application.model.Task;
 
+import java.util.List;
+
 public class TaskServiceJDBC {
 
     TaskDaoJDBC taskDaoJDBC = new TaskDaoJDBC();
@@ -23,5 +25,9 @@ public class TaskServiceJDBC {
             taskDaoJDBC.delete(task);
             return true;
         }
+    }
+
+    public List<Task> getAll() throws Exception{
+        return taskDaoJDBC.getAll();
     }
 }

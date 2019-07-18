@@ -5,7 +5,7 @@ import org.postgresql.Driver;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class TaskDaoJDBC implements DaoJDBC<Task> {
 
@@ -63,9 +63,11 @@ public class TaskDaoJDBC implements DaoJDBC<Task> {
     }
 
     @Override
-    public Collection<Task> getAll() throws Exception {
+    public List<Task> getAll() throws Exception {
 
         PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task");
+
+
 
         ResultSet resultSet = statement.executeQuery();
 

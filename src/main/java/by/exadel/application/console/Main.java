@@ -5,6 +5,7 @@ import by.exadel.application.model.User;
 import by.exadel.application.service.TaskServiceJDBC;
 import by.exadel.application.service.UserServiceJDBC;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -80,7 +81,7 @@ public class Main {
                     System.out.println("Please, enter UserName of User to add the task");
                     String name = inputUsername();
 
-                    if(userServiceJDBC.getId(name) == -1) {
+                    if (userServiceJDBC.getId(name) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
                         item = scanner.nextInt();
@@ -98,7 +99,7 @@ public class Main {
                     task.setTaskName(taskName);
                     task.setDeadline(deadLine);
 
-                    if(taskServiceJDBC.add(task) != null)
+                    if (taskServiceJDBC.add(task) != null)
                         System.out.println("Task was successfully added with id " + task.getTaskId());
                     else System.out.println("User is already has this task");
 
@@ -111,7 +112,7 @@ public class Main {
                     System.out.println("Enter Username of user to delete his task");
                     String userNameToDelete = inputUsername();
 
-                    if(userServiceJDBC.getId(userNameToDelete) == -1) {
+                    if (userServiceJDBC.getId(userNameToDelete) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
                         item = scanner.nextInt();
@@ -126,10 +127,29 @@ public class Main {
                     taskToDelete.setTaskName(taskNameToDelete);
                     taskToDelete.setUserId(userIdToDelete);
 
-                    if(taskServiceJDBC.delete(taskToDelete))
+                    if (taskServiceJDBC.delete(taskToDelete))
                         System.out.println("Task was successfully deleted");
                     else
                         System.out.println("Task with this name does not exist");
+
+                    System.out.println("Please, choose the next action");
+                    item = scanner.nextInt();
+                    break;
+
+                case 6: //optimizate with creating list!!!
+                    scanner.nextLine();
+
+                    if (taskServiceJDBC.getAll().isEmpty())
+                        System.out.println("List of tasks if empty");
+
+                    else {
+                        ArrayList<Task> tasks = new ArrayList<>(taskServiceJDBC.getAll());
+
+                        System.out.printf("%-20s %-20s %-20s\n\n", "ID", "Taskname", "Deadline");
+
+                        for (int i = 0; i < tasks.size(); i++)
+                            System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
+                    }
 
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
@@ -149,6 +169,7 @@ public class Main {
                 + "3 - Show list of user\n"
                 + "4 - Add new task\n"
                 + "5 - Delete task\n"
+                + "6 - Show list of tasks"
                 + "press 0 for exit\n\n"
                 + "AFTER CHOOSING AN OPTION PLEASE PRESS ENTER");
     }

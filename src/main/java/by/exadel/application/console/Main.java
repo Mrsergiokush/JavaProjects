@@ -25,7 +25,7 @@ public class Main {
 
         printout();
 
-        int item = scanner.nextInt(); //add check!!!!!
+        int item = scanner.nextInt();
 
         while (item != 0) {
 
@@ -39,9 +39,9 @@ public class Main {
                     User user = new User();
                     user.setUserName(userName);
 
-                    if (userServiceJDBC.add(user) == 0)
+                    if (userServiceJDBC.add(user) == null)
                         System.out.println("User is already in DataBase");
-                    else System.out.println("User was successfully added");
+                    else System.out.println("User was successfully added with id " + user.getUserId());
 
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
@@ -98,8 +98,8 @@ public class Main {
                     task.setTaskName(taskName);
                     task.setDeadline(deadLine);
 
-                    if(taskServiceJDBC.add(task))
-                        System.out.println("Task was successfully added");
+                    if(taskServiceJDBC.add(task) != null)
+                        System.out.println("Task was successfully added with id " + task.getTaskId());
                     else System.out.println("User is already has this task");
 
                     System.out.println("Please, choose the next action");
@@ -145,8 +145,8 @@ public class Main {
 
         System.out.println("Please choose an action. Press : \n"
                 + "1 - Add new user\n"
-                + "2 - Show list of users\n"
-                + "3 - Delete user by index\n"
+                + "2 - Delete user\n"
+                + "3 - Show list of user\n"
                 + "4 - Add new task\n"
                 + "5 - Delete task\n"
                 + "press 0 for exit\n\n"

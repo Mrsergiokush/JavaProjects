@@ -7,13 +7,12 @@ public class TaskServiceJDBC {
 
     TaskDaoJDBC taskDaoJDBC = new TaskDaoJDBC();
 
-    public boolean add(Task task) throws Exception {
+    public Task add(Task task) throws Exception {
 
         if (taskDaoJDBC.getByNameAndId(task) == null) {//If there not task
-            taskDaoJDBC.add(task);
-            return true;
+            return taskDaoJDBC.add(task);
         } else
-            return false;
+            return null;
     }
 
     public boolean delete(Task task) throws Exception {

@@ -3,48 +3,39 @@ package by.exadel.application.service;
 import by.exadel.application.dao.UserDaoJDBC;
 import by.exadel.application.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceJDBC {
 
     private UserDaoJDBC userDaoJDBC = new UserDaoJDBC();
 
-    public int add(User user) throws Exception{
+    public User add(User user) throws Exception {
 
-        if (compareUsers(user))
-            return 0;
+        if (userDaoJDBC.getByName(user.getUserName()) != null)
+            return null;
         else
             return userDaoJDBC.add(user);
     }
 
-    public int delete(User user) throws Exception{
+    public int delete(User user) throws Exception {
 
-        if(userDaoJDBC.delete(user) == 1)
+        if (userDaoJDBC.delete(user) == 1)
             return 1;
         else return 0;
     }
 
-    public List<User> getAll() throws Exception{
+    public List<User> getAll() throws Exception {
 
         return userDaoJDBC.getAll();
     }
 
-    public Integer getId(String userName) throws Exception{
+    public Integer getId(String userName) throws Exception {
 
-        if(compareUsers(new User(userName)))
-            return userDaoJDBC.getUserByName(userName).getUserId();
-        else return -1;
-    }
-
-    public boolean compareUsers(User user) throws Exception{ //compare users
-
-        List <User> allUsers = new ArrayList<>(userDaoJDBC.getAll());
-
-        for(int i = 0; i < allUsers.size(); i++) {
-            if (user.getUserName().equals(allUsers.get(i).getUserName()))
-                return true;
+        if (userDaoJDBC.getByName(userName) == null)
+            return -1;
+        else {
+            Integer id = userDaoJDBC.getByName(userName).getUserId();
+            return userDaoJDBC.getByName(userName).getUserId();
         }
-        return false;
     }
 }

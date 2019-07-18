@@ -5,58 +5,69 @@ import org.postgresql.Driver;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class TaskDaoJDBC implements DaoJDBC<Task>{
+public class TaskDaoJDBC implements DaoJDBC<Task> {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/myapp";
 
     private static final String USER = "myuser";
     private static final String PASSWORD = "thePassword";
 
+    public TaskDaoJDBC() {
+
+        try {
+            DriverManager.registerDriver(new Driver());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
-    public int add(Task task) throws Exception{
+    public Task add(Task task) throws Exception {
 
-        DriverManager.registerDriver(new Driver());
+        PreparedStatement statement = getCreateStatement("INSERT INTO public.task(task_name, task_deadline, user_id) VALUES (?, ?, ?)", "task_id");
 
-        Connection connection = getConnection();
+        statement.setString(1, task.getTaskName());
 
-        Statement statement = createStatement(connection);
+        statement.setString(2,task.getDeadline());
 
-        String sql = new String("INSERT INTO public.task(task_name, task_deadline, user_id) VALUES ('" + task.getTaskName() +"', '"+ task.getDeadline() +"', "+ task.getUserId() + ")");
+        statement.setInt(3, task.getUserId());
 
-        int rows = statement.executeUpdate(sql);
+        if(statement.executeUpdate() > 0){
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+
+            boolean next = generatedKeys.next();
+
+            Integer taskId = next ? generatedKeys.getInt(1) : -1;
+
+            if(taskId != -1){
+                task.setTaskId(taskId);
+                return task;
+            }
+        }
+
+        throw new RuntimeException("Task was not created");
+    }
+
+    @Override
+    public int delete(Task task) throws Exception {
+
+        PreparedStatement statement = createStatement("DELETE FROM public.task WHERE task_name = ?");
+
+        statement.setString(1, task.getTaskName());
+
+        int rows = statement.executeUpdate();
 
         return rows;
     }
 
     @Override
-    public int delete(Task task) throws Exception{
+    public Collection<Task> getAll() throws Exception {
 
-        DriverManager.registerDriver(new Driver());
+        PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task");
 
-        Connection connection = getConnection();
-
-        Statement statement = createStatement(connection);
-
-        String sql = new String("DELETE FROM public.task WHERE task_name = '" + task.getTaskName() + "' AND user_id = " + task.getUserId());
-
-        int rows = statement.executeUpdate(sql);
-
-        return rows;
-    }
-
-    @Override
-    public ArrayList<Task> getAll() throws Exception{
-
-        DriverManager.registerDriver(new Driver());
-
-        Connection connection = getConnection();
-
-        Statement statement = createStatement(connection);
-
-        String sql = new String("SELECT task_name, task_deadline, task_id, user_id FROM public.task");
-
-        ResultSet resultSet = statement.executeQuery(sql);
+        ResultSet resultSet = statement.executeQuery();
 
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -72,31 +83,32 @@ public class TaskDaoJDBC implements DaoJDBC<Task>{
         return tasks;
     }
 
-    public Task getByNameAndId(Task task) throws Exception{
+    public Task getByNameAndId(Task task) throws Exception {
 
-        DriverManager.registerDriver(new Driver());
+        PreparedStatement statement = createStatement("SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?");
 
-        Connection connection = getConnection();
+        //String sql = new String("SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = '" + task.getTaskName() + "' AND user_id = " + task.getUserId());
 
-        Statement statement = createStatement(connection);
+        statement.setString(1, task.getTaskName());
+        statement.setInt(2, task.getUserId());
 
-        String sql = new String("SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = '" + task.getTaskName() + "' AND user_id = " + task.getUserId());
-
-        ResultSet resultSet = statement.executeQuery(sql);
+        ResultSet resultSet = statement.executeQuery();
 
         if (!resultSet.next())
             return null;
         else
             return task;
-
-
     }
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    public static Statement createStatement(Connection connection) throws SQLException{
-        return connection.createStatement();
+    public static PreparedStatement createStatement(String sql) throws SQLException {
+        return getConnection().prepareStatement(sql);
+    }
+
+    private PreparedStatement getCreateStatement(String sql, String idFieldName) throws SQLException {
+        return getConnection().prepareStatement(sql, new String[]{idFieldName});
     }
 }

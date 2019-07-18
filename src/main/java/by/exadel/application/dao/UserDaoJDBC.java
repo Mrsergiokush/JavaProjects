@@ -7,22 +7,28 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJDBC implements DaoJDBC<User>{
+public class UserDaoJDBC implements DaoJDBC<User> {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/myapp";
 
     private static final String USER = "myuser";
     private static final String PASSWORD = "thePassword";
 
-    public List<User> getAll() throws Exception{
+    public UserDaoJDBC() {
 
-        Connection connection = getConnection(); //get connecion
+        try {
+            DriverManager.registerDriver(new Driver());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        Statement statement = createStatement(connection);
+    @Override
+    public List<User> getAll() throws Exception {
 
-        String sql = new String("SELECT user_id, user_name FROM public.user"); //String request to DB
+        PreparedStatement statement = createStatement("SELECT user_id, user_name FROM public.user");
 
-        ResultSet resultSet = statement.executeQuery(sql);
+        ResultSet resultSet = statement.executeQuery();
 
         ArrayList<User> users = new ArrayList<>();
 
@@ -36,61 +42,69 @@ public class UserDaoJDBC implements DaoJDBC<User>{
         return users;
     }
 
-    public int add(User user) throws Exception{
+    @Override
+    public User add(User user) throws Exception {
 
-        Connection connection = getConnection(); //get connecion
+        PreparedStatement statement = getCreateStatement("INSERT INTO public.user(user_name) VALUES (?)", "user_id");
 
-        Statement statement = createStatement(connection);
+        statement.setString(1, user.getUserName());
 
-        String sql = new String("INSERT INTO public.user(user_name) VALUES ('" + user.getUserName() +"')");
+        if (statement.executeUpdate() > 0) {
+            ResultSet generatedKeys = statement.getGeneratedKeys();
 
-        int rows = statement.executeUpdate(sql);
+            boolean next = generatedKeys.next();
+
+            int userId = next ? generatedKeys.getInt(1) : -1;
+
+            if (userId != -1) {
+                user.setUserId(userId);
+                return user;
+            }
+        }
+
+        throw new RuntimeException("User was not created");
+    }
+
+    @Override
+    public int delete(User user) throws Exception { //Client cant't delete user if user is having tasks
+
+        PreparedStatement statement = createStatement("DELETE FROM public.user WHERE user_name = ?");
+
+        statement.setString(1, user.getUserName());
+
+        int rows = statement.executeUpdate();
 
         return rows;
     }
 
-    public int delete(User user) throws Exception{ //Client cant't delete user if user is having tasks
+    public User getByName(String username) throws Exception {
 
-        DriverManager.registerDriver(new Driver());
+        PreparedStatement statement = createStatement("SELECT user_id FROM public.user WHERE user_name = ?");
 
-        Connection connection = getConnection();
+        statement.setString(1, username);
 
-        Statement statement = createStatement(connection);
+        ResultSet resultSet = statement.executeQuery();
 
-        String sql = new String("DELETE FROM public.user WHERE user_name = '" + user.getUserName() + "'");
-
-        int rows = statement.executeUpdate(sql);
-
-        return rows;
-    }
-
-    public User getUserByName(String username) throws Exception{
-
-        Connection connection = getConnection();
-
-        Statement statement = createStatement(connection);
-
-        String sql = new String("SELECT user_id FROM public.user WHERE user_name = '" + username + "'");
-
-        ResultSet resultSet = statement.executeQuery(sql);
+        if (!resultSet.next()) //if there not user in DB
+            return null;
 
         User user = new User();
 
-        while (resultSet.next()) {
             user.setUserId(resultSet.getInt("user_id"));
             user.setUserName(username);
-        }
 
         return user;
-
     }
 
-    public static Connection getConnection() throws SQLException{
-            DriverManager.registerDriver(new Driver());
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+    private PreparedStatement getCreateStatement(String sql, String idFieldName) throws SQLException {
+        return getConnection().prepareStatement(sql, new String[]{idFieldName});
     }
 
-    public static Statement createStatement(Connection connection) throws SQLException{
-        return connection.createStatement();
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
+
+    public static PreparedStatement createStatement(String sql) throws SQLException {
+        return getConnection().prepareStatement(sql);
     }
 }

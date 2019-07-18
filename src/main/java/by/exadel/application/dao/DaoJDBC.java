@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface DaoJDBC <T>{
 
-    int add(T type) throws Exception;
+    T add(T type) throws Exception;
 
     int delete(T type) throws Exception;
 

@@ -5,10 +5,11 @@ import by.exadel.application.model.Task;
 
 import java.util.List;
 
-public class TaskServiceJDBC {
+public class TaskServiceJDBC implements ServiceJDBC<Task>{
 
     TaskDaoJDBC taskDaoJDBC = new TaskDaoJDBC();
 
+    @Override
     public Task add(Task task) throws Exception {
 
         if (taskDaoJDBC.getByNameAndId(task) == null) {//If there not task
@@ -17,6 +18,7 @@ public class TaskServiceJDBC {
             return null;
     }
 
+    @Override
     public boolean delete(Task task) throws Exception {
 
         if (taskDaoJDBC.getByNameAndId(task) == null)
@@ -27,6 +29,7 @@ public class TaskServiceJDBC {
         }
     }
 
+    @Override
     public List<Task> getAll() throws Exception{
         return taskDaoJDBC.getAll();
     }

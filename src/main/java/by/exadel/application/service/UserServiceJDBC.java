@@ -5,10 +5,11 @@ import by.exadel.application.model.User;
 
 import java.util.List;
 
-public class UserServiceJDBC {
+public class UserServiceJDBC implements ServiceJDBC<User>{
 
     private UserDaoJDBC userDaoJDBC = new UserDaoJDBC();
 
+    @Override
     public User add(User user) throws Exception {
 
         if (userDaoJDBC.getByName(user.getUserName()) != null)
@@ -17,13 +18,15 @@ public class UserServiceJDBC {
             return userDaoJDBC.add(user);
     }
 
-    public int delete(User user) throws Exception {
+    @Override
+    public boolean delete(User user) throws Exception {
 
         if (userDaoJDBC.delete(user) == 1)
-            return 1;
-        else return 0;
+            return true;
+        else return false;
     }
 
+    @Override
     public List<User> getAll() throws Exception {
 
         return userDaoJDBC.getAll();

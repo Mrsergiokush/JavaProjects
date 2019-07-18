@@ -56,7 +56,7 @@ public class Main {
                     User userToDelete = new User();
                     userToDelete.setUserName(username);
 
-                    if (userServiceJDBC.delete(userToDelete) == 1)
+                    if (userServiceJDBC.delete(userToDelete))
                         System.out.println("User was successfully deleted");
                     else System.out.println("There isn't user in DataBase");
 

@@ -136,7 +136,7 @@ public class Main {
                     item = scanner.nextInt();
                     break;
 
-                case 6: //optimizate with creating list!!!
+                case 6:
                     scanner.nextLine();
 
                     if (taskServiceJDBC.getAll().isEmpty())
@@ -155,11 +155,39 @@ public class Main {
                     item = scanner.nextInt();
                     break;
 
+                case 7:
+                    scanner.nextLine();
+
+                    System.out.println("Enter Username of user to show his task");
+                    String userNameToShowTask = inputUsername();
+
+                    if (userServiceJDBC.getId(userNameToShowTask) == -1) {
+                        System.out.println("There isn't user with this name\n");
+                        System.out.println("Please, choose the next action");
+                        item = scanner.nextInt();
+                        break;
+                    }
+
+                    ArrayList<Task> tasks = new ArrayList<>(taskServiceJDBC.getAll(userServiceJDBC.getId(userNameToShowTask)));
+
+                    if (tasks.isEmpty())
+                        System.out.println("List of tasks of user + " + userNameToShowTask + "is empty");
+                    else {
+                        System.out.printf("%-20s %-20s %-20s\n\n", "ID", "Taskname", "Deadline");
+                        for (int i = 0; i < tasks.size(); i++)
+                            System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
+                    }
+                    System.out.println("Please, choose the next action");
+                    item = scanner.nextInt();
+                    break;
+
                 default:
                     item = 0;
             }
         }
+
     }
+
 
     private static void printout() {
 
@@ -169,7 +197,8 @@ public class Main {
                 + "3 - Show list of user\n"
                 + "4 - Add new task\n"
                 + "5 - Delete task\n"
-                + "6 - Show list of tasks"
+                + "6 - Show list of tasks\n"
+                + "7 - Show list of tasks of User\n"
                 + "press 0 for exit\n\n"
                 + "AFTER CHOOSING AN OPTION PLEASE PRESS ENTER");
     }

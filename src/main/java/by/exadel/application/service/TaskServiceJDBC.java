@@ -30,4 +30,8 @@ public class TaskServiceJDBC {
     public List<Task> getAll() throws Exception{
         return taskDaoJDBC.getAll();
     }
+
+    public List<Task> getAll(Integer userId) throws Exception{
+        return taskDaoJDBC.getAll(userId);
+    }
 }

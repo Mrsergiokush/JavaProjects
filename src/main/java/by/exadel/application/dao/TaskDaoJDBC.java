@@ -67,7 +67,27 @@ public class TaskDaoJDBC implements DaoJDBC<Task> {
 
         PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task");
 
+        ResultSet resultSet = statement.executeQuery();
 
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        while (resultSet.next()) {
+            Task task = new Task();
+            task.setTaskName(resultSet.getString("task_name"));
+            task.setDeadline(resultSet.getString("task_deadline"));
+            task.setTaskId(resultSet.getInt("task_id"));
+            task.setUserId(resultSet.getInt("user_id"));
+            tasks.add(task);
+        }
+
+        return tasks;
+    }
+
+    public List<Task> getAll(Integer userId) throws Exception{ //overloading method getAll
+
+        PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ?");
+
+        statement.setInt(1, userId);
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -78,7 +98,7 @@ public class TaskDaoJDBC implements DaoJDBC<Task> {
             task.setTaskName(resultSet.getString("task_name"));
             task.setDeadline(resultSet.getString("task_deadline"));
             task.setTaskId(resultSet.getInt("task_id"));
-            task.setTaskId(resultSet.getInt("user_id"));
+            task.setUserId(resultSet.getInt("user_id"));
             tasks.add(task);
         }
 

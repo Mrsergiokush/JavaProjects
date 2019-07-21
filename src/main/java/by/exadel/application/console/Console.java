@@ -8,21 +8,20 @@ import by.exadel.application.service.UserServiceJDBC;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class Console {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws Exception {
+    private static UserServiceJDBC userServiceJDBC;
+    private static TaskServiceJDBC taskServiceJDBC;
 
-        menu();
-        System.out.println("Exit...");
+    public Console(UserServiceJDBC userServiceJDBC, TaskServiceJDBC taskServiceJDBC) {
 
+        this.userServiceJDBC = userServiceJDBC;
+        this.taskServiceJDBC = taskServiceJDBC;
     }
 
-    private static void menu() throws Exception { //Menu for users
-
-        UserServiceJDBC userServiceJDBC = new UserServiceJDBC();
-        TaskServiceJDBC taskServiceJDBC = new TaskServiceJDBC();
+    public static void menu() throws Exception { //Menu for users
 
         printout();
 
@@ -177,7 +176,7 @@ public class Main {
                         for (int i = 0; i < tasks.size(); i++)
                             System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
                     }
-                    System.out.println("Please, choose the next action");
+                    System.out.println("\nPlease, choose the next action");
                     item = scanner.nextInt();
                     break;
 

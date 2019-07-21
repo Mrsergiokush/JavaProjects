@@ -7,7 +7,12 @@ import java.util.List;
 
 public class UserServiceJDBC implements ServiceJDBC<User>{
 
-    private UserDaoJDBC userDaoJDBC = new UserDaoJDBC();
+    //private UserDaoJDBC userDaoJDBC = new UserDaoJDBC();
+    private UserDaoJDBC userDaoJDBC;
+
+    public UserServiceJDBC(UserDaoJDBC userDaoJDBC) {
+        this.userDaoJDBC = userDaoJDBC;
+    }
 
     @Override
     public User add(User user) throws Exception {

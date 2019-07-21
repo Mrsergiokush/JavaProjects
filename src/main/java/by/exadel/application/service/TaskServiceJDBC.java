@@ -7,7 +7,12 @@ import java.util.List;
 
 public class TaskServiceJDBC implements ServiceJDBC<Task>{
 
-    TaskDaoJDBC taskDaoJDBC = new TaskDaoJDBC();
+    //TaskDaoJDBC taskDaoJDBC = new TaskDaoJDBC();
+    private TaskDaoJDBC taskDaoJDBC;
+
+    public TaskServiceJDBC(TaskDaoJDBC taskDaoJDBC) {
+        this.taskDaoJDBC = taskDaoJDBC;
+    }
 
     @Override
     public Task add(Task task) throws Exception {

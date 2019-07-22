@@ -2,13 +2,17 @@ package by.exadel.application.service;
 
 import by.exadel.application.dao.TaskDaoJDBC;
 import by.exadel.application.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class TaskService implements IService<Task> {
 
     //TaskDaoFS taskDaoFS = new TaskDaoFS();
 
+    @Autowired
     private TaskDaoJDBC taskDaoJDBC;
 
     public TaskService(TaskDaoJDBC taskDaoJDBC) {

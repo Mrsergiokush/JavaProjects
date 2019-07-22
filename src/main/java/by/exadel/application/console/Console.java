@@ -3,22 +3,28 @@ package by.exadel.application.console;
 import by.exadel.application.model.Task;
 import by.exadel.application.model.User;
 import by.exadel.application.service.IService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+@Component
 public class Console {
 
     private static Scanner scanner = new Scanner(System.in);
 
+    @Autowired
     private IService<User> userService;
+
+    @Autowired
     private IService<Task> taskService;
 
-    public Console(IService<User> userService, IService<Task> taskService) {
+    /*public Console(IService<User> userService, IService<Task> taskService) {
 
         this.userService = userService;
         this.taskService = taskService;
-    }
+    }*/
 
     public void menu() throws Exception { //Menu for users
 

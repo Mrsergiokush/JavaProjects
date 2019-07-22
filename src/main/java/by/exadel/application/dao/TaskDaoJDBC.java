@@ -2,11 +2,13 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.Task;
 import org.postgresql.Driver;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TaskDaoJDBC implements IDao<Task> {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/myapp";

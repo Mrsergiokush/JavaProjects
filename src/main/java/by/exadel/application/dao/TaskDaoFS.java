@@ -32,4 +32,16 @@ public class TaskDaoFS implements IDao<Task>{
     public ArrayList<Task> getAll() throws IOException {
         return taskStore.getAll();
     }
+
+    public Task get(Task task) throws IOException{
+
+        ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());
+
+        for(int i = 0; i < tasks.size(); i++){
+            if(task.getTaskName().equals(tasks.get(i).getTaskName()) && task.getUserId().equals(tasks.get(i).getUserId())) //if user has a task
+                return task;
+        }
+        return null;
+    }
+
 }

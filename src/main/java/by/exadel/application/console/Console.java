@@ -30,7 +30,7 @@ public class Console {
 
             switch (item) {
 
-                case 1:
+                case 1: {
                     scanner.nextLine();
                     System.out.println("Please, enter a Username");
 
@@ -45,8 +45,9 @@ public class Console {
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
                     break;
+                }
 
-                case 2:
+                case 2: {
                     scanner.nextLine();
                     System.out.println("Enter Username of user to delete");
 
@@ -61,8 +62,9 @@ public class Console {
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
                     break;
+                }
 
-                case 3:
+                case 3: {
                     ArrayList<User> users = new ArrayList<>(userService.getAll());
 
                     if (users.isEmpty())
@@ -75,20 +77,23 @@ public class Console {
                     System.out.println("\nPlease, choose the next action");
                     item = scanner.nextInt();
                     break;
+                }
 
-                case 4:
+                case 4: {
                     scanner.nextLine();
                     System.out.println("Please, enter UserName of User to add the task");
                     String name = inputUsername();
 
-                    if (userService.getId(name) == -1) {
+                    User user = new User(name);
+
+                    if (userService.getId(user) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
                         item = scanner.nextInt();
                         break;
                     }
 
-                    Integer userId = userService.getId(name);
+                    Integer userId = userService.getId(user);
                     System.out.println("Please, enter a taskName");
                     String taskName = inputTaskname();
                     System.out.println("Please, enter a deadline");
@@ -106,28 +111,31 @@ public class Console {
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
                     break;
+                }
 
-                case 5:
+                case 5: {
                     scanner.nextLine();
                     System.out.println("Enter Username of user to delete his task");
-                    String userNameToDelete = inputUsername();
+                    String username = inputUsername();
 
-                    if (userService.getId(userNameToDelete) == -1) {
+                    User user = new User(username);
+
+                    if (userService.getId(user) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
                         item = scanner.nextInt();
                         break;
                     }
 
-                    Integer userIdToDelete = userService.getId(userNameToDelete);
+                    Integer userId = userService.getId(user);
                     System.out.println("Please, enter a taskName to delete");
                     String taskNameToDelete = inputTaskname();
 
-                    Task taskToDelete = new Task();
-                    taskToDelete.setTaskName(taskNameToDelete);
-                    taskToDelete.setUserId(userIdToDelete);
+                    Task task = new Task();
+                    task.setTaskName(taskNameToDelete);
+                    task.setUserId(userId);
 
-                    if (taskService.delete(taskToDelete))
+                    if (taskService.delete(task))
                         System.out.println("Task was successfully deleted");
                     else
                         System.out.println("Task with this name does not exist");
@@ -135,8 +143,9 @@ public class Console {
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
                     break;
+                }
 
-                case 6:
+                case 6: {
                     scanner.nextLine();
 
                     if (taskService.getAll().isEmpty())
@@ -154,6 +163,7 @@ public class Console {
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
                     break;
+                }
 
                 /*case 7:
                     scanner.nextLine();

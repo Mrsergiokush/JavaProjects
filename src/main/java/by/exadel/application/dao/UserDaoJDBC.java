@@ -77,7 +77,9 @@ public class UserDaoJDBC implements IDao<User> {
         return rows;
     }
 
-    public User getByName(String username) throws Exception {
+    public User get(User user) throws Exception {
+
+        String username = user.getUserName();
 
         PreparedStatement statement = createStatement("SELECT user_id FROM public.user WHERE user_name = ?");
 
@@ -88,10 +90,9 @@ public class UserDaoJDBC implements IDao<User> {
         if (!resultSet.next()) //if there not user in DB
             return null;
 
-        User user = new User();
 
-            user.setUserId(resultSet.getInt("user_id"));
-            user.setUserName(username);
+        user.setUserId(resultSet.getInt("user_id"));
+        user.setUserName(username);
 
         return user;
     }

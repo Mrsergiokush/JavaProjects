@@ -10,5 +10,5 @@ public interface IService<T>{
 
     Collection<T> getAll() throws Exception;
 
-    Integer getId(String name) throws Exception;
+    Integer getId(T type) throws Exception;
 }

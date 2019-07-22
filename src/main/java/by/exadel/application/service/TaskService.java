@@ -7,6 +7,8 @@ import java.util.List;
 
 public class TaskService implements IService<Task> {
 
+    //TaskDaoFS taskDaoFS = new TaskDaoFS();
+
     private TaskDaoJDBC taskDaoJDBC;
 
     public TaskService(TaskDaoJDBC taskDaoJDBC) {
@@ -16,7 +18,7 @@ public class TaskService implements IService<Task> {
     @Override
     public Task add(Task task) throws Exception {
 
-        if (taskDaoJDBC.getByNameAndId(task) == null) {//If there not task
+        if (taskDaoJDBC.get(task) == null) {//If there not task
             return taskDaoJDBC.add(task);
         } else
             return null;
@@ -25,7 +27,7 @@ public class TaskService implements IService<Task> {
     @Override
     public boolean delete(Task task) throws Exception {
 
-        if (taskDaoJDBC.getByNameAndId(task) == null)
+        if (taskDaoJDBC.get(task) == null)
             return false;
         else {
             taskDaoJDBC.delete(task);
@@ -38,12 +40,13 @@ public class TaskService implements IService<Task> {
         return taskDaoJDBC.getAll();
     }
 
+    //useless (find better decision)
     @Override
-    public Integer getId(String name) throws Exception {
+    public Integer getId(Task task) throws Exception {
         return null;
     }
 
-    public List<Task> getAll(Integer userId) throws Exception{
-        return taskDaoJDBC.getAll(userId);
-    }
+    /*public List<Task> getAll(Integer userId) throws Exception{
+        return taskDaoFS.getAll(userId);
+    }*/
 }

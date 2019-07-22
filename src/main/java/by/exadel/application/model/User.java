@@ -2,8 +2,6 @@ package by.exadel.application.model;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 @Component
 public class User {
 
@@ -12,6 +10,10 @@ public class User {
     private String userName;
 
     public User() {
+    }
+
+    public User(String username) {
+        this.userName = username;
     }
 
     public Integer getUserId() {
@@ -36,30 +38,5 @@ public class User {
                 "userId=" + userId +
                 ", userName='" + userName + '\'' +
                 '}';
-    }
-
-    //for work with files
-    private ArrayList<Task> tasks = new ArrayList<>();
-
-    public User(String taskname, String deadline, String username) {
-        this.userName = username;
-        Task task = new Task(taskname, deadline);
-        tasks.add(task);
-    }
-
-    public User(String username) {
-        this.userName = username;
-    }
-
-    public ArrayList<Task> getTasks() {
-        return this.tasks;
-    }
-
-    public int getTasksSize() {
-        return tasks.size();
-    }
-
-    public void addTask(String taskName, String deadline) { //add new task in list of task of user
-        tasks.add(new Task(taskName, deadline));
     }
 }

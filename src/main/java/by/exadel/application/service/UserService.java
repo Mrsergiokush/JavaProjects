@@ -16,7 +16,7 @@ public class UserService implements IService<User> {
     @Override
     public User add(User user) throws Exception {
 
-        if (userDaoJDBC.getByName(user.getUserName()) != null)
+        if (userDaoJDBC.get(user) != null)
             return null;
         else
             return userDaoJDBC.add(user);
@@ -37,12 +37,12 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public Integer getId(String userName) throws Exception {
+    public Integer getId(User user) throws Exception {
 
-        if (userDaoJDBC.getByName(userName) == null)
+        if (userDaoJDBC.get(user) == null)
             return -1;
         else {
-            return userDaoJDBC.getByName(userName).getUserId();
+            return userDaoJDBC.get(user).getUserId();
         }
     }
 }

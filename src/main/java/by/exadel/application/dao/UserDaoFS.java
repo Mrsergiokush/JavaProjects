@@ -6,24 +6,24 @@ import by.exadel.application.store.UserStore;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class UserDaoFS implements IDao<User>{
+public class UserDaoFS implements IDao<User> {
 
     private UserStore store = new UserStore();
 
     @Override
     public User add(User user) throws IOException {
 
-            ArrayList<User> list = new ArrayList<>(store.getAll());
+        ArrayList<User> list = new ArrayList<>(store.getAll());
 
-            list.add(user);
+        list.add(user);
 
-            store.setAll(list);
+        store.setAll(list);
 
-            return user;
+        return user;
     }
 
     @Override
-    public Integer delete(User user) throws IOException{
+    public Integer delete(User user) throws IOException {
 
         ArrayList<User> users = new ArrayList<>(store.getAll());
         users.remove(user);
@@ -34,8 +34,18 @@ public class UserDaoFS implements IDao<User>{
     }
 
     @Override
-    public ArrayList<User> getAll() throws IOException{
-
+    public ArrayList<User> getAll() throws IOException {
         return store.getAll();
+    }
+
+    public User get(User user) throws IOException {
+        ArrayList<User> users = new ArrayList<>(store.getAll());
+
+        for (int i = 0; i < users.size(); i++) {
+            if (user.getUserName().equals(users.get(i).getUserName()))
+                return user;
+        }
+
+        return null;
     }
 }

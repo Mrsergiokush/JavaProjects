@@ -6,10 +6,10 @@
 
     <bean id = "userDaoJDBC" class="by.exadel.application.dao.UserDaoJDBC"/>
     <bean id = "taskDaoJDBC" class="by.exadel.application.dao.TaskDaoJDBC"/>
-    <bean id = "userServiceJDBC" class="by.exadel.application.service.UserServiceJDBC">
+    <bean id = "userServiceJDBC" class="by.exadel.application.service.UserService">
         <constructor-arg index="0" ref="userDaoJDBC"/>
     </bean>
-    <bean id = "taskServiceJDBC" class="by.exadel.application.service.TaskServiceJDBC">
+    <bean id = "taskServiceJDBC" class="by.exadel.application.service.TaskService">
         <constructor-arg index="0" ref ="taskDaoJDBC"/>
     </bean>
     <bean id="Console" class="by.exadel.application.console.Console">

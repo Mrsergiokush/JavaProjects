@@ -1,64 +1,48 @@
 package by.exadel.application.service;
 
-import by.exadel.application.dao.UserDao;
+import by.exadel.application.dao.UserDaoJDBC;
 import by.exadel.application.model.User;
 
-import java.io.IOException;
+import java.util.List;
 
-public class UserService {
+public class UserService implements IService<User> {
 
-    private UserDao dao = new UserDao();
+    private UserDaoJDBC userDaoJDBC;
 
-    public boolean addByUsername(User user) throws IOException {
-        if (!compareUser(user)) //if user is already in list
-            return false;
+    public UserService(UserDaoJDBC userDaoJDBC) {
+        this.userDaoJDBC = userDaoJDBC;
+    }
+
+    @Override
+    public User add(User user) throws Exception {
+
+        if (userDaoJDBC.getByName(user.getUserName()) != null)
+            return null;
         else
-            dao.addToList(user); //add new user in list
-        return true;
+            return userDaoJDBC.add(user);
     }
 
-    public boolean isEmpty() throws IOException{
-        if (dao.getSize() == 0)
+    @Override
+    public boolean delete(User user) throws Exception {
+
+        if (userDaoJDBC.delete(user) == 1)
             return true;
-        else
-            return false;
+        else return false;
     }
 
-    public boolean compareUser(User user) throws IOException{    //compare 2 users
-        if (dao.getSize() == 0)
-            return true;
+    @Override
+    public List<User> getAll() throws Exception {
+
+        return userDaoJDBC.getAll();
+    }
+
+    @Override
+    public Integer getId(String userName) throws Exception {
+
+        if (userDaoJDBC.getByName(userName) == null)
+            return -1;
         else {
-            for (int i = 0; i < dao.getSize(); i++) {
-                if (dao.getUserByIndex(i).getUserName().equals(user.getUserName()))
-                    return false;
-            }
-            return true;
+            return userDaoJDBC.getByName(userName).getUserId();
         }
     }
-
-    public boolean deleteData(int index) throws IOException {
-        if (index > dao.getSize() || index < 0)
-            return false;
-        else {
-            dao.deleteByIndex(index);
-            return true;
-        }
-    }
-
-    public User getUserByIndex(int index) throws IOException{  //return Users by index in list
-        return dao.getUserByIndex(index);
-    }
-
-    public int getQuantity() throws IOException{
-        return dao.getSize(); //get size
-    }
-
-    public boolean thereIsUser(String username) throws IOException{
-        for(int i = 0; i < dao.getSize(); i++){
-            if(dao.getUserByIndex(i).getUserName().equals(username))
-                return true;
-        }
-        return false;
-    }
-
 }

@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskDaoJDBC implements DaoJDBC<Task> {
+public class TaskDaoJDBC implements IDao<Task> {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/myapp";
 
@@ -51,7 +51,7 @@ public class TaskDaoJDBC implements DaoJDBC<Task> {
     }
 
     @Override
-    public int delete(Task task) throws Exception {
+    public Integer delete(Task task) throws Exception {
 
         PreparedStatement statement = createStatement("DELETE FROM public.task WHERE task_name = ?");
 
@@ -108,8 +108,6 @@ public class TaskDaoJDBC implements DaoJDBC<Task> {
     public Task getByNameAndId(Task task) throws Exception {
 
         PreparedStatement statement = createStatement("SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?");
-
-        //String sql = new String("SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = '" + task.getTaskName() + "' AND user_id = " + task.getUserId());
 
         statement.setString(1, task.getTaskName());
         statement.setInt(2, task.getUserId());

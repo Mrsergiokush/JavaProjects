@@ -2,8 +2,7 @@ package by.exadel.application.console;
 
 import by.exadel.application.model.Task;
 import by.exadel.application.model.User;
-import by.exadel.application.service.TaskServiceJDBC;
-import by.exadel.application.service.UserServiceJDBC;
+import by.exadel.application.service.IService;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,16 +11,16 @@ public class Console {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    private static UserServiceJDBC userServiceJDBC;
-    private static TaskServiceJDBC taskServiceJDBC;
+    private IService<User> userService;
+    private IService<Task> taskService;
 
-    public Console(UserServiceJDBC userServiceJDBC, TaskServiceJDBC taskServiceJDBC) {
+    public Console(IService<User> userService, IService<Task> taskService) {
 
-        this.userServiceJDBC = userServiceJDBC;
-        this.taskServiceJDBC = taskServiceJDBC;
+        this.userService = userService;
+        this.taskService = taskService;
     }
 
-    public static void menu() throws Exception { //Menu for users
+    public void menu() throws Exception { //Menu for users
 
         printout();
 
@@ -39,7 +38,7 @@ public class Console {
                     User user = new User();
                     user.setUserName(userName);
 
-                    if (userServiceJDBC.add(user) == null)
+                    if (userService.add(user) == null)
                         System.out.println("User is already in DataBase");
                     else System.out.println("User was successfully added with id " + user.getUserId());
 
@@ -55,7 +54,7 @@ public class Console {
                     User userToDelete = new User();
                     userToDelete.setUserName(username);
 
-                    if (userServiceJDBC.delete(userToDelete))
+                    if (userService.delete(userToDelete))
                         System.out.println("User was successfully deleted");
                     else System.out.println("There isn't user in DataBase");
 
@@ -64,11 +63,13 @@ public class Console {
                     break;
 
                 case 3:
-                    if (userServiceJDBC.getAll().isEmpty())
+                    ArrayList<User> users = new ArrayList<>(userService.getAll());
+
+                    if (users.isEmpty())
                         System.out.println("DataBase is empty");
                     else
-                        for (int i = 0; i < userServiceJDBC.getAll().size(); i++) {
-                            System.out.println("User Name: " + userServiceJDBC.getAll().get(i).getUserName());
+                        for (int i = 0; i < users.size(); i++) {
+                            System.out.println("User Name: " + users.get(i).getUserName());
                         }
 
                     System.out.println("\nPlease, choose the next action");
@@ -80,14 +81,14 @@ public class Console {
                     System.out.println("Please, enter UserName of User to add the task");
                     String name = inputUsername();
 
-                    if (userServiceJDBC.getId(name) == -1) {
+                    if (userService.getId(name) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
                         item = scanner.nextInt();
                         break;
                     }
 
-                    Integer userId = userServiceJDBC.getId(name);
+                    Integer userId = userService.getId(name);
                     System.out.println("Please, enter a taskName");
                     String taskName = inputTaskname();
                     System.out.println("Please, enter a deadline");
@@ -98,7 +99,7 @@ public class Console {
                     task.setTaskName(taskName);
                     task.setDeadline(deadLine);
 
-                    if (taskServiceJDBC.add(task) != null)
+                    if (taskService.add(task) != null)
                         System.out.println("Task was successfully added with id " + task.getTaskId());
                     else System.out.println("User is already has this task");
 
@@ -111,14 +112,14 @@ public class Console {
                     System.out.println("Enter Username of user to delete his task");
                     String userNameToDelete = inputUsername();
 
-                    if (userServiceJDBC.getId(userNameToDelete) == -1) {
+                    if (userService.getId(userNameToDelete) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
                         item = scanner.nextInt();
                         break;
                     }
 
-                    Integer userIdToDelete = userServiceJDBC.getId(userNameToDelete);
+                    Integer userIdToDelete = userService.getId(userNameToDelete);
                     System.out.println("Please, enter a taskName to delete");
                     String taskNameToDelete = inputTaskname();
 
@@ -126,7 +127,7 @@ public class Console {
                     taskToDelete.setTaskName(taskNameToDelete);
                     taskToDelete.setUserId(userIdToDelete);
 
-                    if (taskServiceJDBC.delete(taskToDelete))
+                    if (taskService.delete(taskToDelete))
                         System.out.println("Task was successfully deleted");
                     else
                         System.out.println("Task with this name does not exist");
@@ -138,11 +139,11 @@ public class Console {
                 case 6:
                     scanner.nextLine();
 
-                    if (taskServiceJDBC.getAll().isEmpty())
+                    if (taskService.getAll().isEmpty())
                         System.out.println("List of tasks if empty");
 
                     else {
-                        ArrayList<Task> tasks = new ArrayList<>(taskServiceJDBC.getAll());
+                        ArrayList<Task> tasks = new ArrayList<>(taskService.getAll());
 
                         System.out.printf("%-20s %-20s %-20s\n\n", "ID", "Taskname", "Deadline");
 
@@ -154,20 +155,20 @@ public class Console {
                     item = scanner.nextInt();
                     break;
 
-                case 7:
+                /*case 7:
                     scanner.nextLine();
 
                     System.out.println("Enter Username of user to show his task");
                     String userNameToShowTask = inputUsername();
 
-                    if (userServiceJDBC.getId(userNameToShowTask) == -1) {
+                    if (userService.getId(userNameToShowTask) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
                         item = scanner.nextInt();
                         break;
                     }
 
-                    ArrayList<Task> tasks = new ArrayList<>(taskServiceJDBC.getAll(userServiceJDBC.getId(userNameToShowTask)));
+                    ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(userService.getId(userNameToShowTask)));
 
                     if (tasks.isEmpty())
                         System.out.println("List of tasks of user + " + userNameToShowTask + "is empty");
@@ -178,7 +179,7 @@ public class Console {
                     }
                     System.out.println("\nPlease, choose the next action");
                     item = scanner.nextInt();
-                    break;
+                    break;*/
 
                 default:
                     item = 0;

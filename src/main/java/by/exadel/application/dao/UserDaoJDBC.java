@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJDBC implements DaoJDBC<User> {
+public class UserDaoJDBC implements IDao<User> {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/myapp";
 
@@ -66,7 +66,7 @@ public class UserDaoJDBC implements DaoJDBC<User> {
     }
 
     @Override
-    public int delete(User user) throws Exception { //Client cant't delete user if user is having tasks
+    public Integer delete(User user) throws Exception { //Client cant't delete user if user is having tasks
 
         PreparedStatement statement = createStatement("DELETE FROM public.user WHERE user_name = ?");
 

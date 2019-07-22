@@ -1,7 +1,10 @@
 package by.exadel.application.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 
+@Component
 public class User {
 
     private Integer userId;

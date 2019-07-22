@@ -1,5 +1,8 @@
 package by.exadel.application.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Task {
 
     private Integer taskId;

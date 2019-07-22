@@ -2,10 +2,12 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.User;
 import by.exadel.application.store.UserStore;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+@Component
 public class UserDaoFS implements IDao<User> {
 
     private UserStore store = new UserStore();
@@ -40,6 +42,7 @@ public class UserDaoFS implements IDao<User> {
         return store.getAll();
     }
 
+    @Override
     public User get(User user) throws IOException {
         ArrayList<User> users = new ArrayList<>(store.getAll());
 

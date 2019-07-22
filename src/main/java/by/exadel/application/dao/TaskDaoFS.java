@@ -2,10 +2,12 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.Task;
 import by.exadel.application.store.TaskStore;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+@Component
 public class TaskDaoFS implements IDao<Task>{
 
     private TaskStore taskStore = new TaskStore();
@@ -38,6 +40,7 @@ public class TaskDaoFS implements IDao<Task>{
         return taskStore.getAll();
     }
 
+    @Override
     public Task get(Task task) throws IOException{
 
         ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());

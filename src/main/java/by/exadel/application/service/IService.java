@@ -1,6 +1,6 @@
 package by.exadel.application.service;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IService<T>{
 
@@ -8,7 +8,7 @@ public interface IService<T>{
 
     boolean delete(T type) throws Exception;
 
-    Collection<T> getAll() throws Exception;
+    List<T> getAll() throws Exception;
 
     Integer getId(T type) throws Exception;
 }

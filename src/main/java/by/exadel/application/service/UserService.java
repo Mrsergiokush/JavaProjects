@@ -1,5 +1,6 @@
 package by.exadel.application.service;
 
+import by.exadel.application.dao.IDao;
 import by.exadel.application.dao.UserDaoJDBC;
 import by.exadel.application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +12,25 @@ import java.util.List;
 public class UserService implements IService<User> {
 
     @Autowired
-    private UserDaoJDBC userDaoJDBC;
+    private IDao<User> userDao;
 
     public UserService(UserDaoJDBC userDaoJDBC) {
-        this.userDaoJDBC = userDaoJDBC;
+        this.userDao = userDaoJDBC;
     }
 
     @Override
     public User add(User user) throws Exception {
 
-        if (userDaoJDBC.get(user) != null)
+        if (userDao.get(user) != null)
             return null;
         else
-            return userDaoJDBC.add(user);
+            return userDao.add(user);
     }
 
     @Override
     public boolean delete(User user) throws Exception {
 
-        if (userDaoJDBC.delete(user) == 1)
+        if (userDao.delete(user) == 1)
             return true;
         else return false;
     }
@@ -37,16 +38,16 @@ public class UserService implements IService<User> {
     @Override
     public List<User> getAll() throws Exception {
 
-        return userDaoJDBC.getAll();
+        return userDao.getAll();
     }
 
     @Override
     public Integer getId(User user) throws Exception {
 
-        if (userDaoJDBC.get(user) == null)
+        if (userDao.get(user) == null)
             return -1;
         else {
-            return userDaoJDBC.get(user).getUserId();
+            return userDao.get(user).getUserId();
         }
     }
 }

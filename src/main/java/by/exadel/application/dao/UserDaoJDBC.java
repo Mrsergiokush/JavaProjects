@@ -79,6 +79,7 @@ public class UserDaoJDBC implements IDao<User> {
         return rows;
     }
 
+    @Override
     public User get(User user) throws Exception {
 
         String username = user.getUserName();

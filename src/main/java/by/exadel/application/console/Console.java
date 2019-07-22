@@ -20,12 +20,6 @@ public class Console {
     @Autowired
     private IService<Task> taskService;
 
-    /*public Console(IService<User> userService, IService<Task> taskService) {
-
-        this.userService = userService;
-        this.taskService = taskService;
-    }*/
-
     public void menu() throws Exception { //Menu for users
 
         printout();
@@ -171,7 +165,7 @@ public class Console {
                     break;
                 }
 
-                /*case 7:
+                /*case 7: //Come up with the another idea
                     scanner.nextLine();
 
                     System.out.println("Enter Username of user to show his task");

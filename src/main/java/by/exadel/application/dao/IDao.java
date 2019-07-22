@@ -1,6 +1,6 @@
 package by.exadel.application.dao;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IDao <T>{
 
@@ -8,6 +8,8 @@ public interface IDao <T>{
 
     Integer delete(T type) throws Exception;
 
-    Collection<T> getAll() throws Exception;
+    List<T> getAll() throws Exception;
+
+    T get(T type) throws Exception;
 }
 

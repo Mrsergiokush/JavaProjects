@@ -1,5 +1,6 @@
 package by.exadel.application.service;
 
+import by.exadel.application.dao.IDao;
 import by.exadel.application.dao.TaskDaoJDBC;
 import by.exadel.application.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,17 @@ public class TaskService implements IService<Task> {
     //TaskDaoFS taskDaoFS = new TaskDaoFS();
 
     @Autowired
-    private TaskDaoJDBC taskDaoJDBC;
+    private IDao<Task> taskDao;
 
     public TaskService(TaskDaoJDBC taskDaoJDBC) {
-        this.taskDaoJDBC = taskDaoJDBC;
+        this.taskDao = taskDaoJDBC;
     }
 
     @Override
     public Task add(Task task) throws Exception {
 
-        if (taskDaoJDBC.get(task) == null) {//If there not task
-            return taskDaoJDBC.add(task);
+        if (taskDao.get(task) == null) {//If there not task
+            return taskDao.add(task);
         } else
             return null;
     }
@@ -31,17 +32,17 @@ public class TaskService implements IService<Task> {
     @Override
     public boolean delete(Task task) throws Exception {
 
-        if (taskDaoJDBC.get(task) == null)
+        if (taskDao.get(task) == null)
             return false;
         else {
-            taskDaoJDBC.delete(task);
+            taskDao.delete(task);
             return true;
         }
     }
 
     @Override
     public List<Task> getAll() throws Exception{
-        return taskDaoJDBC.getAll();
+        return taskDao.getAll();
     }
 
     //useless (find better decision)

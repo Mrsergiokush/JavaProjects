@@ -107,6 +107,7 @@ public class TaskDaoJDBC implements IDao<Task> {
         return tasks;
     }
 
+    @Override
     public Task get(Task task) throws Exception {
 
         PreparedStatement statement = createStatement("SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?");

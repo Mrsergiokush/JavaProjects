@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class TaskStore implements IStore<Task>{
 
-    private final String TASKS = "tasks.txt";
+    private final String TASKS = "Tasks.txt";
 
     @Override
     public void setAll(ArrayList<Task> tasks) throws IOException {

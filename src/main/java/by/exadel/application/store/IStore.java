@@ -9,4 +9,6 @@ public interface IStore <T>{
 
     ArrayList<T> getAll() throws IOException;
 
+    Integer scanID() throws IOException;
+
 }

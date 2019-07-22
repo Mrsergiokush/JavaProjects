@@ -44,4 +44,19 @@ public class UserStore implements IStore<User>{
         }
         writer.close();
     }
+
+    @Override
+    public Integer scanID() throws IOException{
+
+        ArrayList<User> users = new ArrayList<>(getAll());
+
+        Integer id = -1;
+
+        for(int i = 0; i < users.size(); i++){
+            if(users.get(i).getUserId() > id)
+                id = users.get(i).getUserId();
+        }
+        id++;
+        return id;
+    }
 }

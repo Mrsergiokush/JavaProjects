@@ -14,8 +14,13 @@ public class TaskDaoFS implements IDao<Task>{
     public Task add(Task task) throws IOException {
 
         ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());
+
+        task.setTaskId(taskStore.scanID());
+
         tasks.add(task);
+
         taskStore.setAll(tasks);
+
         return task;
     }
 

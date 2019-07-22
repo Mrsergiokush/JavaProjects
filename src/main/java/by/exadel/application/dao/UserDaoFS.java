@@ -15,6 +15,8 @@ public class UserDaoFS implements IDao<User> {
 
         ArrayList<User> list = new ArrayList<>(store.getAll());
 
+        user.setUserId(store.scanID());
+
         list.add(user);
 
         store.setAll(list);

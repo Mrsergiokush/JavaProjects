@@ -43,4 +43,19 @@ public class TaskStore implements IStore<Task>{
         }
         return tasks;
     }
+
+    @Override
+    public Integer scanID() throws IOException{
+
+        ArrayList<Task> tasks = new ArrayList<>(getAll());
+
+        Integer id = -1;
+
+        for(int i = 0; i < tasks.size(); i++){
+            if(tasks.get(i).getTaskId() > id)
+                id = tasks.get(i).getTaskId();
+        }
+        id++;
+        return id;
+    }
 }

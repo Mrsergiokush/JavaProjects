@@ -4,6 +4,7 @@ import by.exadel.application.model.Task;
 import by.exadel.application.model.User;
 import by.exadel.application.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,9 +16,11 @@ public class Console {
     private static Scanner scanner = new Scanner(System.in);
 
     @Autowired
+    @Qualifier("userService")
     private IService<User> userService;
 
     @Autowired
+    @Qualifier("taskService")
     private IService<Task> taskService;
 
     public void menu() throws Exception { //Menu for users
@@ -233,3 +236,5 @@ public class Console {
         return taskname;
     }
 }
+
+//RowMaper

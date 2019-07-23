@@ -1,24 +1,17 @@
 package by.exadel.application.service;
 
 import by.exadel.application.dao.IDao;
-import by.exadel.application.dao.TaskDaoJDBC;
 import by.exadel.application.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class TaskService implements IService<Task> {
-
-    //TaskDaoFS taskDaoFS = new TaskDaoFS();
 
     @Autowired
     private IDao<Task> taskDao;
-
-    public TaskService(TaskDaoJDBC taskDaoJDBC) {
-        this.taskDao = taskDaoJDBC;
-    }
 
     @Override
     public Task add(Task task) throws Exception {
@@ -50,8 +43,4 @@ public class TaskService implements IService<Task> {
     public Integer getId(Task task) throws Exception {
         return null;
     }
-
-    /*public List<Task> getAll(Integer userId) throws Exception{
-        return taskDaoFS.getAll(userId);
-    }*/
 }

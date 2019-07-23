@@ -2,6 +2,7 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.User;
 import org.postgresql.Driver;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Profile("DataBase")
 public class UserDaoJDBC implements IDao<User> {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/myapp";

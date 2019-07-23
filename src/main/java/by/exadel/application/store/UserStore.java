@@ -1,6 +1,7 @@
 package by.exadel.application.store;
 
 import by.exadel.application.model.User;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+@Component
 public class UserStore implements IStore<User>{
 
     private final String USER_NAME = "Users.txt"; //name of file

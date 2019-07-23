@@ -1,10 +1,12 @@
 package by.exadel.application.store;
 
 import by.exadel.application.model.Task;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
 
+@Component
 public class TaskStore implements IStore<Task>{
 
     private final String TASKS = "Tasks.txt";

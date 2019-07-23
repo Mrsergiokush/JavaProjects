@@ -2,15 +2,19 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.User;
 import by.exadel.application.store.UserStore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 @Component
+@Profile("FileSystem")
 public class UserDaoFS implements IDao<User> {
 
-    private UserStore store = new UserStore();
+    @Autowired
+    private UserStore store;
 
     @Override
     public User add(User user) throws IOException {
@@ -29,12 +33,18 @@ public class UserDaoFS implements IDao<User> {
     @Override
     public Integer delete(User user) throws IOException {
 
+        boolean isDelete;
+
         ArrayList<User> users = new ArrayList<>(store.getAll());
-        users.remove(user);
 
-        store.setAll(users);
+        user.setUserId(get(user).getUserId());
 
-        return 1;
+        isDelete = users.remove(user);
+        if (isDelete) {
+            store.setAll(users);
+            return 1;
+        } else return 0;
+
     }
 
     @Override
@@ -48,7 +58,7 @@ public class UserDaoFS implements IDao<User> {
 
         for (int i = 0; i < users.size(); i++) {
             if (user.getUserName().equals(users.get(i).getUserName()))
-                return user;
+                return users.get(i);
         }
 
         return null;

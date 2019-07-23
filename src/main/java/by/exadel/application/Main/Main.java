@@ -9,5 +9,6 @@ public class Main {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"config.xml"});
         Console console = context.getBean("console", Console.class);
         console.menu();
+        System.out.println("EXIT...");
     }
 }

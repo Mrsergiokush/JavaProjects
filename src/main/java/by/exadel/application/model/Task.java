@@ -2,6 +2,8 @@ package by.exadel.application.model;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class Task {
 
@@ -51,5 +53,21 @@ public class Task {
     }
 
     public Task() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return taskId.equals(task.taskId) &&
+                userId.equals(task.userId) &&
+                taskName.equals(task.taskName) &&
+                deadline.equals(task.deadline);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskId, userId, taskName, deadline);
     }
 }

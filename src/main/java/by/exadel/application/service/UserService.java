@@ -1,22 +1,17 @@
 package by.exadel.application.service;
 
 import by.exadel.application.dao.IDao;
-import by.exadel.application.dao.UserDaoJDBC;
 import by.exadel.application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class UserService implements IService<User> {
 
     @Autowired
     private IDao<User> userDao;
-
-    public UserService(UserDaoJDBC userDaoJDBC) {
-        this.userDao = userDaoJDBC;
-    }
 
     @Override
     public User add(User user) throws Exception {

@@ -69,7 +69,6 @@
                             <mainClass>by.exadel.application.Main.Main</mainClass>
                         </manifest>
                     </archive>
-
                 </configuration>
                 <executions>
                     <execution>

@@ -1,6 +1,6 @@
 package by.exadel.application.service;
 
-import by.exadel.application.dao.IDao;
+import by.exadel.application.dao.IDaoUser;
 import by.exadel.application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,12 @@ import java.util.List;
 public class UserService implements IService<User> {
 
     @Autowired
-    private IDao<User> userDao;
+    private IDaoUser userDao;
 
     @Override
     public User add(User user) throws Exception {
 
-        if (userDao.get(user) != null)
+        if (userDao.getByUserName(user.getUserName()) != null)
             return null;
         else
             return userDao.add(user);
@@ -39,10 +39,10 @@ public class UserService implements IService<User> {
     @Override
     public Integer getId(User user) throws Exception {
 
-        if (userDao.get(user) == null)
+        if (userDao.getByUserName(user.getUserName()) == null)
             return -1;
         else {
-            return userDao.get(user).getUserId();
+            return userDao.getByUserName(user.getUserName()).getUserId();
         }
     }
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @Repository
 @Profile("FileSystem")
-public class TaskDaoFS implements IDao<Task> {
+public class TaskDaoFS implements IDaoTask {
 
     @Autowired
     private TaskStore taskStore;
@@ -31,12 +31,12 @@ public class TaskDaoFS implements IDao<Task> {
     }
 
     @Override
-    public Integer delete(Task task) throws IOException {
+    public Integer delete(Task task) throws Exception {
 
         ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());
 
-        task.setTaskId(get(task).getTaskId());//get all fields of task
-        task.setDeadline(get(task).getDeadline());
+        task.setTaskId(getByNameAndId(task.getUserId(), task.getTaskName()).getTaskId());      //set taskId
+        task.setDeadline(getByNameAndId(task.getUserId(), task.getTaskName()).getDeadline()); //set task deadline
 
         boolean isDelete = tasks.remove(task);
 
@@ -52,15 +52,27 @@ public class TaskDaoFS implements IDao<Task> {
     }
 
     @Override
-    public Task get(Task task) throws IOException {
+    public Task getByNameAndId(Integer userId, String taskName) throws IOException {
 
         ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());
 
         for (int i = 0; i < tasks.size(); i++) {
-            if (task.getTaskName().equals(tasks.get(i).getTaskName()) && task.getUserId().equals(tasks.get(i).getUserId())) //if user has a task
+            if (taskName.equals(tasks.get(i).getTaskName()) && userId.equals(tasks.get(i).getUserId())) //if user has a task
                 return tasks.get(i);
         }
         return null;
     }
 
+    @Override
+    public ArrayList<Task> getTaskByUserId(Integer userId) throws IOException{
+
+        ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());
+
+        for(int i = 0; i < tasks.size(); i++){
+            if(tasks.get(i).getUserId() != userId)
+                tasks.remove(i);
+        }
+
+        return tasks;
+    }
 }

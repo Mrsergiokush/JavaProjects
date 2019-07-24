@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @Profile("DataBase")
-public class TaskDaoJDBC implements IDao<Task> {
+public class TaskDaoJDBC implements IDaoTask {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/myapp";
 
@@ -34,18 +34,18 @@ public class TaskDaoJDBC implements IDao<Task> {
 
         statement.setString(1, task.getTaskName());
 
-        statement.setString(2,task.getDeadline());
+        statement.setString(2, task.getDeadline());
 
         statement.setInt(3, task.getUserId());
 
-        if(statement.executeUpdate() > 0){
+        if (statement.executeUpdate() > 0) {
             ResultSet generatedKeys = statement.getGeneratedKeys();
 
             boolean next = generatedKeys.next();
 
             Integer taskId = next ? generatedKeys.getInt(1) : -1;
 
-            if(taskId != -1){
+            if (taskId != -1) {
                 task.setTaskId(taskId);
                 return task;
             }
@@ -87,7 +87,8 @@ public class TaskDaoJDBC implements IDao<Task> {
         return tasks;
     }
 
-    public List<Task> getAll(Integer userId) throws Exception{ //overloading method getAll
+    @Override
+    public List<Task> getTaskByUserId(Integer userId) throws Exception { //get all tasks of one user
 
         PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ?");
 
@@ -110,19 +111,25 @@ public class TaskDaoJDBC implements IDao<Task> {
     }
 
     @Override
-    public Task get(Task task) throws Exception {
+    public Task getByNameAndId(Integer userId, String taskName) throws Exception {
 
         PreparedStatement statement = createStatement("SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?");
 
-        statement.setString(1, task.getTaskName());
-        statement.setInt(2, task.getUserId());
+        statement.setString(1, taskName);
+        statement.setInt(2, userId);
 
         ResultSet resultSet = statement.executeQuery();
 
         if (!resultSet.next())
             return null;
-        else
+        else {
+            Task task = new Task();
+            task.setTaskName(resultSet.getString("task_name"));
+            task.setDeadline(resultSet.getString("task_deadline"));
+            task.setTaskId(resultSet.getInt("task_id"));
+            task.setUserId(resultSet.getInt("user_id"));
             return task;
+        }
     }
 
     public static Connection getConnection() throws SQLException {

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @Profile("SpringJDBC")
-public class TaskDaoSpringJDBC implements IDao<Task> {
+public class TaskDaoSpringJDBC implements IDaoTask {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -36,9 +36,9 @@ public class TaskDaoSpringJDBC implements IDao<Task> {
 
         String SQL = "DELETE FROM public.task WHERE task_name = ?";
 
-        jdbcTemplate.update(SQL, task.getTaskName());
+        Integer rows = jdbcTemplate.update(SQL, task.getTaskName());
 
-        return 1;
+        return rows;
     }
 
     @Override
@@ -51,17 +51,28 @@ public class TaskDaoSpringJDBC implements IDao<Task> {
         return tasks;
     }
 
+
     @Override
-    public Task get(Task task) {
+    public List<Task> getTaskByUserId(Integer userId) throws Exception {
 
         String SQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ?";
 
+        List<Task> tasks = jdbcTemplate.query(SQL, new Object[]{userId}, new TaskRowMapper());
+
+        return tasks;
+    }
+
+    @Override
+    public Task getByNameAndId(Integer userId, String taskName) throws Exception {
+
+        String SQL = "SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?";
+
         try {
-            task = jdbcTemplate.queryForObject(SQL, new TaskRowMapper());
+            Task task = jdbcTemplate.queryForObject(SQL, new Object[]{userId, taskName}, new TaskRowMapper());
+            return task;
         } catch (DataAccessException e) {
             return null;
         }
 
-        return task;
     }
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @Repository
 @Profile("FileSystem")
-public class UserDaoFS implements IDao<User> {
+public class UserDaoFS implements IDaoUser {
 
     @Autowired
     private UserStore store;
@@ -37,7 +37,7 @@ public class UserDaoFS implements IDao<User> {
 
         ArrayList<User> users = new ArrayList<>(store.getAll());
 
-        user.setUserId(get(user).getUserId());
+        user.setUserId(getByUserName(user.getUserName()).getUserId());
 
         isDelete = users.remove(user);
         if (isDelete) {
@@ -53,14 +53,13 @@ public class UserDaoFS implements IDao<User> {
     }
 
     @Override
-    public User get(User user) throws IOException {
+    public User getByUserName(String userName) throws IOException {
         ArrayList<User> users = new ArrayList<>(store.getAll());
 
         for (int i = 0; i < users.size(); i++) {
-            if (user.getUserName().equals(users.get(i).getUserName()))
+            if (userName.equals(users.get(i).getUserName()))
                 return users.get(i);
         }
-
         return null;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @Profile("DataBase")
-public class UserDaoJDBC implements IDao<User> {
+public class UserDaoJDBC implements IDaoUser {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/myapp";
 
@@ -82,22 +82,22 @@ public class UserDaoJDBC implements IDao<User> {
     }
 
     @Override
-    public User get(User user) throws Exception {
+    public User getByUserName(String userName) throws Exception {
 
-        String username = user.getUserName();
 
         PreparedStatement statement = createStatement("SELECT user_id FROM public.user WHERE user_name = ?");
 
-        statement.setString(1, username);
+        statement.setString(1, userName);
 
         ResultSet resultSet = statement.executeQuery();
 
         if (!resultSet.next()) //if there not user in DB
             return null;
 
+        User user = new User();
 
         user.setUserId(resultSet.getInt("user_id"));
-        user.setUserName(username);
+        user.setUserName(userName);
 
         return user;
     }

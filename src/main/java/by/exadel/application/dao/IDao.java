@@ -10,6 +10,5 @@ public interface IDao <T>{
 
     List<T> getAll() throws Exception;
 
-    T get(T type) throws Exception;
 }
 

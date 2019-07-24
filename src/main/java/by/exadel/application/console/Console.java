@@ -2,7 +2,8 @@ package by.exadel.application.console;
 
 import by.exadel.application.model.Task;
 import by.exadel.application.model.User;
-import by.exadel.application.service.IService;
+import by.exadel.application.service.TaskService;
+import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,11 +18,11 @@ public class Console {
 
     @Autowired
     @Qualifier("userService")
-    private IService<User> userService;
+    private UserService userService;
 
     @Autowired
     @Qualifier("taskService")
-    private IService<Task> taskService;
+    private TaskService taskService;
 
     public void menu() throws Exception { //Menu for users
 
@@ -168,7 +169,7 @@ public class Console {
                     break;
                 }
 
-                /*case 7: { //Come up with the another idea
+                case 7: { //Come up with the another idea
                     scanner.nextLine();
 
                     System.out.println("Enter Username of user to show his task");
@@ -184,7 +185,7 @@ public class Console {
                     }
 
                     Integer userId = userService.getId(user);
-                    ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(userId);
+                    ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(userId));
 
                     if (tasks.isEmpty())
                         System.out.println("List of tasks of user + " + userNameToShowTask + "is empty");
@@ -196,7 +197,7 @@ public class Console {
                     System.out.println("\nPlease, choose the next action");
                     item = scanner.nextInt();
                     break;
-                }*/
+                }
                 default:
                     item = 0;
             }

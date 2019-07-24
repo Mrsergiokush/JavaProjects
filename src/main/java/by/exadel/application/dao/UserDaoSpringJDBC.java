@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @Profile("SpringJDBC")
-public class UserDaoSpringJDBC implements IDao<User> {
+public class UserDaoSpringJDBC implements IDaoUser {
 
 
     private final JdbcTemplate jdbcTemplate;
@@ -29,7 +29,7 @@ public class UserDaoSpringJDBC implements IDao<User> {
 
         jdbcTemplate.update(SQL, user.getUserName());
 
-        return user;
+        return getByUserName(user.getUserName());
     }
 
     @Override
@@ -37,9 +37,9 @@ public class UserDaoSpringJDBC implements IDao<User> {
 
         String SQL = "DELETE FROM public.user WHERE user_name = ?";
 
-        jdbcTemplate.update(SQL, user.getUserName());
+        Integer rows = jdbcTemplate.update(SQL, user.getUserName());
 
-        return null;
+        return rows;
     }
 
     @Override
@@ -53,16 +53,16 @@ public class UserDaoSpringJDBC implements IDao<User> {
     }
 
     @Override
-    public User get(User user) {
+    public User getByUserName(String userName) {
 
-        String SQL = "SELECT user_id FROM public.user WHERE user_name = ?";
+        String SQL = "SELECT * FROM public.user WHERE user_name = ?";
 
         try {
-            user = jdbcTemplate.queryForObject(SQL, new UserRowMapper());
+            User user;
+            user = jdbcTemplate.queryForObject(SQL, new Object[]{userName}, new UserRowMapper());
+            return user;
         } catch (DataAccessException e) {
             return null;
         }
-
-        return user;
     }
 }

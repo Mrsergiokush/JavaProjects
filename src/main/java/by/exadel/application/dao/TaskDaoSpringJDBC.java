@@ -1,6 +1,6 @@
 package by.exadel.application.dao;
 
-import by.exadel.application.dao.Mapper.TaskRowMapper;
+import by.exadel.application.dao.mapper.TaskRowMapper;
 import by.exadel.application.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

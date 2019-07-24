@@ -168,20 +168,23 @@ public class Console {
                     break;
                 }
 
-                /*case 7: //Come up with the another idea
+                /*case 7: { //Come up with the another idea
                     scanner.nextLine();
 
                     System.out.println("Enter Username of user to show his task");
                     String userNameToShowTask = inputUsername();
+                    User user = new User();
+                    user.setUserName(userNameToShowTask);
 
-                    if (userService.getId(userNameToShowTask) == -1) {
+                    if (userService.getId(user) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
                         item = scanner.nextInt();
                         break;
                     }
 
-                    ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(userService.getId(userNameToShowTask)));
+                    Integer userId = userService.getId(user);
+                    ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(userId);
 
                     if (tasks.isEmpty())
                         System.out.println("List of tasks of user + " + userNameToShowTask + "is empty");
@@ -192,8 +195,8 @@ public class Console {
                     }
                     System.out.println("\nPlease, choose the next action");
                     item = scanner.nextInt();
-                    break;*/
-
+                    break;
+                }*/
                 default:
                     item = 0;
             }
@@ -238,3 +241,6 @@ public class Console {
 }
 
 //RowMaper
+//limit offset (количество юзеров) (10 макисмум)
+//Удаление по индексу
+//Добавить dao

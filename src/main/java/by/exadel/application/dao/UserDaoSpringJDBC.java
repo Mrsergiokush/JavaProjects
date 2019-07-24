@@ -1,6 +1,6 @@
 package by.exadel.application.dao;
 
-import by.exadel.application.dao.Mapper.UserRowMapper;
+import by.exadel.application.dao.mapper.UserRowMapper;
 import by.exadel.application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

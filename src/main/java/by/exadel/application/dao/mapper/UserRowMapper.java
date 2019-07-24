@@ -1,4 +1,4 @@
-package by.exadel.application.dao.Mapper;
+package by.exadel.application.dao.mapper;
 
 import by.exadel.application.model.User;
 import org.springframework.jdbc.core.RowMapper;

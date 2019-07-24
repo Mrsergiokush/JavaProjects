@@ -14,18 +14,23 @@ public class Main {
 
         System.out.println("Please, choose implementation\n" +
                 "1) Data Base\n" +
-                "2) File system");
+                "2) File system\n"+
+                "3) SpringJDBC");
 
         String item = inputItem();
 
         switch (item) {
-            case "1":
 
+            case "1":
                 System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "DataBase");
                 break;
-            case "2":
 
+            case "2":
                 System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "FileSystem");
+                break;
+
+            case "3":
+                System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "SpringJDBC");
                 break;
         }
 

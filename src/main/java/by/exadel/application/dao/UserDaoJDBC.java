@@ -3,13 +3,13 @@ package by.exadel.application.dao;
 import by.exadel.application.model.User;
 import org.postgresql.Driver;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Repository
 @Profile("DataBase")
 public class UserDaoJDBC implements IDao<User> {
 

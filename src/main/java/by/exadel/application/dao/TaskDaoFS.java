@@ -4,12 +4,12 @@ import by.exadel.application.model.Task;
 import by.exadel.application.store.TaskStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-@Component
+@Repository
 @Profile("FileSystem")
 public class TaskDaoFS implements IDao<Task> {
 

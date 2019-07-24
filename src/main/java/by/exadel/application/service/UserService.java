@@ -25,6 +25,7 @@ public class UserService implements IService<User> {
     @Override
     public boolean delete(User user) throws Exception {
 
+
         if (userDao.delete(user) == 1)
             return true;
         else return false;

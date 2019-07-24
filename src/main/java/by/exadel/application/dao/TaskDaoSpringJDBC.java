@@ -28,6 +28,10 @@ public class TaskDaoSpringJDBC implements IDaoTask {
 
         jdbcTemplate.update(SQL, task.getTaskName(), task.getDeadline(), task.getUserId());
 
+        Integer taskId = getByNameAndId(task.getUserId(), task.getTaskName()).getTaskId(); //get task id
+
+        task.setTaskId(taskId); //set task id
+
         return task;
     }
 
@@ -68,7 +72,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
         String SQL = "SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?";
 
         try {
-            Task task = jdbcTemplate.queryForObject(SQL, new Object[]{userId, taskName}, new TaskRowMapper());
+            Task task = jdbcTemplate.queryForObject(SQL, new Object[]{taskName, userId}, new TaskRowMapper());
             return task;
         } catch (DataAccessException e) {
             return null;

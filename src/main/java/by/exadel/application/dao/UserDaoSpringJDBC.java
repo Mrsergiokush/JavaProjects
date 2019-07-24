@@ -29,7 +29,9 @@ public class UserDaoSpringJDBC implements IDaoUser {
 
         jdbcTemplate.update(SQL, user.getUserName());
 
-        return getByUserName(user.getUserName());
+        user.setUserId(getByUserName(user.getUserName()).getUserId());
+
+        return user;
     }
 
     @Override

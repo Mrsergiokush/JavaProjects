@@ -72,9 +72,9 @@ public class UserDaoJDBC implements IDaoUser {
     @Override
     public Integer delete(User user) throws Exception { //Client cant't delete user if user is having tasks
 
-        PreparedStatement statement = createStatement("DELETE FROM public.user WHERE user_name = ?");
+        PreparedStatement statement = createStatement("DELETE FROM public.user WHERE user_id = ?");
 
-        statement.setString(1, user.getUserName());
+        statement.setInt(1, user.getUserId());
 
         int rows = statement.executeUpdate();
 
@@ -83,7 +83,6 @@ public class UserDaoJDBC implements IDaoUser {
 
     @Override
     public User getByUserName(String userName) throws Exception {
-
 
         PreparedStatement statement = createStatement("SELECT user_id FROM public.user WHERE user_name = ?");
 
@@ -98,6 +97,26 @@ public class UserDaoJDBC implements IDaoUser {
 
         user.setUserId(resultSet.getInt("user_id"));
         user.setUserName(userName);
+
+        return user;
+    }
+
+    @Override
+    public User getByUserID(Integer userId) throws Exception {
+
+        PreparedStatement statement = createStatement("SELECT FROM public.user WHERE user_id = ?");
+
+        statement.setInt(1, userId);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (!resultSet.next()) //if there not user in DB
+            return null;
+
+        User user = new User();
+
+        user.setUserId(userId);
+        user.setUserName(resultSet.getString("user_name"));
 
         return user;
     }

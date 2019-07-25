@@ -17,6 +17,12 @@ public class UserDaoSpringJDBC implements IDaoUser {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private static final String addUserSQL = "INSERT INTO public.user(user_name) VALUES (?)"; //requests to DB
+    private static final String deleteSQL = "DELETE FROM public.user WHERE user_id = ?";
+    private static final String getAllSQL = "SELECT user_id, user_name FROM public.user";
+    private static final String getByUserNameSQL = "SELECT * FROM public.user WHERE user_name = ?";
+    public static final String getById = "SELECT FROM public.user WHERE user_id = ?";
+
     @Autowired
     public UserDaoSpringJDBC(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -25,9 +31,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
     @Override
     public User add(User user) throws Exception {
 
-        String SQL = "INSERT INTO public.user(user_name) VALUES (?)";
-
-        jdbcTemplate.update(SQL, user.getUserName());
+        jdbcTemplate.update(addUserSQL, user.getUserName());
 
         user.setUserId(getByUserName(user.getUserName()).getUserId());
 
@@ -37,9 +41,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
     @Override
     public Integer delete(User user) throws Exception {
 
-        String SQL = "DELETE FROM public.user WHERE user_name = ?";
-
-        Integer rows = jdbcTemplate.update(SQL, user.getUserName());
+        Integer rows = jdbcTemplate.update(deleteSQL, user.getUserId());
 
         return rows;
     }
@@ -47,9 +49,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
     @Override
     public List<User> getAll() throws Exception {
 
-        String SQL = "SELECT user_id, user_name FROM public.user";
-
-        List<User> users = jdbcTemplate.query(SQL, new UserRowMapper());
+        List<User> users = jdbcTemplate.query(getAllSQL, new UserRowMapper());
 
         return users;
     }
@@ -57,11 +57,20 @@ public class UserDaoSpringJDBC implements IDaoUser {
     @Override
     public User getByUserName(String userName) {
 
-        String SQL = "SELECT * FROM public.user WHERE user_name = ?";
-
         try {
             User user;
-            user = jdbcTemplate.queryForObject(SQL, new Object[]{userName}, new UserRowMapper());
+            user = jdbcTemplate.queryForObject(getByUserNameSQL, new Object[]{userName}, new UserRowMapper());
+            return user;
+        } catch (DataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public User getByUserID(Integer userId) throws Exception {
+        try {
+            User user;
+            user = jdbcTemplate.queryForObject(getByUserNameSQL, new Object[]{userId}, new UserRowMapper());
             return user;
         } catch (DataAccessException e) {
             return null;

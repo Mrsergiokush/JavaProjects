@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -53,16 +54,18 @@ public class Console {
 
                 case 2: {
                     scanner.nextLine();
-                    System.out.println("Enter Username of user to delete");
+                    System.out.println("Enter UserId of user to delete");
 
-                    String username = inputUsername();
+                    Integer Id = inputId();
                     User userToDelete = new User();
-                    userToDelete.setUserName(username);
-
-                    if (userService.delete(userToDelete))
-                        System.out.println("User was successfully deleted");
-                    else System.out.println("There isn't user in DataBase");
-
+                    userToDelete.setUserId(Id);
+                    try {
+                        if (userService.delete(userToDelete))
+                            System.out.println("User was successfully deleted");
+                        else System.out.println("There isn't user in DataBase");
+                    } catch (SQLException e) {
+                        System.out.println("You can't delete user with tasks");
+                    }
                     System.out.println("Please, choose the next action");
                     item = scanner.nextInt();
                     break;
@@ -239,9 +242,13 @@ public class Console {
         taskname = taskname.replace(",", " ");
         return taskname;
     }
-}
 
-//RowMaper
+    public static Integer inputId(){
+
+        Integer Id = scanner.nextInt();
+        return Id;
+    }
+}
 //limit offset (количество юзеров) (10 макисмум)
 //Удаление по индексу
-//Добавить dao
+//Накинуть проверки на вводимые значения

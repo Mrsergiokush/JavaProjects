@@ -37,7 +37,9 @@ public class UserDaoFS implements IDaoUser {
 
         ArrayList<User> users = new ArrayList<>(store.getAll());
 
-        user.setUserId(getByUserName(user.getUserName()).getUserId());
+       // user.setUserId(getByUserName(user.getUserName()).getUserId());
+
+        user.setUserName(getByUserID(user.getUserId()).getUserName());
 
         isDelete = users.remove(user);
         if (isDelete) {
@@ -58,6 +60,17 @@ public class UserDaoFS implements IDaoUser {
 
         for (int i = 0; i < users.size(); i++) {
             if (userName.equals(users.get(i).getUserName()))
+                return users.get(i);
+        }
+        return null;
+    }
+
+    @Override
+    public User getByUserID(Integer Id) throws IOException{
+        ArrayList<User> users = new ArrayList<>(store.getAll());
+
+        for (int i = 0; i < users.size(); i++) {
+            if (Id.equals(users.get(i).getUserId()))
                 return users.get(i);
         }
         return null;

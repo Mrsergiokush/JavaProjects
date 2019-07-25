@@ -16,6 +16,12 @@ public class TaskDaoSpringJDBC implements IDaoTask {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private static final String addTaskSQL = "INSERT INTO public.task(task_name, task_deadline, user_id) VALUES (?, ?, ?)";
+    private static final String deleteTaskSQL = "DELETE FROM public.task WHERE task_name = ?";
+    private static final String getAllSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task";
+    private static final String getTasksByUserIdSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ?";
+    private static final String getByNameAndIdSQL = "SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?";
+
     @Autowired
     public TaskDaoSpringJDBC(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -24,9 +30,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public Task add(Task task) throws Exception {
 
-        String SQL = "INSERT INTO public.task(task_name, task_deadline, user_id) VALUES (?, ?, ?)";
-
-        jdbcTemplate.update(SQL, task.getTaskName(), task.getDeadline(), task.getUserId());
+        jdbcTemplate.update(addTaskSQL, task.getTaskName(), task.getDeadline(), task.getUserId());
 
         Integer taskId = getByNameAndId(task.getUserId(), task.getTaskName()).getTaskId(); //get task id
 
@@ -38,9 +42,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public Integer delete(Task task) throws Exception {
 
-        String SQL = "DELETE FROM public.task WHERE task_name = ?";
-
-        Integer rows = jdbcTemplate.update(SQL, task.getTaskName());
+        Integer rows = jdbcTemplate.update(deleteTaskSQL, task.getTaskName());
 
         return rows;
     }
@@ -48,9 +50,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public List<Task> getAll() throws Exception {
 
-        String SQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task";
-
-        List<Task> tasks = jdbcTemplate.query(SQL, new TaskRowMapper());
+        List<Task> tasks = jdbcTemplate.query(getAllSQL, new TaskRowMapper());
 
         return tasks;
     }
@@ -59,9 +59,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public List<Task> getTaskByUserId(Integer userId) throws Exception {
 
-        String SQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ?";
-
-        List<Task> tasks = jdbcTemplate.query(SQL, new Object[]{userId}, new TaskRowMapper());
+        List<Task> tasks = jdbcTemplate.query(getTasksByUserIdSQL, new Object[]{userId}, new TaskRowMapper());
 
         return tasks;
     }
@@ -69,14 +67,11 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public Task getByNameAndId(Integer userId, String taskName) throws Exception {
 
-        String SQL = "SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?";
-
         try {
-            Task task = jdbcTemplate.queryForObject(SQL, new Object[]{taskName, userId}, new TaskRowMapper());
+            Task task = jdbcTemplate.queryForObject(getByNameAndIdSQL, new Object[]{taskName, userId}, new TaskRowMapper());
             return task;
         } catch (DataAccessException e) {
             return null;
         }
-
     }
 }

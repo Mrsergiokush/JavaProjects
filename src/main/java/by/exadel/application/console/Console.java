@@ -135,11 +135,11 @@ public class Console {
                     }
 
                     Integer userId = userService.getId(user);
-                    System.out.println("Please, enter a taskName to delete");
-                    String taskNameToDelete = inputTaskname();
+                    System.out.println("Please, enter a taskId to delete");
+                    Integer taskId = inputId();
 
                     Task task = new Task();
-                    task.setTaskName(taskNameToDelete);
+                    task.setTaskId(taskId);
                     task.setUserId(userId);
 
                     if (taskService.delete(task))

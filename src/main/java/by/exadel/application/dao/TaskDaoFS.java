@@ -35,7 +35,11 @@ public class TaskDaoFS implements IDaoTask {
 
         ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());
 
-        task.setTaskId(getByNameAndId(task.getUserId(), task.getTaskName()).getTaskId());      //set taskId
+        for(int i = 0; i < tasks.size(); i++){
+            if(tasks.get(i).getUserId().equals(task.getUserId()) && tasks.get(i).getTaskId().equals(task.getTaskId()))
+                task.setTaskName(tasks.get(i).getTaskName()); //set taskName
+        }
+
         task.setDeadline(getByNameAndId(task.getUserId(), task.getTaskName()).getDeadline()); //set task deadline
 
         boolean isDelete = tasks.remove(task);

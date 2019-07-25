@@ -57,9 +57,9 @@ public class TaskDaoJDBC implements IDaoTask {
     @Override
     public Integer delete(Task task) throws Exception {
 
-        PreparedStatement statement = createStatement("DELETE FROM public.task WHERE task_name = ?");
+        PreparedStatement statement = createStatement("DELETE FROM public.task WHERE task_id = ?");
 
-        statement.setString(1, task.getTaskName());
+        statement.setInt(1, task.getTaskId());
 
         int rows = statement.executeUpdate();
 

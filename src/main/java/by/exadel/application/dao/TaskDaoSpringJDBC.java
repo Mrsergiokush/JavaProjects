@@ -17,7 +17,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     private final JdbcTemplate jdbcTemplate;
 
     private static final String addTaskSQL = "INSERT INTO public.task(task_name, task_deadline, user_id) VALUES (?, ?, ?)";
-    private static final String deleteTaskSQL = "DELETE FROM public.task WHERE task_name = ?";
+    private static final String deleteTaskSQL = "DELETE FROM public.task WHERE task_id = ?";
     private static final String getAllSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task";
     private static final String getTasksByUserIdSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ?";
     private static final String getByNameAndIdSQL = "SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?";

@@ -76,7 +76,6 @@ public class TaskDaoFS implements IDaoTask {
             if(tasks.get(i).getUserId() != userId)
                 tasks.remove(i);
         }
-
         return tasks;
     }
 }

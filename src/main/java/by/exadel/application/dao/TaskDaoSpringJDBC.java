@@ -18,9 +18,8 @@ public class TaskDaoSpringJDBC implements IDaoTask {
 
     private static final String addTaskSQL = "INSERT INTO public.task(task_name, task_deadline, user_id) VALUES (?, ?, ?)";
     private static final String deleteTaskSQL = "DELETE FROM public.task WHERE task_id = ?";
-    private static final String getAllSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task";
-    private static final String getTasksByUserIdSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ?";
     private static final String getByNameAndIdSQL = "SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?";
+    private static final String getSizeSQL = "SELECT count(*) FROM public.task";
 
     @Autowired
     public TaskDaoSpringJDBC(JdbcTemplate jdbcTemplate) {
@@ -48,7 +47,9 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     }
 
     @Override
-    public List<Task> getAll() throws Exception {
+    public List<Task> getAll(Integer position) throws Exception {
+
+        String getAllSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task LIMIT 3 OFFSET " + position;
 
         List<Task> tasks = jdbcTemplate.query(getAllSQL, new TaskRowMapper());
 
@@ -57,7 +58,9 @@ public class TaskDaoSpringJDBC implements IDaoTask {
 
 
     @Override
-    public List<Task> getTaskByUserId(Integer userId) throws Exception {
+    public List<Task> getTaskByUserId(Integer userId, Integer position) throws Exception {
+
+        String getTasksByUserIdSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ? LIMIT 3 OFFSET " + position;
 
         List<Task> tasks = jdbcTemplate.query(getTasksByUserIdSQL, new Object[]{userId}, new TaskRowMapper());
 
@@ -73,5 +76,12 @@ public class TaskDaoSpringJDBC implements IDaoTask {
         } catch (DataAccessException e) {
             return null;
         }
+    }
+
+    @Override
+    public Integer getSize() throws Exception {
+
+        Integer size = jdbcTemplate.queryForObject(getSizeSQL, Integer.class);
+        return size;
     }
 }

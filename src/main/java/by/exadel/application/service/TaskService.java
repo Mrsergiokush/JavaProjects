@@ -27,17 +27,11 @@ public class TaskService implements IService<Task> {
         if (taskDao.delete(task) == 1)
             return true;
         else return false;
-        /*if (taskDao.getByNameAndId(task.getUserId(), task.getTaskName()) == null)
-            return false;
-        else {
-            taskDao.delete(task);
-            return true;
-        }*/
     }
 
     @Override
-    public List<Task> getAll() throws Exception {
-        return taskDao.getAll();
+    public List<Task> getAll(Integer pos) throws Exception {
+        return taskDao.getAll(pos);
     }
 
     //useless (find better decision)
@@ -46,7 +40,12 @@ public class TaskService implements IService<Task> {
         return null;
     }
 
-    public List<Task> getAll(Integer Id) throws Exception {
-        return taskDao.getTaskByUserId(Id);
+    public List<Task> getAll(Integer Id, Integer pos) throws Exception {
+        return taskDao.getTaskByUserId(Id, pos);
+    }
+
+    @Override
+    public Integer getSize() throws Exception {
+        return taskDao.getSize();
     }
 }

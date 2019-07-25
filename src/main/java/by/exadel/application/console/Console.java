@@ -72,14 +72,10 @@ public class Console {
                 }
 
                 case 3: {
-                    ArrayList<User> users = new ArrayList<>(userService.getAll());
-
-                    if (users.isEmpty())
+                    if (userService.getSize() == 0)
                         System.out.println("DataBase is empty");
                     else
-                        for (int i = 0; i < users.size(); i++) {
-                            System.out.println("User Name: " + users.get(i).getUserName());
-                        }
+                        printOutUsers();
 
                     System.out.println("\nPlease, choose the next action");
                     item = inputInteger();
@@ -155,24 +151,18 @@ public class Console {
                 case 6: {
                     scanner.nextLine();
 
-                    if (taskService.getAll().isEmpty())
+                    if (taskService.getSize() == 0)
                         System.out.println("List of tasks if empty");
 
-                    else {
-                        ArrayList<Task> tasks = new ArrayList<>(taskService.getAll());
-
-                        System.out.printf("%-20s %-20s %-20s\n\n", "ID", "Taskname", "Deadline");
-
-                        for (int i = 0; i < tasks.size(); i++)
-                            System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
-                    }
+                    else
+                        printOutTasks();
 
                     System.out.println("Please, choose the next action");
                     item = inputInteger();
                     break;
                 }
 
-                case 7: { //Come up with the another idea
+                /*case 7: { //Come up with the another idea
                     scanner.nextLine();
 
                     System.out.println("Enter Username of user to show his task");
@@ -190,7 +180,7 @@ public class Console {
                     Integer userId = userService.getId(user);
                     ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(userId));
 
-                    if (tasks.isEmpty())
+                    if (taskService.getSize() == 0)
                         System.out.println("List of tasks of user + " + userNameToShowTask + "is empty");
                     else {
                         System.out.printf("%-20s %-20s %-20s\n\n", "ID", "Taskname", "Deadline");
@@ -200,12 +190,100 @@ public class Console {
                     System.out.println("\nPlease, choose the next action");
                     item = inputInteger();
                     break;
-                }
+                }*/
                 default:
                     item = 0;
             }
         }
+    }
 
+    private void printOutTasks() throws Exception {
+
+        Integer page = 0;
+        Integer counter = taskService.getSize();
+        Integer pageCounter = counter / 3;  //Всего старниц
+        Integer item;
+        boolean flag = true;
+
+        while (flag) {
+
+            ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(page * 3));
+
+            System.out.printf("%-20s %-20s %-20s\n\n", "ID", "Taskname", "Deadline");
+
+            for (int i = 0; i < tasks.size(); i++)
+                System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
+
+            System.out.println("************************************");
+            System.out.println("You now on " + page + " of " + pageCounter);
+            System.out.println("To go to next page enter 2");
+            System.out.println("To go to prev page enter 1");
+            System.out.println("To exit enter 0");
+            System.out.println("*************************************");
+
+            item = inputInteger();
+            switch (item) {
+                case 1:
+                    if (page == 0)
+                        break;
+                    page--;
+                    break;
+
+                case 2:
+                    if (page.equals(pageCounter))
+                        break;
+                    page++;
+                    break;
+
+                case 0:
+                    flag = false;
+                    break;
+            }
+        }
+
+    }
+
+    private void printOutUsers() throws Exception {
+
+        Integer page = 0;
+        Integer counter = userService.getSize();
+        Integer pageCounter = counter / 3;  //Всего старниц
+        Integer item;
+        boolean flag = true;
+
+        while (flag) {
+
+            ArrayList<User> users = new ArrayList<>(userService.getAll(page * 3));
+
+            for (int i = 0; i < users.size(); i++)
+                System.out.println("User : " + users.get(i).getUserName());
+
+            System.out.println("************************************");
+            System.out.println("You now on " + page + " of " + pageCounter);
+            System.out.println("To go to next page enter 2");
+            System.out.println("To go to prev page enter 1");
+            System.out.println("To exit enter 0");
+            System.out.println("*************************************");
+
+            item = inputInteger();
+            switch (item) {
+                case 1:
+                    if (page == 0)
+                        break;
+                    page--;
+                    break;
+
+                case 2:
+                    if (page.equals(pageCounter))
+                        break;
+                    page++;
+                    break;
+
+                case 0:
+                    flag = false;
+                    break;
+            }
+        }
     }
 
     private static void printout() {
@@ -254,13 +332,12 @@ public class Console {
     public static Integer inputInteger() { //checking on input INTEGER
         Integer Id;
         do {
-            System.out.println("Please enter a positive number");
             while (!scanner.hasNextInt()) {
                 System.out.println("Input data must be a number");
                 scanner.next();
             }
             Id = scanner.nextInt();
-        } while (Id <= 0);
+        } while (Id < 0);
         return Id;
     }
 }

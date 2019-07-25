@@ -19,9 +19,9 @@ public class UserDaoSpringJDBC implements IDaoUser {
 
     private static final String addUserSQL = "INSERT INTO public.user(user_name) VALUES (?)"; //requests to DB
     private static final String deleteSQL = "DELETE FROM public.user WHERE user_id = ?";
-    private static final String getAllSQL = "SELECT user_id, user_name FROM public.user";
     private static final String getByUserNameSQL = "SELECT * FROM public.user WHERE user_name = ?";
-    public static final String getById = "SELECT FROM public.user WHERE user_id = ?";
+    private static final String getById = "SELECT FROM public.user WHERE user_id = ?";
+    private static final String getSizeSQL = "SELECT count(*) FROM public.user";
 
     @Autowired
     public UserDaoSpringJDBC(JdbcTemplate jdbcTemplate) {
@@ -47,7 +47,9 @@ public class UserDaoSpringJDBC implements IDaoUser {
     }
 
     @Override
-    public List<User> getAll() throws Exception {
+    public List<User> getAll(Integer pos) throws Exception {
+
+        String getAllSQL = "SELECT user_id, user_name FROM public.user LIMIT 3 OFFSET "+ pos;
 
         List<User> users = jdbcTemplate.query(getAllSQL, new UserRowMapper());
 
@@ -75,5 +77,12 @@ public class UserDaoSpringJDBC implements IDaoUser {
         } catch (DataAccessException e) {
             return null;
         }
+    }
+
+    @Override
+    public Integer getSize() throws Exception {
+
+        Integer size = jdbcTemplate.queryForObject(getSizeSQL, Integer.class);
+        return size;
     }
 }

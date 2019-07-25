@@ -67,9 +67,9 @@ public class TaskDaoJDBC implements IDaoTask {
     }
 
     @Override
-    public List<Task> getAll() throws Exception {
+    public List<Task> getAll(Integer position) throws Exception {
 
-        PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task");
+        PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task LIMIT 3 OFFSET " + position);
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -88,9 +88,9 @@ public class TaskDaoJDBC implements IDaoTask {
     }
 
     @Override
-    public List<Task> getTaskByUserId(Integer userId) throws Exception { //get all tasks of one user
+    public List<Task> getTaskByUserId(Integer userId, Integer position) throws Exception { //get all tasks of one user
 
-        PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ?");
+        PreparedStatement statement = createStatement("SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ? LIMIT 3 OFFSET " + position);
 
         statement.setInt(1, userId);
 
@@ -132,6 +132,20 @@ public class TaskDaoJDBC implements IDaoTask {
         }
     }
 
+    @Override
+    public Integer getSize() throws Exception {
+
+        Integer size;
+
+        PreparedStatement statement = createStatement("SELECT count(*) FROM public.task");
+
+        ResultSet resultSet = statement.executeQuery();
+
+        resultSet.next();
+
+        return size = resultSet.getInt(1);
+    }
+
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
@@ -143,4 +157,5 @@ public class TaskDaoJDBC implements IDaoTask {
     private PreparedStatement getCreateStatement(String sql, String idFieldName) throws SQLException {
         return getConnection().prepareStatement(sql, new String[]{idFieldName});
     }
+
 }

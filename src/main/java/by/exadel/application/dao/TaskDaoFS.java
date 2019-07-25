@@ -35,8 +35,8 @@ public class TaskDaoFS implements IDaoTask {
 
         ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());
 
-        for(int i = 0; i < tasks.size(); i++){
-            if(tasks.get(i).getUserId().equals(task.getUserId()) && tasks.get(i).getTaskId().equals(task.getTaskId()))
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getUserId().equals(task.getUserId()) && tasks.get(i).getTaskId().equals(task.getTaskId()))
                 task.setTaskName(tasks.get(i).getTaskName()); //set taskName
         }
 
@@ -51,8 +51,20 @@ public class TaskDaoFS implements IDaoTask {
     }
 
     @Override
-    public ArrayList<Task> getAll() throws IOException {
-        return taskStore.getAll();
+    public ArrayList<Task> getAll(Integer pos) throws IOException {
+
+        ArrayList<Task> allTasks = new ArrayList<>(taskStore.getAll());
+
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        for (int i = pos; i < pos + 3; i++) {
+            if (i >= allTasks.size())
+                break;
+            else
+                tasks.add(allTasks.get(i));
+        }
+
+        return tasks;
     }
 
     @Override
@@ -68,14 +80,24 @@ public class TaskDaoFS implements IDaoTask {
     }
 
     @Override
-    public ArrayList<Task> getTaskByUserId(Integer userId) throws IOException{
+    public ArrayList<Task> getTaskByUserId(Integer userId, Integer pos) throws IOException {
 
-        ArrayList<Task> tasks = new ArrayList<>(taskStore.getAll());
+        ArrayList<Task> allTasks = new ArrayList<>(taskStore.getAll());
 
-        for(int i = 0; i < tasks.size(); i++){
-            if(tasks.get(i).getUserId() != userId)
-                tasks.remove(i);
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        for (int i = 0; i < allTasks.size(); i++) { //deleting tasks of another user
+            if (allTasks.get(i).getUserId() != userId)
+                allTasks.remove(i);
         }
+        for (int i = pos; i < pos + 3; i++) //get only 3 tasks
+            tasks.add(allTasks.get(i));
+
         return tasks;
+    }
+
+    @Override
+    public Integer getSize() throws Exception {
+        return taskStore.getAll().size();
     }
 }

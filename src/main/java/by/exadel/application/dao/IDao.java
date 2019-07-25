@@ -8,7 +8,9 @@ public interface IDao <T>{
 
     Integer delete(T type) throws Exception;
 
-    List<T> getAll() throws Exception;
+    List<T> getAll(Integer pos) throws Exception;
+
+    Integer getSize() throws Exception;
 
 }
 

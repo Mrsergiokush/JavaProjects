@@ -37,8 +37,6 @@ public class UserDaoFS implements IDaoUser {
 
         ArrayList<User> users = new ArrayList<>(store.getAll());
 
-       // user.setUserId(getByUserName(user.getUserName()).getUserId());
-
         user.setUserName(getByUserID(user.getUserId()).getUserName());
 
         isDelete = users.remove(user);
@@ -50,8 +48,19 @@ public class UserDaoFS implements IDaoUser {
     }
 
     @Override
-    public ArrayList<User> getAll() throws IOException {
-        return store.getAll();
+    public ArrayList<User> getAll(Integer position) throws IOException {
+
+        ArrayList<User> allUsers = new ArrayList<>(store.getAll());
+        ArrayList<User> users = new ArrayList<>();
+
+        for (int i = position; i < position + 3; i++) { //check on out of bound
+            if (i >= allUsers.size())
+                break;
+            else
+                users.add(allUsers.get(i));
+        }
+
+        return users;
     }
 
     @Override
@@ -66,7 +75,7 @@ public class UserDaoFS implements IDaoUser {
     }
 
     @Override
-    public User getByUserID(Integer Id) throws IOException{
+    public User getByUserID(Integer Id) throws IOException {
         ArrayList<User> users = new ArrayList<>(store.getAll());
 
         for (int i = 0; i < users.size(); i++) {
@@ -74,5 +83,10 @@ public class UserDaoFS implements IDaoUser {
                 return users.get(i);
         }
         return null;
+    }
+
+    @Override
+    public Integer getSize() throws Exception {
+        return store.getAll().size();
     }
 }

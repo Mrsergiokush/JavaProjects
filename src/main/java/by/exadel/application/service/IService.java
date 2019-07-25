@@ -8,7 +8,9 @@ public interface IService<T>{
 
     boolean delete(T type) throws Exception;
 
-    List<T> getAll() throws Exception;
+    List<T> getAll(Integer pos) throws Exception;
 
     Integer getId(T type) throws Exception;
+
+    Integer getSize() throws Exception;
 }

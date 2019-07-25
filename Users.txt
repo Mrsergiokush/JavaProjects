@@ -1,1 +1,4 @@
- 2,Alex
+ 0,Alex
+ 1,Sergio
+ 2,Messi
+ 3,Cristiano

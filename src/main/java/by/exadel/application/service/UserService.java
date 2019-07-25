@@ -32,9 +32,9 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public List<User> getAll() throws Exception {
+    public List<User> getAll(Integer position) throws Exception {
 
-        return userDao.getAll();
+        return userDao.getAll(position);
     }
 
     @Override
@@ -45,5 +45,10 @@ public class UserService implements IService<User> {
         else {
             return userDao.getByUserName(user.getUserName()).getUserId();
         }
+    }
+
+    @Override
+    public Integer getSize() throws Exception {
+        return userDao.getSize();
     }
 }

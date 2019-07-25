@@ -28,9 +28,9 @@ public class UserDaoJDBC implements IDaoUser {
     }
 
     @Override
-    public List<User> getAll() throws Exception {
+    public List<User> getAll(Integer fromPosition) throws Exception {
 
-        PreparedStatement statement = createStatement("SELECT user_id, user_name FROM public.user");
+        PreparedStatement statement = createStatement("SELECT * FROM public.user ORDER BY user_id LIMIT 3 OFFSET " + fromPosition);
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -119,6 +119,21 @@ public class UserDaoJDBC implements IDaoUser {
         user.setUserName(resultSet.getString("user_name"));
 
         return user;
+    }
+
+    @Override
+    public Integer getSize() throws Exception {
+
+        Integer size;
+
+        PreparedStatement statement = createStatement("SELECT count(*) FROM public.user");
+
+        ResultSet resultSet = statement.executeQuery();
+
+        resultSet.next();
+
+        return size = resultSet.getInt(1);
+
     }
 
     private PreparedStatement getCreateStatement(String sql, String idFieldName) throws SQLException {

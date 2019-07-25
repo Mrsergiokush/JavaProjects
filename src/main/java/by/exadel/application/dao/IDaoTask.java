@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IDaoTask extends IDao<Task> {
 
-    List<Task> getTaskByUserId(Integer userId) throws Exception;
+    List<Task> getTaskByUserId(Integer userId, Integer position) throws Exception;
 
     Task getByNameAndId(Integer userId, String taskName) throws Exception;
 }

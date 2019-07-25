@@ -29,7 +29,7 @@ public class Console {
 
         printout();
 
-        int item = scanner.nextInt();
+        int item = inputInteger();
 
         while (item != 0) {
 
@@ -48,7 +48,7 @@ public class Console {
                     else System.out.println("User was successfully added with id " + user.getUserId());
 
                     System.out.println("Please, choose the next action");
-                    item = scanner.nextInt();
+                    item = inputInteger();
                     break;
                 }
 
@@ -56,7 +56,7 @@ public class Console {
                     scanner.nextLine();
                     System.out.println("Enter UserId of user to delete");
 
-                    Integer Id = inputId();
+                    Integer Id = inputInteger();
                     User userToDelete = new User();
                     userToDelete.setUserId(Id);
                     try {
@@ -67,7 +67,7 @@ public class Console {
                         System.out.println("You can't delete user with tasks");
                     }
                     System.out.println("Please, choose the next action");
-                    item = scanner.nextInt();
+                    item = inputInteger();
                     break;
                 }
 
@@ -82,7 +82,7 @@ public class Console {
                         }
 
                     System.out.println("\nPlease, choose the next action");
-                    item = scanner.nextInt();
+                    item = inputInteger();
                     break;
                 }
 
@@ -96,7 +96,7 @@ public class Console {
                     if (userService.getId(user) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
-                        item = scanner.nextInt();
+                        item = inputInteger();
                         break;
                     }
 
@@ -116,7 +116,7 @@ public class Console {
                     else System.out.println("User is already has this task");
 
                     System.out.println("Please, choose the next action");
-                    item = scanner.nextInt();
+                    item = inputInteger();
                     break;
                 }
 
@@ -130,13 +130,13 @@ public class Console {
                     if (userService.getId(user) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
-                        item = scanner.nextInt();
+                        item = inputInteger();
                         break;
                     }
 
                     Integer userId = userService.getId(user);
                     System.out.println("Please, enter a taskId to delete");
-                    Integer taskId = inputId();
+                    Integer taskId = inputInteger();
 
                     Task task = new Task();
                     task.setTaskId(taskId);
@@ -148,7 +148,7 @@ public class Console {
                         System.out.println("Task with this name does not exist");
 
                     System.out.println("Please, choose the next action");
-                    item = scanner.nextInt();
+                    item = inputInteger();
                     break;
                 }
 
@@ -168,7 +168,7 @@ public class Console {
                     }
 
                     System.out.println("Please, choose the next action");
-                    item = scanner.nextInt();
+                    item = inputInteger();
                     break;
                 }
 
@@ -183,7 +183,7 @@ public class Console {
                     if (userService.getId(user) == -1) {
                         System.out.println("There isn't user with this name\n");
                         System.out.println("Please, choose the next action");
-                        item = scanner.nextInt();
+                        item = inputInteger();
                         break;
                     }
 
@@ -198,7 +198,7 @@ public class Console {
                             System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
                     }
                     System.out.println("\nPlease, choose the next action");
-                    item = scanner.nextInt();
+                    item = inputInteger();
                     break;
                 }
                 default:
@@ -207,7 +207,6 @@ public class Console {
         }
 
     }
-
 
     private static void printout() {
 
@@ -232,6 +231,11 @@ public class Console {
     public static String inputUsername() {
 
         String username = scanner.nextLine();
+
+        while (username.length() == 0) {
+            System.out.println("String can't be empty");
+            username = scanner.nextLine();
+        }
         username = username.replace(",", " ");
         return username;
     }
@@ -239,16 +243,25 @@ public class Console {
     public static String inputTaskname() {
 
         String taskname = scanner.nextLine();
+        while (taskname.length() == 0) {
+            System.out.println("String can't be empty");
+            taskname = scanner.nextLine();
+        }
         taskname = taskname.replace(",", " ");
         return taskname;
     }
 
-    public static Integer inputId(){
-
-        Integer Id = scanner.nextInt();
+    public static Integer inputInteger() { //checking on input ID
+        Integer Id;
+        do {
+            System.out.println("Please enter a positive number");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Input data must be a number");
+                scanner.next();
+            }
+            Id = scanner.nextInt();
+        } while (Id <= 0);
         return Id;
     }
 }
 //limit offset (количество юзеров) (10 макисмум)
-//Удаление по индексу
-//Накинуть проверки на вводимые значения

@@ -251,7 +251,7 @@ public class Console {
         return taskname;
     }
 
-    public static Integer inputInteger() { //checking on input ID
+    public static Integer inputInteger() { //checking on input INTEGER
         Integer Id;
         do {
             System.out.println("Please enter a positive number");

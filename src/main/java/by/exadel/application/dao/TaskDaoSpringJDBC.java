@@ -42,7 +42,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public Integer delete(Task task) throws Exception {
 
-        Integer rows = jdbcTemplate.update(deleteTaskSQL, task.getTaskName());
+        Integer rows = jdbcTemplate.update(deleteTaskSQL, task.getTaskId());
 
         return rows;
     }

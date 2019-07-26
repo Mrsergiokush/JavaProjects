@@ -90,8 +90,14 @@ public class TaskDaoFS implements IDaoTask {
             if (allTasks.get(i).getUserId() != userId)
                 allTasks.remove(i);
         }
-        for (int i = pos; i < pos + 3; i++) //get only 3 tasks
+
+        for (int i = pos; i < pos + 3; i++) {   //get only 3 tasks
+
+            if (i >= allTasks.size())
+                break;
+
             tasks.add(allTasks.get(i));
+        }
 
         return tasks;
     }

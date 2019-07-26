@@ -162,13 +162,13 @@ public class Console {
                     break;
                 }
 
-                /*case 7: { //Come up with the another idea
+                case 7: { //Come up with the another idea
                     scanner.nextLine();
 
                     System.out.println("Enter Username of user to show his task");
-                    String userNameToShowTask = inputUsername();
+                    String userName = inputUsername();
                     User user = new User();
-                    user.setUserName(userNameToShowTask);
+                    user.setUserName(userName);
 
                     if (userService.getId(user) == -1) {
                         System.out.println("There isn't user with this name\n");
@@ -178,19 +178,16 @@ public class Console {
                     }
 
                     Integer userId = userService.getId(user);
-                    ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(userId));
 
                     if (taskService.getSize() == 0)
-                        System.out.println("List of tasks of user + " + userNameToShowTask + "is empty");
-                    else {
-                        System.out.printf("%-20s %-20s %-20s\n\n", "ID", "Taskname", "Deadline");
-                        for (int i = 0; i < tasks.size(); i++)
-                            System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
-                    }
+                        System.out.println("List of tasks of user + " + userName + "is empty");
+                    else
+                        printOutTasksOfUser(userId);
+
                     System.out.println("\nPlease, choose the next action");
                     item = inputInteger();
                     break;
-                }*/
+                }
                 default:
                     item = 0;
             }
@@ -202,10 +199,8 @@ public class Console {
         Integer page = 0;
         Integer counter = taskService.getSize();
         Integer pageCounter = counter / 3;  //Всего старниц
-        Integer item;
-        boolean flag = true;
 
-        while (flag) {
+        while (page != -1) { //-1 - for exit of output
 
             ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(page * 3));
 
@@ -214,33 +209,31 @@ public class Console {
             for (int i = 0; i < tasks.size(); i++)
                 System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
 
-            System.out.println("************************************");
-            System.out.println("You now on " + page + " of " + pageCounter);
-            System.out.println("To go to next page enter 2");
-            System.out.println("To go to prev page enter 1");
-            System.out.println("To exit enter 0");
-            System.out.println("*************************************");
+            outputPageInfo(page, pageCounter);
+            page = choosePage(page, pageCounter);
 
-            item = inputInteger();
-            switch (item) {
-                case 1:
-                    if (page == 0)
-                        break;
-                    page--;
-                    break;
-
-                case 2:
-                    if (page.equals(pageCounter))
-                        break;
-                    page++;
-                    break;
-
-                case 0:
-                    flag = false;
-                    break;
-            }
         }
 
+    }
+
+    private void printOutTasksOfUser(Integer userId) throws Exception {
+        Integer page = 0;
+        Integer counter = taskService.getSize();
+        Integer pageCounter = counter / 3;  //Всего старниц
+
+        while (page != -1) {
+
+            ArrayList<Task> tasks = new ArrayList<>(taskService.getAll(userId, page * 3));
+
+            System.out.printf("%-20s %-20s %-20s\n\n", "ID", "Taskname", "Deadline");
+
+            for (int i = 0; i < tasks.size(); i++)
+                System.out.printf("%-20s %-20s %-20s\n", tasks.get(i).getTaskId(), tasks.get(i).getTaskName(), tasks.get(i).getDeadline());
+
+            outputPageInfo(page, pageCounter);
+            page = choosePage(page, pageCounter);
+
+        }
     }
 
     private void printOutUsers() throws Exception {
@@ -248,42 +241,49 @@ public class Console {
         Integer page = 0;
         Integer counter = userService.getSize();
         Integer pageCounter = counter / 3;  //Всего старниц
-        Integer item;
-        boolean flag = true;
 
-        while (flag) {
+        while (page != -1) {
 
             ArrayList<User> users = new ArrayList<>(userService.getAll(page * 3));
 
             for (int i = 0; i < users.size(); i++)
                 System.out.println("User : " + users.get(i).getUserName());
 
-            System.out.println("************************************");
-            System.out.println("You now on " + page + " of " + pageCounter);
-            System.out.println("To go to next page enter 2");
-            System.out.println("To go to prev page enter 1");
-            System.out.println("To exit enter 0");
-            System.out.println("*************************************");
+            outputPageInfo(page, pageCounter);
+            page = choosePage(page, pageCounter);
 
-            item = inputInteger();
-            switch (item) {
-                case 1:
-                    if (page == 0)
-                        break;
-                    page--;
-                    break;
-
-                case 2:
-                    if (page.equals(pageCounter))
-                        break;
-                    page++;
-                    break;
-
-                case 0:
-                    flag = false;
-                    break;
-            }
         }
+    }
+
+    private void outputPageInfo(Integer page, Integer pageCounter) {
+        System.out.println("************************************");
+        System.out.println("You now on " + page + " of " + pageCounter);
+        System.out.println("To go to next page enter 2");
+        System.out.println("To go to prev page enter 1");
+        System.out.println("To exit enter 0");
+        System.out.println("*************************************");
+    }
+
+    private Integer choosePage(Integer page, Integer pageCounter) {
+        Integer item = inputInteger();
+        switch (item) {
+            case 1:
+                if (page == 0)
+                    break;
+                page--;
+                break;
+
+            case 2:
+                if (page.equals(pageCounter))
+                    break;
+                page++;
+                break;
+
+            case 0:
+                page = -1;
+                break;
+        }
+        return page;
     }
 
     private static void printout() {

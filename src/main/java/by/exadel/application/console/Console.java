@@ -1,3 +1,4 @@
+/*
 package by.exadel.application.console;
 
 import by.exadel.application.model.Task;
@@ -246,8 +247,10 @@ public class Console {
 
             ArrayList<User> users = new ArrayList<>(userService.getAll(page * 3));
 
+            System.out.printf("%-20s %-20s\n\n", "UserID", "UserName");
+
             for (int i = 0; i < users.size(); i++)
-                System.out.println("User : " + users.get(i).getUserName());
+                System.out.printf("%-20s %-20s\n", users.get(i).getUserId(), users.get(i).getUserName());
 
             outputPageInfo(page, pageCounter);
             page = choosePage(page, pageCounter);
@@ -256,7 +259,7 @@ public class Console {
     }
 
     private void outputPageInfo(Integer page, Integer pageCounter) {
-        System.out.println("************************************");
+        System.out.println("\n************************************");
         System.out.println("You now on " + page + " of " + pageCounter);
         System.out.println("To go to next page enter 2");
         System.out.println("To go to prev page enter 1");
@@ -283,6 +286,7 @@ public class Console {
                 page = -1;
                 break;
         }
+
         return page;
     }
 
@@ -340,5 +344,4 @@ public class Console {
         } while (Id < 0);
         return Id;
     }
-}
-//limit offset (количество юзеров) (10 макисмум)
+}*/

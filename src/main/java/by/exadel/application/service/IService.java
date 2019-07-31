@@ -13,4 +13,5 @@ public interface IService<T>{
     Integer getId(T type) throws Exception;
 
     Integer getSize() throws Exception;
+
 }

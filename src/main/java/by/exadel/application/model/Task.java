@@ -2,6 +2,7 @@ package by.exadel.application.model;
 
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Component
@@ -13,7 +14,9 @@ public class Task {
 
     private String taskName;
 
-    private String deadline;
+    private LocalDate deadline;
+
+    private String date;
 
     public Integer getTaskId() {
         return taskId;
@@ -39,15 +42,23 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public String getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
+    public void setDeadline(LocalDate date) {
+        this.deadline = date;
     }
 
-    public Task(String taskName, String deadline) {
+    public String getDate() {
+        return date;
+    }
+
+    public String setDate(String date) {
+        return this.date = date;
+    }
+
+    public Task(String taskName, LocalDate deadline) {
         this.taskName = taskName;
         this.deadline = deadline;
     }

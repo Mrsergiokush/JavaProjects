@@ -11,6 +11,10 @@ public class User {
 
     private String userName;
 
+    private Integer age;
+
+    private String email;
+
     public User() {
     }
 
@@ -34,12 +38,20 @@ public class User {
         this.userName = userName;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                '}';
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -48,11 +60,23 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return userId.equals(user.userId) &&
-                userName.equals(user.userName);
+                userName.equals(user.userName) &&
+                age.equals(user.age) &&
+                email.equals(user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, userName);
+        return Objects.hash(userId, userName, age, email);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

@@ -9,4 +9,6 @@ public interface IDaoTask extends IDao<Task> {
     List<Task> getTaskByUserId(Integer userId, Integer position) throws Exception;
 
     Task getByNameAndId(Integer userId, String taskName) throws Exception;
+
+    Task getById(Integer id) throws Exception;
 }

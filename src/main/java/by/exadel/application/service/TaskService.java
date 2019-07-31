@@ -48,4 +48,12 @@ public class TaskService implements IService<Task> {
     public Integer getSize() throws Exception {
         return taskDao.getSize();
     }
+
+    public void update(Task task) throws Exception{
+        taskDao.update(task);
+    }
+
+    public Task getById(Integer task_id) throws Exception{
+        return taskDao.getById(task_id);
+    }
 }

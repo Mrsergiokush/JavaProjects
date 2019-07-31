@@ -1,29 +1,31 @@
 package by.exadel.application.dao;
 
-import by.exadel.application.dao.mapper.TaskRowMapper;
 import by.exadel.application.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-@Profile("SpringJDBC")
 public class TaskDaoSpringJDBC implements IDaoTask {
 
     private final JdbcTemplate jdbcTemplate;
+    private final RowMapper<Task> taskMapper;
 
     private static final String addTaskSQL = "INSERT INTO public.task(task_name, task_deadline, user_id) VALUES (?, ?, ?)";
     private static final String deleteTaskSQL = "DELETE FROM public.task WHERE task_id = ?";
     private static final String getByNameAndIdSQL = "SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?";
     private static final String getSizeSQL = "SELECT count(*) FROM public.task";
+    private static final String updateSQL = "update public.task set task_name = ?, task_deadline = ? where task_id = ?";
+    private static final String getByIdSQL = "SELECT * FROM public.task WHERE task_id = ?";
 
     @Autowired
-    public TaskDaoSpringJDBC(JdbcTemplate jdbcTemplate) {
+    public TaskDaoSpringJDBC(JdbcTemplate jdbcTemplate, RowMapper<Task> taskMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.taskMapper = taskMapper;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
 
         String getAllSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task LIMIT 3 OFFSET " + position;
 
-        List<Task> tasks = jdbcTemplate.query(getAllSQL, new TaskRowMapper());
+        List<Task> tasks = jdbcTemplate.query(getAllSQL, taskMapper);
 
         return tasks;
     }
@@ -62,7 +64,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
 
         String getTasksByUserIdSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ? LIMIT 3 OFFSET " + position;
 
-        List<Task> tasks = jdbcTemplate.query(getTasksByUserIdSQL, new Object[]{userId}, new TaskRowMapper());
+        List<Task> tasks = jdbcTemplate.query(getTasksByUserIdSQL, new Object[]{userId}, taskMapper);
 
         return tasks;
     }
@@ -71,7 +73,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     public Task getByNameAndId(Integer userId, String taskName) throws Exception {
 
         try {
-            Task task = jdbcTemplate.queryForObject(getByNameAndIdSQL, new Object[]{taskName, userId}, new TaskRowMapper());
+            Task task = jdbcTemplate.queryForObject(getByNameAndIdSQL, new Object[]{taskName, userId}, taskMapper);
             return task;
         } catch (DataAccessException e) {
             return null;
@@ -83,5 +85,22 @@ public class TaskDaoSpringJDBC implements IDaoTask {
 
         Integer size = jdbcTemplate.queryForObject(getSizeSQL, Integer.class);
         return size;
+    }
+
+    @Override
+    public Integer update(Task task) throws Exception {
+
+        return jdbcTemplate.update(updateSQL, task.getTaskName(), task.getDeadline(), task.getTaskId());
+
+    }
+
+    @Override
+    public Task getById(Integer id) throws Exception {
+        try {
+            Task task = jdbcTemplate.queryForObject(getByIdSQL, new Object[]{id}, taskMapper);
+            return task;
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 }

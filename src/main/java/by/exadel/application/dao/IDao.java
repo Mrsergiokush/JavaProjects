@@ -12,5 +12,7 @@ public interface IDao <T>{
 
     Integer getSize() throws Exception;
 
+    Integer update(T type) throws Exception;
+
 }
 

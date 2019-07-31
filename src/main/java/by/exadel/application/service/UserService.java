@@ -51,4 +51,12 @@ public class UserService implements IService<User> {
     public Integer getSize() throws Exception {
         return userDao.getSize();
     }
+
+    public void update(User user) throws Exception {
+        userDao.update(user);
+    }
+
+    public User getById(Integer id) throws Exception {
+        return userDao.getByUserID(id);
+    }
 }

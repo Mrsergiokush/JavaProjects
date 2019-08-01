@@ -36,8 +36,10 @@ public class UserController {
         user.setUserName(userName);
         user.setEmail(email);
         user.setAge(age);
-        userService.add(user);
-        return "redirect:0";
+        if (userService.add(user) == null)
+            return "ErrorAddUser";
+        else
+            return "redirect:0";
     }
 
     @RequestMapping(value = "{userId}", method = RequestMethod.DELETE)
@@ -56,7 +58,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{userId}", method = RequestMethod.PUT)
-    public String save(@ModelAttribute("user") User user) throws Exception{
+    public String save(@ModelAttribute("user") User user) throws Exception {
         userService.update(user);
         return "redirect:/user/0";
     }

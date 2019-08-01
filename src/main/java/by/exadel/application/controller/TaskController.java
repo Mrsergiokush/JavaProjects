@@ -48,8 +48,11 @@ public class TaskController {
         task.setDeadline(localDate);
         task.setPriority(priority);
         task.setUserId(userId);
-        taskService.add(task);
-        return "redirect:0";
+
+        if (taskService.add(task) == null)
+            return "ErrorAddTask";
+        else
+            return "redirect:0";
     }
 
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)

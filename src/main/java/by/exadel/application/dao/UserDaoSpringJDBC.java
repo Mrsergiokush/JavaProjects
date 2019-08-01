@@ -20,6 +20,8 @@ public class UserDaoSpringJDBC implements IDaoUser {
     private static final String getByIdSQL = "SELECT * FROM public.user WHERE user_id = ?";
     private static final String getSizeSQL = "SELECT count(*) FROM public.user";
     private static final String updateSQL = "UPDATE public.user SET user_name = ?, user_age = ?, user_email = ? WHERE user_id = ?";
+    private static final String getByEmailSQL = "SELECT * FROM public.user WHERE user_email = ?";
+
     @Autowired
     public UserDaoSpringJDBC(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -85,6 +87,17 @@ public class UserDaoSpringJDBC implements IDaoUser {
 
     @Override
     public Integer update(User user) throws Exception {
-        return jdbcTemplate.update(updateSQL, user.getUserName(),user.getAge(), user.getEmail(), user.getUserId());
+        return jdbcTemplate.update(updateSQL, user.getUserName(), user.getAge(), user.getEmail(), user.getUserId());
+    }
+
+    @Override
+    public User getByEmail(String email) throws Exception {
+        try {
+            User user;
+            user = jdbcTemplate.queryForObject(getByEmailSQL, new Object[]{email}, new UserRowMapper());
+            return user;
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 }

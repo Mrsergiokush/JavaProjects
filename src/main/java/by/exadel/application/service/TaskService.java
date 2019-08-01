@@ -24,9 +24,9 @@ public class TaskService implements IService<Task> {
 
     @Override
     public boolean delete(Task task) throws Exception {
-        if (taskDao.delete(task) == 1)
-            return true;
-        else return false;
+            if (taskDao.delete(task) == 1) //if task successfully deleting
+                return true; //return true
+            else return false;
     }
 
     @Override
@@ -49,11 +49,11 @@ public class TaskService implements IService<Task> {
         return taskDao.getSize();
     }
 
-    public void update(Task task) throws Exception{
+    public void update(Task task) throws Exception {
         taskDao.update(task);
     }
 
-    public Task getById(Integer task_id) throws Exception{
+    public Task getById(Integer task_id) throws Exception {
         return taskDao.getById(task_id);
     }
 }

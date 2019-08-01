@@ -2,7 +2,9 @@ package by.exadel.application.service;
 
 import by.exadel.application.dao.IDaoUser;
 import by.exadel.application.model.User;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public class UserService implements IService<User> {
     @Override
     public User add(User user) throws Exception {
 
-        if (userDao.getByUserName(user.getUserName()) != null)
+        if (userDao.getByEmail(user.getEmail()) != null)
             return null;
         else
             return userDao.add(user);
@@ -24,11 +26,17 @@ public class UserService implements IService<User> {
 
     @Override
     public boolean delete(User user) throws Exception {
-
-
-        if (userDao.delete(user) == 1)
+        try {
+            userDao.delete(user);
+        } catch (DataIntegrityViolationException e) {
+            return false;
+        } catch (PSQLException e) {
+            return false;
+        }
+        return true;
+        /*if (userDao.delete(user) == 1)
             return true;
-        else return false;
+        else return false;*/
     }
 
     @Override

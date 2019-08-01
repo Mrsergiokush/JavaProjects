@@ -33,11 +33,20 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addTask(@RequestParam(value = "taskName") String taskName, @RequestParam(value = "deadLine") String deadLine, @PathVariable Integer userId) throws Exception {
+    public String addTask(@PathVariable Integer userId, @RequestParam(value = "taskName") String taskName, @RequestParam(value = "deadLine") String deadLine,
+                          @RequestParam(value = "isDone") String isDone,
+                          @RequestParam(value = "priority") String priority) throws Exception {
         Task task = new Task();
         LocalDate localDate = LocalDate.parse(deadLine);
         task.setTaskName(taskName);
+
+        if (isDone.equals("Done"))
+            task.setDone(true);
+        else
+            task.setDone(false);
+
         task.setDeadline(localDate);
+        task.setPriority(priority);
         task.setUserId(userId);
         taskService.add(task);
         return "redirect:0";
@@ -59,7 +68,13 @@ public class TaskController {
     }
 
     @RequestMapping(value = "{taskId}", method = RequestMethod.PUT)
-    public String save(@ModelAttribute("user") Task task) throws Exception {
+    public String save(@ModelAttribute("user") Task task, @RequestParam(value = "isDone") String isDone) throws Exception {
+
+        if (isDone.equals("Done"))
+            task.setDone(true);
+        else
+            task.setDone(false);
+
         task.setDeadline(LocalDate.parse(task.getDate()));
         taskService.update(task);
         return "redirect:0";

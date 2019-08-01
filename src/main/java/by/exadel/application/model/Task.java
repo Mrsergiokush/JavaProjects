@@ -16,7 +16,27 @@ public class Task {
 
     private LocalDate deadline;
 
+    private String priority;
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    private boolean isDone;
+
     private String date;
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
 
     public Integer getTaskId() {
         return taskId;

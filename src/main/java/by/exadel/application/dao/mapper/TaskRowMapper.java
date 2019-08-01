@@ -18,6 +18,8 @@ public class TaskRowMapper implements RowMapper<Task> {
         task.setTaskName(rs.getString("task_name"));
         task.setUserId(rs.getInt("user_id"));
         task.setDeadline(rs.getDate("task_deadline").toLocalDate());
+        task.setDone(rs.getBoolean("task_isDone"));
+        task.setPriority(rs.getString("task_priority"));
         return task;
     }
 }

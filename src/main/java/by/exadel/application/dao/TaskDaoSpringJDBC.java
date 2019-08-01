@@ -15,11 +15,11 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Task> taskMapper;
 
-    private static final String addTaskSQL = "INSERT INTO public.task(task_name, task_deadline, user_id) VALUES (?, ?, ?)";
+    private static final String addTaskSQL = "INSERT INTO public.task(task_name, task_deadline, \"task_isDone\", task_priority, user_id) VALUES (?, ?, ?, ?, ?)";
     private static final String deleteTaskSQL = "DELETE FROM public.task WHERE task_id = ?";
-    private static final String getByNameAndIdSQL = "SELECT task_name, task_id, task_deadline, user_id FROM public.task WHERE task_name = ? AND user_id = ?";
+    private static final String getByNameAndIdSQL = "SELECT task_name, task_id, task_deadline, user_id, task_priority, \"task_isDone\" FROM public.task WHERE task_name = ? AND user_id = ?";
     private static final String getSizeSQL = "SELECT count(*) FROM public.task";
-    private static final String updateSQL = "update public.task set task_name = ?, task_deadline = ? where task_id = ?";
+    private static final String updateSQL = "update public.task set task_name = ?, task_deadline = ?, task_priority = ?, \"task_isDone\" = ? where task_id = ?";
     private static final String getByIdSQL = "SELECT * FROM public.task WHERE task_id = ?";
 
     @Autowired
@@ -31,7 +31,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public Task add(Task task) throws Exception {
 
-        jdbcTemplate.update(addTaskSQL, task.getTaskName(), task.getDeadline(), task.getUserId());
+        jdbcTemplate.update(addTaskSQL, task.getTaskName(), task.getDeadline(), task.isDone(), task.getPriority(),task.getUserId());
 
         Integer taskId = getByNameAndId(task.getUserId(), task.getTaskName()).getTaskId(); //get task id
 
@@ -51,7 +51,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public List<Task> getAll(Integer position) throws Exception {
 
-        String getAllSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task LIMIT 3 OFFSET " + position;
+        String getAllSQL = "SELECT task_name, task_deadline, task_id, user_id, task_priority, \"task_isDone\" FROM public.task LIMIT 3 OFFSET " + position;
 
         List<Task> tasks = jdbcTemplate.query(getAllSQL, taskMapper);
 
@@ -62,7 +62,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public List<Task> getTaskByUserId(Integer userId, Integer position) throws Exception {
 
-        String getTasksByUserIdSQL = "SELECT task_name, task_deadline, task_id, user_id FROM public.task WHERE user_id = ? LIMIT 3 OFFSET " + position;
+        String getTasksByUserIdSQL = "SELECT task_name, task_deadline, task_id, user_id, task_priority, \"task_isDone\" FROM public.task WHERE user_id = ? LIMIT 3 OFFSET " + position;
 
         List<Task> tasks = jdbcTemplate.query(getTasksByUserIdSQL, new Object[]{userId}, taskMapper);
 
@@ -90,7 +90,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     @Override
     public Integer update(Task task) throws Exception {
 
-        return jdbcTemplate.update(updateSQL, task.getTaskName(), task.getDeadline(), task.getTaskId());
+        return jdbcTemplate.update(updateSQL, task.getTaskName(), task.getDeadline(), task.getPriority(), task.isDone(),task.getTaskId());//ДОБАВИТЬ ПРИОРИТЕТ
 
     }
 

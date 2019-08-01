@@ -30,12 +30,17 @@
         <th>Task_id</th>
         <th>TaskName</th>
         <th>Deadline</th>
+        <th>Priority</th>
+        <th>Done</th>
     </tr>
     <c:forEach var="task" items="${taskList}">
         <tr>
             <td>${task.taskId}</td>
             <td>${task.taskName}</td>
             <td>${task.deadline}</td>
+            <td>${task.priority}</td>
+            <td>${task.done}</td>
+
             <td><a href="${task.taskId}/edit">Edit</a></td>
             <form:form method="DELETE" action="${task.taskId}">
                 <td><input type="submit" value="Delete"></td>

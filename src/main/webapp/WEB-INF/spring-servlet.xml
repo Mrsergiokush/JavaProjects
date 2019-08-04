@@ -22,7 +22,7 @@
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg index="0" ref="dataSource"/>
+        <constructor-arg name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean id="resolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

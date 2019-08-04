@@ -1,5 +1,6 @@
 package by.exadel.application.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ public class Task {
 
     private String taskName;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate deadline;
 
     private String priority;
@@ -28,7 +30,6 @@ public class Task {
 
     private boolean isDone;
 
-    private String date;
 
     public boolean isDone() {
         return isDone;
@@ -66,16 +67,8 @@ public class Task {
         return deadline;
     }
 
-    public void setDeadline(LocalDate date) {
-        this.deadline = date;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String setDate(String date) {
-        return this.date = date;
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
     }
 
     public Task(String taskName, LocalDate deadline) {

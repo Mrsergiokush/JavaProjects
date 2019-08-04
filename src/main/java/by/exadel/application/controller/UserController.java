@@ -1,5 +1,6 @@
 package by.exadel.application.controller;
 
+import by.exadel.application.model.Filter;
 import by.exadel.application.model.User;
 import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addNewUser(@RequestParam(value = "userName") String userName, @RequestParam(value = "age") Integer age, @RequestParam(value = "email") String email) throws Exception {
+    public String addNewUser(@RequestParam(value = "userName") String userName
+            , @RequestParam(value = "age") Integer age
+            , @RequestParam(value = "email") String email) throws Exception {
         User user = new User();
         user.setUserName(userName);
         user.setEmail(email);
@@ -61,5 +64,13 @@ public class UserController {
     public String save(@ModelAttribute("user") User user) throws Exception {
         userService.update(user);
         return "redirect:/user/0";
+    }
+
+    @RequestMapping(value = "/{from}", method = RequestMethod.POST)
+    public String filter(@PathVariable Integer from, Filter filter, Model model) throws Exception {
+        List<User> users = userService.getByFilter(filter);
+        model.addAttribute("userList", users);
+        model.addAttribute("from", from);
+        return "user";
     }
 }

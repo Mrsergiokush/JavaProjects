@@ -14,13 +14,15 @@
 <body>
 <form:form method="PUT" action="../${taskId}">
     <input type="text" name="taskName" value="${task.taskName}">
-    <input type="date" name="date" value="${task.deadline}">
+    <input type="date" name="deadline" value="${task.deadline}">
     <label>Priority</label>
+
     <select name="priority">
         <option>Low</option>
         <option>Medium</option>
         <option>High</option>
     </select>
+
     <label>IsDone</label>
     <select name="isDone">
         <option>Done</option>

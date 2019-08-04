@@ -1,12 +1,14 @@
 package by.exadel.application.service;
 
 import by.exadel.application.dao.IDaoUser;
+import by.exadel.application.model.Filter;
 import by.exadel.application.model.User;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -66,5 +68,22 @@ public class UserService implements IService<User> {
 
     public User getById(Integer id) throws Exception {
         return userDao.getByUserID(id);
+    }
+
+    public List<User> getByFilter(Filter filter) throws Exception {
+
+        String type = filter.getType();
+        String value = filter.getValue();
+
+        switch (type) {
+            case "name":
+                return Collections.singletonList(userDao.getByUserName(value));
+            case "age":
+                return Collections.singletonList(userDao.getByUserID(Integer.valueOf(value)));
+            case "email":
+                return Collections.singletonList(userDao.getByEmail(value));
+            default:
+                return null;
+        }
     }
 }

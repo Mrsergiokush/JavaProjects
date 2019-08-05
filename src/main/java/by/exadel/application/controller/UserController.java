@@ -66,9 +66,10 @@ public class UserController {
         return "redirect:/user/0";
     }
 
-    @RequestMapping(value = "/{from}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{from}", method = RequestMethod.POST) //filter
     public String filter(@PathVariable Integer from, Filter filter, Model model) throws Exception {
-        List<User> users = userService.getByFilter(filter);
+        List<User> users = userService.getByFilter(filter , from);
+        /*model.addAttribute("size", )*/
         model.addAttribute("userList", users);
         model.addAttribute("from", from);
         return "user";

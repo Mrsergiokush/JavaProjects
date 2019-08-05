@@ -24,20 +24,14 @@ public class TaskService implements IService<Task> {
 
     @Override
     public boolean delete(Task task) throws Exception {
-            if (taskDao.delete(task) == 1) //if task successfully deleting
-                return true; //return true
-            else return false;
+        if (taskDao.delete(task) == 1) //if task successfully deleting
+            return true; //return true
+        else return false;
     }
 
     @Override
     public List<Task> getAll(Integer pos) throws Exception {
         return taskDao.getAll(pos);
-    }
-
-    //useless (find better decision)
-    @Override
-    public Integer getId(Task task) throws Exception {
-        return null;
     }
 
     public List<Task> getAll(Integer Id, Integer pos) throws Exception {

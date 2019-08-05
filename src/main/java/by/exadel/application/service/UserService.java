@@ -36,25 +36,12 @@ public class UserService implements IService<User> {
             return false;
         }
         return true;
-        /*if (userDao.delete(user) == 1)
-            return true;
-        else return false;*/
     }
 
     @Override
     public List<User> getAll(Integer position) throws Exception {
 
         return userDao.getAll(position);
-    }
-
-    @Override
-    public Integer getId(User user) throws Exception {
-
-        if (userDao.getByUserName(user.getUserName()) == null)
-            return -1;
-        else {
-            return userDao.getByUserName(user.getUserName()).getUserId();
-        }
     }
 
     @Override
@@ -70,16 +57,16 @@ public class UserService implements IService<User> {
         return userDao.getByUserID(id);
     }
 
-    public List<User> getByFilter(Filter filter) throws Exception {
+    public List<User> getByFilter(Filter filter, Integer from) throws Exception {
 
         String type = filter.getType();
         String value = filter.getValue();
 
         switch (type) {
             case "name":
-                return Collections.singletonList(userDao.getByUserName(value));
+                return userDao.getByUserName(value, from);
             case "age":
-                return Collections.singletonList(userDao.getByUserID(Integer.valueOf(value)));
+                return userDao.getByAge(Integer.valueOf(value), from);
             case "email":
                 return Collections.singletonList(userDao.getByEmail(value));
             default:

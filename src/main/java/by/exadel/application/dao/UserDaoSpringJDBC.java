@@ -16,12 +16,11 @@ public class UserDaoSpringJDBC implements IDaoUser {
 
     private static final String addUserSQL = "INSERT INTO public.user(user_name, user_age, user_email) VALUES (?, ?, ?)"; //requests to DB
     private static final String deleteSQL = "DELETE FROM public.user WHERE user_id = ?";
-    private static final String getByUserNameSQL = "SELECT * FROM public.user WHERE user_name = ?";
     private static final String getByIdSQL = "SELECT * FROM public.user WHERE user_id = ?";
     private static final String getSizeSQL = "SELECT count(*) FROM public.user";
     private static final String updateSQL = "UPDATE public.user SET user_name = ?, user_age = ?, user_email = ? WHERE user_id = ?";
     private static final String getByEmailSQL = "SELECT * FROM public.user WHERE user_email = ?";
-
+    
     @Autowired
     public UserDaoSpringJDBC(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -32,7 +31,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
 
         jdbcTemplate.update(addUserSQL, user.getUserName(), user.getAge(), user.getEmail());
 
-        user.setUserId(getByUserName(user.getUserName()).getUserId());
+        user.setUserId(getByEmail(user.getEmail()).getUserId());
 
         return user;
     }
@@ -56,12 +55,13 @@ public class UserDaoSpringJDBC implements IDaoUser {
     }
 
     @Override
-    public User getByUserName(String userName) {
+    public List<User> getByUserName(String userName, Integer from) {
+
+        String getByUserNameSQL = "SELECT * FROM public.user WHERE user_name = ? LIMIT 3 OFFSET " + from;
 
         try {
-            User user;
-            user = jdbcTemplate.queryForObject(getByUserNameSQL, new Object[]{userName}, new UserRowMapper());
-            return user;
+            List<User> users = jdbcTemplate.query(getByUserNameSQL, new Object[]{userName}, new UserRowMapper());
+            return users;
         } catch (DataAccessException e) {
             return null;
         }
@@ -96,6 +96,19 @@ public class UserDaoSpringJDBC implements IDaoUser {
             User user;
             user = jdbcTemplate.queryForObject(getByEmailSQL, new Object[]{email}, new UserRowMapper());
             return user;
+        } catch (DataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<User> getByAge(Integer age, Integer from) {
+
+        String getByAgeSQL = "SELECT * FROM public.user WHERE user_age = ? LIMIT 3 OFFSET " + from;
+
+        try {
+            List<User> users = jdbcTemplate.query(getByAgeSQL, new Object[]{age}, new UserRowMapper());
+            return users;
         } catch (DataAccessException e) {
             return null;
         }

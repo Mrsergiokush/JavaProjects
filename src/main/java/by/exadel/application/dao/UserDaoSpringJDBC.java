@@ -5,21 +5,19 @@ import by.exadel.application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public class UserDaoSpringJDBC implements IDaoUser {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String addUserSQL = "INSERT INTO public.user(user_name, user_age, user_email) VALUES (?, ?, ?)"; //requests to DB
-    private static final String deleteSQL = "DELETE FROM public.user WHERE user_id = ?";
-    private static final String getByIdSQL = "SELECT * FROM public.user WHERE user_id = ?";
-    private static final String getSizeSQL = "SELECT count(*) FROM public.user";
-    private static final String updateSQL = "UPDATE public.user SET user_name = ?, user_age = ?, user_email = ? WHERE user_id = ?";
-    private static final String getByEmailSQL = "SELECT * FROM public.user WHERE user_email = ?";
+    private static final String addUserSQL = "INSERT INTO users(user_name, user_age, user_email) VALUES (?, ?, ?)"; //requests to DB
+    private static final String deleteSQL = "DELETE FROM users WHERE id = ?";
+    private static final String getByIdSQL = "SELECT * FROM users WHERE id = ?";
+    private static final String getSizeSQL = "SELECT count(*) FROM users";
+    private static final String updateSQL = "UPDATE users SET user_name = ?, user_age = ?, user_email = ? WHERE id = ?";
+    private static final String getByEmailSQL = "SELECT * FROM users WHERE user_email = ?";
 
     @Autowired
     public UserDaoSpringJDBC(JdbcTemplate jdbcTemplate) {
@@ -31,7 +29,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
 
         jdbcTemplate.update(addUserSQL, user.getUserName(), user.getAge(), user.getEmail());
 
-        user.setUserId(getByEmail(user.getEmail()).getUserId());
+        user.setId(getByEmail(user.getEmail()).getId());
 
         return user;
     }
@@ -39,7 +37,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
     @Override
     public Integer delete(User user) throws Exception {
 
-        Integer rows = jdbcTemplate.update(deleteSQL, user.getUserId());
+        Integer rows = jdbcTemplate.update(deleteSQL, user.getId());
 
         return rows;
     }
@@ -47,7 +45,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
     @Override
     public List<User> getAll(Integer pos) throws Exception {
 
-        String getAllSQL = "SELECT user_id, user_name, user_age, user_email FROM public.user LIMIT 3 OFFSET " + pos;
+        String getAllSQL = "SELECT id, user_name, user_age, user_email FROM users LIMIT 3 OFFSET " + pos;
 
         List<User> users = jdbcTemplate.query(getAllSQL, new UserRowMapper());
 
@@ -57,7 +55,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
     @Override
     public List<User> getByUserName(String userName, Integer from) {
 
-        String getByUserNameSQL = "SELECT * FROM public.user WHERE user_name = ? LIMIT 3 OFFSET " + from;
+        String getByUserNameSQL = "SELECT * FROM users WHERE user_name = ? LIMIT 3 OFFSET " + from;
 
         try {
             List<User> users = jdbcTemplate.query(getByUserNameSQL, new Object[]{userName}, new UserRowMapper());
@@ -87,7 +85,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
 
     @Override
     public Integer update(User user) throws Exception {
-        return jdbcTemplate.update(updateSQL, user.getUserName(), user.getAge(), user.getEmail(), user.getUserId());
+        return jdbcTemplate.update(updateSQL, user.getUserName(), user.getAge(), user.getEmail(), user.getId());
     }
 
     @Override
@@ -104,7 +102,7 @@ public class UserDaoSpringJDBC implements IDaoUser {
     @Override
     public List<User> getByAge(Integer age, Integer from) {
 
-        String getByAgeSQL = "SELECT * FROM public.user WHERE user_age = ? LIMIT 3 OFFSET " + from;
+        String getByAgeSQL = "SELECT * FROM users WHERE user_age = ? LIMIT 3 OFFSET " + from;
 
         try {
             List<User> users = jdbcTemplate.query(getByAgeSQL, new Object[]{age}, new UserRowMapper());

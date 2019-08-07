@@ -1,23 +1,30 @@
 package by.exadel.application.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Component
+@Entity
+@Table(name = "task")
 public class Task {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer taskId;
 
+    @JoinColumn(name = "user_id")
     private Integer userId;
 
+    @Column(name = "task_name")
     private String taskName;
 
+    @Column(name = "task_deadline")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate deadline;
 
+    @Column(name = "task_priority")
     private String priority;
 
     public String getPriority() {
@@ -28,6 +35,7 @@ public class Task {
         this.priority = priority;
     }
 
+    @Column(name = "task_isDone")
     private boolean isDone;
 
 

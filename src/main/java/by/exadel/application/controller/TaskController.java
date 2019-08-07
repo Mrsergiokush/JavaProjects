@@ -13,15 +13,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("user/{userId}/task")
+@RequestMapping("user/{id}/task")
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
     @RequestMapping(value = "/{from}", method = RequestMethod.GET)
-    public String getAllUsers(@PathVariable Integer from, @PathVariable Integer userId, Model model) throws Exception {
-        List<Task> tasks = taskService.getAll(userId, from);
+    public String getAllUsers(@PathVariable Integer from, @PathVariable Integer id, Model model) throws Exception {
+        List<Task> tasks = taskService.getAll(id, from);
         model.addAttribute("size", taskService.getSize());
         model.addAttribute("from", from);
         model.addAttribute("taskList", tasks);
@@ -34,7 +34,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addTask(@PathVariable Integer userId, @RequestParam(value = "taskName") String taskName,
+    public String addTask(@PathVariable Integer id, @RequestParam(value = "taskName") String taskName,
                           @RequestParam(value = "deadLine") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadLine,
                           @RequestParam(value = "isDone") String isDone,
                           @RequestParam(value = "priority") String priority) throws Exception {
@@ -48,7 +48,7 @@ public class TaskController {
 
         task.setDeadline(deadLine);
         task.setPriority(priority);
-        task.setUserId(userId);
+        task.setUserId(id);
 
         if (taskService.add(task) == null)
             return "ErrorAddTask";

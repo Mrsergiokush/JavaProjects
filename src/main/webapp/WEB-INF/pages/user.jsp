@@ -22,7 +22,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         body {
-            background-color: rgba(145,145,145,0.26);
+            background-color: rgba(145, 145, 145, 0.26);
         }
     </style>
 </head>
@@ -45,16 +45,18 @@
                 <c:forEach var="user" items="${userList}">
                     <tr>
                         <td>${user.userName}</td>
-                        <td>${user.userId}</td>
+                        <td>${user.id}</td>
                         <td>${user.age}</td>
                         <td>${user.email}</td>
 
-                        <form:form method="DELETE" action="${user.userId}">
-                            <td><button class="btn btn-primary" type="submit"/><i class="fa fa-trash-alt"/></td>
+                        <form:form method="DELETE" action="${user.id}">
+                            <td>
+                                <button class="btn btn-primary" type="submit"/>
+                                <i class="fa fa-trash-alt"/></td>
                         </form:form>
 
-                        <td><a class="btn btn-primary" href="${user.userId}/edit"><i class="fa fa-pencil-alt"/></a></td>
-                        <td><a class="btn btn-primary" href="${user.userId}/task/0"><i class="fa fa-list-alt"/></a></td>
+                        <td><a class="btn btn-primary" href="${user.id}/edit"><i class="fa fa-pencil-alt"/></a></td>
+                        <td><a class="btn btn-primary" href="${user.id}/task/0"><i class="fa fa-list-alt"/></a></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -66,18 +68,29 @@
                 <a class="btn btn-primary" href=${from-3}>Back</a>
             </c:if>
 
-            <a href="add">Add new user</a>
+            <a class="btn btn-primary" href="add">Add new user</a>
         </div>
     </div>
 </div>
-
 <form class="form" method="post" action="0">
-    <select name="type">
-        <option value="name">Name</option>
-        <option value="age">Age</option>
-        <option value="email">E-mail</option>
-    </select>
-    <input value="value" name="value"/>
+    <div class="input-group mb-3">
+        <select name="type" class="custom-select" id="inputGroupSelect02">
+            <option value="name">Name</option>
+            <option value="age">Age</option>
+            <option value="email">E-mail</option>
+        </select>
+        <div class="input-group-append">
+            <label class="input-group-text" for="inputGroupSelect02">Filter By</label>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Input</span>
+        </div>
+        <div>
+            <input class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                   value="value" name="value"/>
+        </div>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

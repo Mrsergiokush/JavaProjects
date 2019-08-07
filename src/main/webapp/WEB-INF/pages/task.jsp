@@ -58,8 +58,8 @@
                 <a class="btn btn-primary" href=${from-3}>Back</a>
             </c:if>
 
-            <a href="add">Add new task</a>
-            <a href="/JavaProjects/user/0">Show users</a>
+            <a  class="btn btn-primary" href="add">Add new task</a>
+            <a class="btn btn-primary" href="/JavaProjects/user/0">Show users</a>
         </div>
     </div>
 </div>

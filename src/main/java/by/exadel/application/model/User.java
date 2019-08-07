@@ -1,18 +1,23 @@
 package by.exadel.application.model;
 
-import org.springframework.stereotype.Component;
-
+import javax.persistence.*;
 import java.util.Objects;
 
-@Component
+@Entity
+@Table(name = "users")
 public class User {
 
-    private Integer userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
+    @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "user_age")
     private Integer age;
 
+    @Column(name = "user_email")
     private String email;
 
     public User() {
@@ -22,12 +27,12 @@ public class User {
         this.userName = username;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer userId) {
+        this.id = userId;
     }
 
     public String getUserName() {
@@ -59,7 +64,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId.equals(user.userId) &&
+        return id.equals(user.id) &&
                 userName.equals(user.userName) &&
                 age.equals(user.age) &&
                 email.equals(user.email);
@@ -67,13 +72,13 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, userName, age, email);
+        return Objects.hash(id, userName, age, email);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "userId=" + id +
                 ", userName='" + userName + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +

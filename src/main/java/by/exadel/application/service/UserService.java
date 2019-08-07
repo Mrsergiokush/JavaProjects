@@ -57,7 +57,7 @@ public class UserService implements IService<User> {
         return userDao.getByUserID(id);
     }
 
-    public List<User> getByFilter(Filter filter, Integer from) throws Exception {
+    public List<User> getByFilter(Filter filter, Integer from) throws Exception { //from - элемент паггинации(если нацденных знаений много, то извекать будем по частям)
 
         String type = filter.getType();
         String value = filter.getValue();

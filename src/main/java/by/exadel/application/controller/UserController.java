@@ -45,22 +45,22 @@ public class UserController {
             return "redirect:0";
     }
 
-    @RequestMapping(value = "{userId}", method = RequestMethod.DELETE)
-    public String deleteItem(@PathVariable Integer userId) throws Exception {
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public String deleteItem(@PathVariable Integer id) throws Exception {
         User user = new User();
-        user.setUserId(userId);
+        user.setId(id);
         userService.delete(user);
         return "redirect:0";
     }
 
-    @RequestMapping(value = "{userId}/edit")
-    public String editForm(@PathVariable Integer userId, Model model) throws Exception {
-        User user = userService.getById(userId);
+    @RequestMapping(value = "{id}/edit")
+    public String editForm(@PathVariable Integer id, Model model) throws Exception {
+        User user = userService.getById(id);
         model.addAttribute("user", user);
         return "userEditForm";
     }
 
-    @RequestMapping(value = "{userId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public String save(@ModelAttribute("user") User user) throws Exception {
         userService.update(user);
         return "redirect:/user/0";

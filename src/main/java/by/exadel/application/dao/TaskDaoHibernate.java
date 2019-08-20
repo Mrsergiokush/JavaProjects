@@ -5,6 +5,7 @@ import by.exadel.application.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+@Repository
 public class TaskDaoHibernate implements IDaoTask {
 
     @Override
@@ -20,11 +22,10 @@ public class TaskDaoHibernate implements IDaoTask {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Task> cr = criteriaBuilder.createQuery(Task.class);
+        CriteriaQuery<Task> cr  = criteriaBuilder.createQuery(Task.class);
         Root<Task> root = cr.from(Task.class);
 
-
-        cr.select(root).where(criteriaBuilder.equal(root.get("id"), userId));
+        cr.select(root).where(criteriaBuilder.equal(root.get("user"), userId));
         Query<Task> query = session.createQuery(cr);
         List<Task> tasks = query.setFirstResult(position).setMaxResults(3).getResultList();
         transaction.commit();
@@ -32,7 +33,7 @@ public class TaskDaoHibernate implements IDaoTask {
     }
 
     @Override
-    public Task getByNameAndId(Integer userId, String taskName) throws Exception {
+    public Task getByUserAndId(Integer userId, String taskName) throws Exception {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -40,7 +41,7 @@ public class TaskDaoHibernate implements IDaoTask {
         Root<Task> root = cr.from(Task.class);
 
         Predicate[] predicates = new Predicate[2];
-        predicates[0] = criteriaBuilder.equal(root.get("userId"), userId);
+        predicates[0] = criteriaBuilder.equal(root.get("user"), userId);
         predicates[1] = criteriaBuilder.equal(root.get("taskName"), taskName);
         cr.select(root).where(predicates);
 
@@ -76,11 +77,8 @@ public class TaskDaoHibernate implements IDaoTask {
         Transaction tx1 = session.beginTransaction();
         session.save(task);
 
-        Integer id = getByNameAndId(task.getUserId(), task.getTaskName()).getTaskId();
-        task.setTaskId(id);
         tx1.commit();
-        session.close();
-        return getByNameAndId(task.getUserId(), task.getTaskName());
+        return getByUserAndId(task.getUser().getId(), task.getTaskName());
     }
 
     @Override

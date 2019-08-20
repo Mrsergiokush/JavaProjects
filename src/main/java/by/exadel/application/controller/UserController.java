@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/{from}", method = RequestMethod.GET)
     public String getAllUsers(@PathVariable Integer from, Model model) throws Exception {

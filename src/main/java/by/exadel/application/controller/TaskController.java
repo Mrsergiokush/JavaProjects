@@ -3,6 +3,7 @@ package by.exadel.application.controller;
 
 import by.exadel.application.model.Task;
 import by.exadel.application.service.TaskService;
+import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,12 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/{from}", method = RequestMethod.GET)
     public String getAllUsers(@PathVariable Integer from, @PathVariable Integer id, Model model) throws Exception {
+
         List<Task> tasks = taskService.getAll(id, from);
         model.addAttribute("size", taskService.getSize());
         model.addAttribute("from", from);
@@ -48,7 +52,7 @@ public class TaskController {
 
         task.setDeadline(deadLine);
         task.setPriority(priority);
-        task.setUserId(id);
+//        task.setUser(userService.getById(id));
 
         if (taskService.add(task) == null)
             return "ErrorAddTask";
@@ -59,7 +63,7 @@ public class TaskController {
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)
     public String deleteTask(@PathVariable Integer taskId) throws Exception {
         Task task = new Task();
-        task.setTaskId(taskId);
+        task.setId(taskId);
         taskService.delete(task);
         return "redirect:0";
     }

@@ -18,17 +18,17 @@ import static org.hibernate.criterion.Restrictions.eq;
 @Repository
 public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user WHERE user_name = ? LIMIT 3 OFFSET from
     @Override
-    public List<User> getByUserName(String userName, Integer from) throws Exception {
+    public List<User> getByUserName(String userName, Integer from) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         return (List<User>) session.createCriteria(User.class)
                 .add(eq("userName", userName))
                 .setMaxResults(3)
-                .setFirstResult(from * 3)
+                .setFirstResult(from)
                 .list();
     }
 
     @Override
-    public User getByUserID(Integer userId) throws Exception { //select * from user where user_id = userId
+    public User getByUserID(Integer userId) { //select * from user where user_id = userId
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -43,7 +43,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     }
 
     @Override
-    public User getByEmail(String email) throws Exception { //select * from user where user_email = email;
+    public User getByEmail(String email) { //select * from user where user_email = email;
 
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
 
@@ -65,7 +65,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     }
 
     @Override
-    public List<User> getByAge(Integer age, Integer from) throws Exception {
+    public List<User> getByAge(Integer age, Integer from) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -81,7 +81,8 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     }
 
     @Override
-    public User add(User user) throws Exception {
+    public User add(User user) {
+
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.save(user);
@@ -90,7 +91,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     }
 
     @Override
-    public Integer delete(User user) throws Exception { //User на этапе удаления имеет только поле Id
+    public Integer delete(User user) { //User на этапе удаления имеет только поле Id
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(getByUserID(user.getId()));
@@ -100,7 +101,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     }
 
     @Override
-    public List<User> getAll(Integer pos) throws Exception {
+    public List<User> getAll(Integer pos) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<User> cr = cb.createQuery(User.class);
@@ -113,7 +114,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     }
 
     @Override
-    public Integer getSize() throws Exception {
+    public Integer getSize() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -128,7 +129,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     }
 
     @Override
-    public Integer update(User user) throws Exception {
+    public Integer update(User user) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.update(user);
@@ -137,3 +138,4 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
         return 1;
     }
 }
+//INMEMORY BASE

@@ -37,14 +37,14 @@
                 </thead>
                 <c:forEach var="task" items="${taskList}">
                     <tr>
-                        <td>${task.taskId}</td>
+                        <td>${task.id}</td>
                         <td>${task.taskName}</td>
                         <td>${task.deadline}</td>
                         <td>${task.priority}</td>
                         <td>${task.done}</td>
 
-                        <td><a class="btn btn-primary" href="${task.taskId}/edit"><i class="fa fa-pencil-alt"/></a></td>
-                        <form:form method="DELETE" action="${task.taskId}">
+                        <td><a class="btn btn-primary" href="${task.id}/edit"><i class="fa fa-pencil-alt"/></a></td>
+                        <form:form method="DELETE" action="${task.id}">
                             <td><button class="btn btn-primary" type="submit"/><i class="fa fa-trash-alt"/></td>
                         </form:form>
                     </tr>

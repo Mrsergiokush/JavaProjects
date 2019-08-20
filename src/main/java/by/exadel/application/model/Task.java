@@ -12,10 +12,11 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer taskId;
+    private Integer id;
 
-    @JoinColumn(name = "user_id")
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "task_name")
     private String taskName;
@@ -35,9 +36,11 @@ public class Task {
         this.priority = priority;
     }
 
-    @Column(name = "task_isDone")
+    @Column(name = "task_isdone")
     private boolean isDone;
 
+    public Task() {
+    }
 
     public boolean isDone() {
         return isDone;
@@ -47,20 +50,12 @@ public class Task {
         isDone = done;
     }
 
-    public Integer getTaskId() {
-        return taskId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTaskId(Integer taskId) {
-        this.taskId = taskId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer taskId) {
+        this.id = taskId;
     }
 
     public String getTaskName() {
@@ -79,27 +74,47 @@ public class Task {
         this.deadline = deadline;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Task(String taskName, LocalDate deadline) {
         this.taskName = taskName;
         this.deadline = deadline;
     }
 
-    public Task() {
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return taskId.equals(task.taskId) &&
-                userId.equals(task.userId) &&
+        return isDone == task.isDone &&
+                id.equals(task.id) &&
+                user.equals(task.user) &&
                 taskName.equals(task.taskName) &&
-                deadline.equals(task.deadline);
+                deadline.equals(task.deadline) &&
+                priority.equals(task.priority);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId, userId, taskName, deadline);
+        return Objects.hash(id, user, taskName, deadline, priority, isDone);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + id +
+                ", user=" + user +
+                ", taskName='" + taskName + '\'' +
+                ", deadline=" + deadline +
+                ", priority='" + priority + '\'' +
+                ", isDone=" + isDone +
+                '}';
     }
 }

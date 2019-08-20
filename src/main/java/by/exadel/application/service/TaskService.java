@@ -16,7 +16,7 @@ public class TaskService implements IService<Task> {
     @Override
     public Task add(Task task) throws Exception {
 
-        if (taskDao.getByNameAndId(task.getUserId(), task.getTaskName()) == null) {//If there not task
+        if (taskDao.getByUserAndId(task.getUser().getId(), task.getTaskName()) == null) {//If there not task
             return taskDao.add(task);
         } else
             return null;

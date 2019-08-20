@@ -1,4 +1,4 @@
-package by.exadel.application.dao;
+/*package by.exadel.application.dao;
 
 import by.exadel.application.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public class TaskDaoSpringJDBC implements IDaoTask {
 
     private final JdbcTemplate jdbcTemplate;
@@ -33,7 +32,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
 
         jdbcTemplate.update(addTaskSQL, task.getTaskName(), task.getDeadline(), task.isDone(), task.getPriority(),task.getUserId());
 
-        Integer taskId = getByNameAndId(task.getUserId(), task.getTaskName()).getTaskId(); //get task id
+        Integer taskId = getByUserAndId(task.getUserId(), task.getTaskName()).getTaskId(); //get task id
 
         task.setTaskId(taskId); //set task id
 
@@ -70,7 +69,7 @@ public class TaskDaoSpringJDBC implements IDaoTask {
     }
 
     @Override
-    public Task getByNameAndId(Integer userId, String taskName) throws Exception {
+    public Task getByUserAndId(Integer userId, String taskName) throws Exception {
 
         try {
             Task task = jdbcTemplate.queryForObject(getByNameAndIdSQL, new Object[]{taskName, userId}, taskMapper);
@@ -103,4 +102,4 @@ public class TaskDaoSpringJDBC implements IDaoTask {
             return null;
         }
     }
-}
+}*/

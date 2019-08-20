@@ -1,3 +1,4 @@
+/*
 package by.exadel.application.dao.mapper;
 
 import by.exadel.application.model.Task;
@@ -23,3 +24,4 @@ public class TaskRowMapper implements RowMapper<Task> {
         return task;
     }
 }
+*/

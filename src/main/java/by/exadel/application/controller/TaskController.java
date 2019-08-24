@@ -52,7 +52,7 @@ public class TaskController {
 
         task.setDeadline(deadLine);
         task.setPriority(priority);
-//        task.setUser(userService.getById(id));
+        task.setUser(userService.getById(id));
 
         if (taskService.add(task) == null)
             return "ErrorAddTask";
@@ -76,13 +76,14 @@ public class TaskController {
     }
 
     @RequestMapping(value = "{taskId}", method = RequestMethod.PUT)
-    public String save(@ModelAttribute("task") Task task, @RequestParam(value = "isDone") String isDone) throws Exception {
+    public String save(@PathVariable Integer id, @ModelAttribute("task") Task task, @RequestParam(value = "isDone") String isDone) throws Exception {
 
         if (isDone.equals("Done"))
             task.setDone(true);
         else
             task.setDone(false);
 
+        task.setUser(userService.getById(id));
         taskService.update(task);
         return "redirect:0";
     }

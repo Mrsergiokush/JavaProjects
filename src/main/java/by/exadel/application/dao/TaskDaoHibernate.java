@@ -18,22 +18,21 @@ import java.util.List;
 public class TaskDaoHibernate implements IDaoTask {
 
     @Override
-    public List<Task> getTaskByUserId(Integer userId, Integer position) throws Exception {
+    public List<Task> getTaskByUserId(Integer userId, Integer position) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Task> cr  = criteriaBuilder.createQuery(Task.class);
+        CriteriaQuery<Task> cr = criteriaBuilder.createQuery(Task.class);
         Root<Task> root = cr.from(Task.class);
 
         cr.select(root).where(criteriaBuilder.equal(root.get("user"), userId));
         Query<Task> query = session.createQuery(cr);
         List<Task> tasks = query.setFirstResult(position).setMaxResults(3).getResultList();
-        transaction.commit();
         return tasks;
     }
 
     @Override
-    public Task getByUserAndId(Integer userId, String taskName) throws Exception {
+    public Task getByUserAndId(Integer userId, String taskName) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -56,7 +55,7 @@ public class TaskDaoHibernate implements IDaoTask {
     }
 
     @Override
-    public Task getById(Integer id) throws Exception {
+    public Task getById(Integer id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -65,24 +64,26 @@ public class TaskDaoHibernate implements IDaoTask {
         cr.select(root).where(criteriaBuilder.equal(root.get("id"), id));
 
         Query<Task> query = session.createQuery(cr);
-        Task task = query.getSingleResult();
 
-        transaction.commit();
-        return task;
+        try {
+            Task task = query.getSingleResult();
+            return task;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
-    public Task add(Task task) throws Exception {
+    public Task add(Task task) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.save(task);
-
         tx1.commit();
         return getByUserAndId(task.getUser().getId(), task.getTaskName());
     }
 
     @Override
-    public Integer delete(Task task) throws Exception {
+    public Integer delete(Task task) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(task);
@@ -92,16 +93,15 @@ public class TaskDaoHibernate implements IDaoTask {
     }
 
     @Override
-    public List<Task> getAll(Integer pos) throws Exception {
+    public List<Task> getAll(Integer pos) {
         return null;
     }
 
     @Override
-    public Integer getSize() throws Exception {
+    public Integer getSize() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-
         //Count number of tasks
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<Task> root = criteriaQuery.from(Task.class);

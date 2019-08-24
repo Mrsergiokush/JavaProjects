@@ -4,6 +4,7 @@ import by.exadel.application.model.User;
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -85,9 +86,15 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
 
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.save(user);
-        tx1.commit();
-        return getByEmail(user.getEmail());
+
+        try {
+            session.save(user);
+            tx1.commit();
+            return getByEmail(user.getEmail());
+        } catch (ConstraintViolationException e) {
+            return null;
+        }
+
     }
 
     @Override

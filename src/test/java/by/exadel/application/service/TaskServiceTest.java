@@ -23,7 +23,6 @@ public class TaskServiceTest {
     List<User> users = userDao.getAll(1);
 
     public Task initTask() {
-
         Task task = new Task();
 
         task.setUser(users.get(0));
@@ -37,8 +36,8 @@ public class TaskServiceTest {
 
     @Test
     public void add() {
-
         Task task = initTask();
+
         taskDao.add(task);
 
         Assert.assertEquals(task, taskDao.getById(task.getId()));
@@ -47,13 +46,40 @@ public class TaskServiceTest {
     }
 
     @Test
-    public void delete() {
-
+    public void add_TASK_WITH_SAME_NAME() {
         Task task = initTask();
+
+        taskDao.add(task);
+
+        Assert.assertNull(taskDao.add(task));
+
+        taskDao.delete(task);
+    }
+
+    @Test
+    public void delete() {
+        Task task = initTask();
+
         taskDao.add(task);
 
         taskDao.delete(task);
 
         Assert.assertNull(taskDao.getById(task.getId()));
+    }
+
+    @Test
+    public void getTaskById() {
+         Task task = initTask();
+
+         taskDao.add(task);
+
+         Assert.assertEquals(task.getTaskName(), taskDao.getById(task.getId()).getTaskName()); //compare task name
+
+         taskDao.delete(task);
+    }
+
+    @Test
+    public void update() {
+
     }
 }

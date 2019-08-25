@@ -4,6 +4,7 @@ import by.exadel.application.model.Task;
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -77,9 +78,15 @@ public class TaskDaoHibernate implements IDaoTask {
     public Task add(Task task) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.save(task);
-        tx1.commit();
-        return getByUserAndId(task.getUser().getId(), task.getTaskName());
+
+        try {
+            session.save(task);
+            tx1.commit();
+            return getByUserAndId(task.getUser().getId(), task.getTaskName());
+        } catch (ConstraintViolationException e) { // two the same tasks
+            return null;
+        }
+
     }
 
     @Override

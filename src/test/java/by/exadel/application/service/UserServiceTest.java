@@ -16,28 +16,31 @@ public class UserServiceTest {
     UserDaoHibernate dao = new UserDaoHibernate();
 
     public User userInit() {
-
         User user = new User();
+
         user.setUserName("Test");
         user.setAge(23);
         user.setEmail("test@gmail.com");
+
         return user;
     }
 
     @Test
     public void add() {
-
         User user = userInit();
+
         dao.add(user);
+
         Assert.assertEquals(user, dao.getByEmail(user.getEmail()));
+
         dao.delete(user);
     }
 
 
     @Test
     public void add_USER_WITH_SAME_EMAIL() {
-
         User user = userInit();
+
         dao.add(user);
 
         Assert.assertNull(dao.add(user));
@@ -48,6 +51,7 @@ public class UserServiceTest {
     @Test
     public void delete() {
         User user = userInit();
+
         dao.add(user);
 
         dao.delete(user);
@@ -57,12 +61,13 @@ public class UserServiceTest {
 
     @Test
     public void update() {
-
         User user = userInit();
+
         dao.add(user);
 
         String newName = "newTest";
         user.setUserName(newName);
+
         dao.update(user);
 
         Assert.assertEquals(user.getUserName(), dao.getByEmail(user.getEmail()).getUserName());
@@ -72,7 +77,6 @@ public class UserServiceTest {
 
     @Test
     public void getById() {
-
         User user = userInit();
         dao.add(user);
 

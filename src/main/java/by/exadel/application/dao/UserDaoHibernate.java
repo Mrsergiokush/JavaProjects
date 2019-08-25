@@ -123,7 +123,6 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     @Override
     public Integer getSize() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 
         //Count number of users
@@ -132,7 +131,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
         criteriaQuery.select(criteriaBuilder.count(root));
         Query<Long> query = session.createQuery(criteriaQuery);
         long count = query.getSingleResult();
-        return Math.toIntExact(count); //to Int (FIXXXXXXX)
+        return Math.toIntExact(count);
     }
 
     @Override

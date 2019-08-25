@@ -19,11 +19,11 @@ public class UserService implements IService<User> {
 
     @Override
     public User add(User user) throws Exception {
-
         if (userDao.getByEmail(user.getEmail()) != null)
             return null;
-        else
-            return userDao.add(user);
+        else if (userDao.add(user) == null)
+            return null;
+        else return user;
     }
 
     @Override

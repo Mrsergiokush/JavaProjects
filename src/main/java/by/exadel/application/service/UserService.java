@@ -3,6 +3,7 @@ package by.exadel.application.service;
 import by.exadel.application.dao.IDaoUser;
 import by.exadel.application.model.Filter;
 import by.exadel.application.model.User;
+import org.apache.log4j.Logger;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,18 +18,26 @@ public class UserService implements IService<User> {
     @Autowired
     private IDaoUser userDao;
 
+    public static final Logger logger = Logger.getLogger(UserService.class);
+
     @Override
     public User add(User user) throws Exception {
-        if (userDao.getByEmail(user.getEmail()) != null)
+
+        logger.info("Trying add user");
+
+        if (userDao.getByEmail(user.getEmail()) != null) {
+            logger.info("User is already exist");
             return null;
-        else if (userDao.add(user) == null)
+        } else if (userDao.add(user) == null) {
+            logger.info("Unique constraint user");
             return null;
-        else return user;
+        } else return user;
     }
 
     @Override
     public boolean delete(User user) throws Exception {
         try {
+            logger.info("Trying delete user");
             userDao.delete(user);
         } catch (DataIntegrityViolationException e) {
             return false;
@@ -41,6 +50,7 @@ public class UserService implements IService<User> {
     @Override
     public List<User> getAll(Integer position) throws Exception {
 
+        logger.info("Getting all user");
         return userDao.getAll(position);
     }
 
@@ -50,10 +60,13 @@ public class UserService implements IService<User> {
     }
 
     public void update(User user) throws Exception {
+
+        logger.info("update user");
         userDao.update(user);
     }
 
     public User getById(Integer id) throws Exception {
+        logger.info("Get by Id User");
         return userDao.getByUserID(id);
     }
 

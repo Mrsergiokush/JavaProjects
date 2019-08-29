@@ -2,6 +2,7 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.User;
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -17,9 +18,12 @@ import java.util.List;
 import static org.hibernate.criterion.Restrictions.eq;
 
 @Repository
-public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user WHERE user_name = ? LIMIT 3 OFFSET from
+public class UserDaoHibernate implements IDaoUser {
+
+    public static final Logger logger = Logger.getLogger(UserDaoHibernate.class);
+
     @Override
-    public List<User> getByUserName(String userName, Integer from) {
+    public List<User> getByUserName(String userName, Integer from) {  //SELECT * FROM public.user WHERE user_name = ? LIMIT 3 OFFSET from
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         return (List<User>) session.createCriteria(User.class)
                 .add(eq("userName", userName))
@@ -31,7 +35,6 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     @Override
     public User getByUserID(Integer userId) { //select * from user where user_id = userId
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<User> cr = criteriaBuilder.createQuery(User.class);
         Root<User> root = cr.from(User.class);
@@ -39,7 +42,6 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
 
         Query<User> query = session.createQuery(cr);
         User user = query.getSingleResult();
-        transaction.commit();
         return user;
     }
 
@@ -48,7 +50,6 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
 
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
 
-        Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<User> cr = criteriaBuilder.createQuery(User.class);
         Root<User> root = cr.from(User.class);
@@ -58,7 +59,6 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
 
         try {
             User user = query.getSingleResult();
-            transaction.commit();
             return user;
         } catch (NoResultException e) {
             return null;
@@ -68,7 +68,6 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
     @Override
     public List<User> getByAge(Integer age, Integer from) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<User> cr = criteriaBuilder.createQuery(User.class);
         Root<User> root = cr.from(User.class);
@@ -77,7 +76,6 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
         cr.select(root).where(criteriaBuilder.equal(root.get("age"), age));
         Query<User> query = session.createQuery(cr);
         List<User> users = query.setFirstResult(from).setMaxResults(3).getResultList();
-        transaction.commit();
         return users;
     }
 
@@ -90,8 +88,10 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
         try {
             session.save(user);
             tx1.commit();
+            logger.info("User was successfully added");
             return getByEmail(user.getEmail());
         } catch (ConstraintViolationException e) {
+            logger.info("User wasn't successfully added");
             return null;
         }
 
@@ -102,6 +102,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(getByUserID(user.getId()));
+        logger.info("User was successfully deleted");
         tx1.commit();
         session.close();
         return 1;
@@ -140,6 +141,7 @@ public class UserDaoHibernate implements IDaoUser { //SELECT * FROM public.user 
         Transaction tx1 = session.beginTransaction();
         session.update(user);
         tx1.commit();
+        logger.info("User was successfully updated");
         session.close();
         return 1;
     }

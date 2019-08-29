@@ -2,6 +2,7 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.Task;
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -18,10 +19,12 @@ import java.util.List;
 @Repository
 public class TaskDaoHibernate implements IDaoTask {
 
+    public static final Logger logger = Logger.getLogger(TaskDaoHibernate.class);
+
     @Override
     public List<Task> getTaskByUserId(Integer userId, Integer position) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
+
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Task> cr = criteriaBuilder.createQuery(Task.class);
         Root<Task> root = cr.from(Task.class);
@@ -29,6 +32,9 @@ public class TaskDaoHibernate implements IDaoTask {
         cr.select(root).where(criteriaBuilder.equal(root.get("user"), userId));
         Query<Task> query = session.createQuery(cr);
         List<Task> tasks = query.setFirstResult(position).setMaxResults(3).getResultList();
+
+        logger.info("Get tasks by User Id");
+
         return tasks;
     }
 
@@ -49,8 +55,10 @@ public class TaskDaoHibernate implements IDaoTask {
         try {
             Task task = query.getSingleResult();
             transaction.commit();
+            logger.info("Get task by Name and Id");
             return task;
         } catch (NoResultException e) {
+            logger.info("Get task by Name and Id was FAILED");
             return null;
         }
     }
@@ -58,7 +66,6 @@ public class TaskDaoHibernate implements IDaoTask {
     @Override
     public Task getById(Integer id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Task> cr = criteriaBuilder.createQuery(Task.class);
         Root<Task> root = cr.from(Task.class);
@@ -68,8 +75,10 @@ public class TaskDaoHibernate implements IDaoTask {
 
         try {
             Task task = query.getSingleResult();
+            logger.info("Get task By Id");
             return task;
         } catch (NoResultException e) {
+            logger.info("Get task by ID was FAILED");
             return null;
         }
     }
@@ -82,8 +91,10 @@ public class TaskDaoHibernate implements IDaoTask {
         try {
             session.save(task);
             tx1.commit();
+            logger.info("Task was added successfully");
             return getByUserAndId(task.getUser().getId(), task.getTaskName());
         } catch (ConstraintViolationException e) { // two the same tasks
+            logger.info("Task wasn't added (UNIQUE CONSTRAINT)");
             return null;
         }
 
@@ -95,6 +106,7 @@ public class TaskDaoHibernate implements IDaoTask {
         Transaction tx1 = session.beginTransaction();
         session.delete(task);
         tx1.commit();
+        logger.info("Task was successfully deleted");
         session.close();
         return 1;
     }
@@ -107,7 +119,6 @@ public class TaskDaoHibernate implements IDaoTask {
     @Override
     public Integer getSize() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         //Count number of tasks
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
@@ -123,6 +134,7 @@ public class TaskDaoHibernate implements IDaoTask {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.update(task);
+        logger.info("Task was successfully updated");
         tx1.commit();
         session.close();
         return 1;

@@ -106,3 +106,226 @@
   Подробности: Key (user_email)=(test@gmail.com) already exists.
 2019-08-29 16:24:49 INFO  UserDaoHibernate:94 - User wasn't successfully added
 2019-08-29 16:24:49 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:55 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-08-30 13:30:55 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-08-30 13:30:55 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-08-30 13:30:55 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-08-30 13:30:55 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-08-30 13:30:55 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-08-30 13:30:55 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-08-30 13:30:55 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-08-30 13:30:56 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:81 - Get task by ID was FAILED
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 13:30:58 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 13:30:58 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "task_name_user_id_unique"
+  Подробности: Key (user_id, task_name)=(107, Test) already exists.
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:97 - Task wasn't added (UNIQUE CONSTRAINT)
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 13:30:58 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:144 - User was successfully updated
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 13:30:59 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "email_unique"
+  Подробности: Key (user_email)=(test@gmail.com) already exists.
+2019-08-30 13:30:59 INFO  UserDaoHibernate:94 - User wasn't successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:81 - Get task by ID was FAILED
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 13:30:59 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 13:30:59 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "task_name_user_id_unique"
+  Подробности: Key (user_id, task_name)=(107, Test) already exists.
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:97 - Task wasn't added (UNIQUE CONSTRAINT)
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 13:30:59 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:144 - User was successfully updated
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:30:59 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 13:30:59 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 13:30:59 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "email_unique"
+  Подробности: Key (user_email)=(test@gmail.com) already exists.
+2019-08-30 13:30:59 INFO  UserDaoHibernate:94 - User wasn't successfully added
+2019-08-30 13:30:59 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 13:31:36 INFO  UserService:53 - Getting all user
+2019-08-30 13:31:36 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-08-30 13:31:37 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-08-30 13:31:37 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-08-30 13:31:37 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-08-30 13:31:37 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-08-30 13:31:37 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-08-30 13:31:37 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-08-30 13:31:37 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-08-30 13:31:38 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-08-30 13:31:39 INFO  UserService:53 - Getting all user
+2019-08-30 14:49:30 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-08-30 14:49:30 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-08-30 14:49:30 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-08-30 14:49:30 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-08-30 14:49:30 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-08-30 14:49:30 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-08-30 14:49:30 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-08-30 14:49:30 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-08-30 14:49:31 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:81 - Get task by ID was FAILED
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:49:33 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 14:49:33 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "task_name_user_id_unique"
+  Подробности: Key (user_id, task_name)=(107, Test) already exists.
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:97 - Task wasn't added (UNIQUE CONSTRAINT)
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 14:49:33 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:49:33 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:49:33 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:49:33 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:49:33 INFO  UserDaoHibernate:144 - User was successfully updated
+2019-08-30 14:49:33 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:49:33 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:49:33 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:49:33 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:49:33 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:49:33 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:49:33 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 14:49:33 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "email_unique"
+  Подробности: Key (user_email)=(test@gmail.com) already exists.
+2019-08-30 14:49:33 INFO  UserDaoHibernate:94 - User wasn't successfully added
+2019-08-30 14:49:33 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:28 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-08-30 14:52:28 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-08-30 14:52:28 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-08-30 14:52:28 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-08-30 14:52:28 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-08-30 14:52:28 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-08-30 14:52:28 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-08-30 14:52:28 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-08-30 14:52:29 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:81 - Get task by ID was FAILED
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:52:31 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 14:52:31 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "task_name_user_id_unique"
+  Подробности: Key (user_id, task_name)=(107, Test) already exists.
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:97 - Task wasn't added (UNIQUE CONSTRAINT)
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:144 - User was successfully updated
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 14:52:31 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "email_unique"
+  Подробности: Key (user_email)=(test@gmail.com) already exists.
+2019-08-30 14:52:31 INFO  UserDaoHibernate:94 - User wasn't successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:81 - Get task by ID was FAILED
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:52:31 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 14:52:31 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "task_name_user_id_unique"
+  Подробности: Key (user_id, task_name)=(107, Test) already exists.
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:97 - Task wasn't added (UNIQUE CONSTRAINT)
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:94 - Task was added successfully
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:58 - Get task by Name and Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:78 - Get task By Id
+2019-08-30 14:52:31 INFO  TaskDaoHibernate:109 - Task was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:144 - User was successfully updated
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:31 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:52:31 WARN  SqlExceptionHelper:137 - SQL Error: 0, SQLState: 23505
+2019-08-30 14:52:31 ERROR SqlExceptionHelper:142 - ERROR: duplicate key value violates unique constraint "email_unique"
+  Подробности: Key (user_email)=(test@gmail.com) already exists.
+2019-08-30 14:52:31 INFO  UserDaoHibernate:94 - User wasn't successfully added
+2019-08-30 14:52:31 INFO  UserDaoHibernate:105 - User was successfully deleted
+2019-08-30 14:52:47 INFO  UserService:53 - Getting all user
+2019-08-30 14:52:47 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-08-30 14:52:48 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-08-30 14:52:48 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-08-30 14:52:48 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-08-30 14:52:48 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-08-30 14:52:48 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-08-30 14:52:48 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-08-30 14:52:48 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-08-30 14:52:49 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-08-30 14:53:20 INFO  UserService:26 - Trying add user
+2019-08-30 14:53:20 INFO  UserDaoHibernate:91 - User was successfully added
+2019-08-30 14:53:20 INFO  UserService:53 - Getting all user
+2019-08-30 14:53:34 INFO  TaskService:47 - Trying get all tasks by user Id
+2019-08-30 14:53:34 INFO  TaskDaoHibernate:36 - Get tasks by User Id

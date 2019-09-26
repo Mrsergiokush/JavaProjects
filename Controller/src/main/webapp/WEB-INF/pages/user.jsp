@@ -10,6 +10,7 @@
 
 <c:set var="from" value="${from}"/>
 <c:set var="size" value="${size}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <title>Title</title>
@@ -33,7 +34,7 @@
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
-                    <th>UserName</th>
+                    <th>Username</th>
                     <th>Id</th>
                     <th>Age</th>
                     <th>Email</th>
@@ -44,7 +45,7 @@
                 </thead>
                 <c:forEach var="user" items="${userList}">
                     <tr>
-                        <td>${user.userName}</td>
+                        <td>${user.username}</td>
                         <td>${user.id}</td>
                         <td>${user.age}</td>
                         <td>${user.email}</td>
@@ -83,15 +84,28 @@
             <label class="input-group-text" for="inputGroupSelect02">Filter By</label>
         </div>
     </div>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default">Input</span>
-        </div>
-        <div>
-            <input class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                   value="value" name="value"/>
-        </div>
+    <div class="input-group mb-3"/>
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">Input</span>
+    </div>
+    <div>
+        <input class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+               value="value" name="value"/>
+    </div>
 </form>
+
+<div class="container">
+    <c:if test="${pageContext.request.userPrincipal.name != null}">
+        <form id="logoutForm" method="POST" action="${contextPath}/logout">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+
+        <%--        <a onclick="document.forms['logoutForm'].submit()">Logout</a>--%>
+        <a class="btn btn-primary">Logout</a>
+        <%--        <a class="btn btn-primary" href=${from+3}>Next</a>--%>
+
+    </c:if>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

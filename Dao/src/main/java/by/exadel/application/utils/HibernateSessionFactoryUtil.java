@@ -1,5 +1,6 @@
 package by.exadel.application.utils;
 
+import by.exadel.application.model.Role;
 import by.exadel.application.model.Task;
 import by.exadel.application.model.User;
 import org.hibernate.SessionFactory;
@@ -21,6 +22,7 @@ public class HibernateSessionFactoryUtil {
                 Configuration configuration = new Configuration().configure();
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(Task.class);
+                configuration.addAnnotatedClass(Role.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 

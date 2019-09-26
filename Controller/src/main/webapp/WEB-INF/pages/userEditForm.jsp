@@ -13,7 +13,7 @@
 </head>
 <body>
 <form:form method="PUT" action="/JavaProjects/user/${user.id}">
-    <input type="text" name = "userName" value="${user.userName}">
+    <input type="text" name = "userName" value="${user.username}">
     <input type="email" name = "email" value="${user.email}">
     <input type="number" name = "age" value="${user.age}">
     <input type="submit" value="Save">

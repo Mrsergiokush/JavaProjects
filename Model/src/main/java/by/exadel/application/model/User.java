@@ -2,6 +2,7 @@ package by.exadel.application.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -12,7 +13,7 @@ public class User {
     private Integer id;
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     @Column(name = "user_age")
     private Integer age;
@@ -20,11 +21,46 @@ public class User {
     @Column(name = "user_email")
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
+    @Transient
+    private String confirmPassword;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public User() {
     }
 
     public User(String username) {
-        this.userName = username;
+        this.username = username;
     }
 
     public Integer getId() {
@@ -35,12 +71,12 @@ public class User {
         this.id = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getAge() {
@@ -65,21 +101,21 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id.equals(user.id) &&
-                userName.equals(user.userName) &&
+                username.equals(user.username) &&
                 age.equals(user.age) &&
                 email.equals(user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, age, email);
+        return Objects.hash(id, username, age, email);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + id +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 '}';

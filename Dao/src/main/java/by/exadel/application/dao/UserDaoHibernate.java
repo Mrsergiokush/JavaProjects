@@ -2,7 +2,6 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.User;
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -20,7 +19,7 @@ import static org.hibernate.criterion.Restrictions.eq;
 @Repository
 public class UserDaoHibernate implements IDaoUser {
 
-    public static final Logger logger = Logger.getLogger(UserDaoHibernate.class);
+//    public static final Logger logger = Logger.getLogger(UserDaoHibernate.class);
 
     @Override
     public List<User> getByUserName(String userName, Integer from) {  //SELECT * FROM public.user WHERE user_name = ? LIMIT 3 OFFSET from
@@ -88,10 +87,10 @@ public class UserDaoHibernate implements IDaoUser {
         try {
             session.save(user);
             tx1.commit();
-            logger.info("User was successfully added");
+//            logger.info("User was successfully added");
             return getByEmail(user.getEmail());
         } catch (ConstraintViolationException e) {
-            logger.info("User wasn't successfully added");
+//            logger.info("User wasn't successfully added");
             return null;
         }
 
@@ -102,7 +101,7 @@ public class UserDaoHibernate implements IDaoUser {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(getByUserID(user.getId()));
-        logger.info("User was successfully deleted");
+//        logger.info("User was successfully deleted");
         tx1.commit();
         session.close();
         return 1;
@@ -141,7 +140,7 @@ public class UserDaoHibernate implements IDaoUser {
         Transaction tx1 = session.beginTransaction();
         session.update(user);
         tx1.commit();
-        logger.info("User was successfully updated");
+//        logger.info("User was successfully updated");
         session.close();
         return 1;
     }

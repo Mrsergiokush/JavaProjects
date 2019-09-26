@@ -2,7 +2,6 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.Task;
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -19,7 +18,7 @@ import java.util.List;
 @Repository
 public class TaskDaoHibernate implements IDaoTask {
 
-    public static final Logger logger = Logger.getLogger(TaskDaoHibernate.class);
+//    public static final Logger logger = Logger.getLogger(TaskDaoHibernate.class);
 
     @Override
     public List<Task> getTaskByUserId(Integer userId, Integer position) {
@@ -33,7 +32,7 @@ public class TaskDaoHibernate implements IDaoTask {
         Query<Task> query = session.createQuery(cr);
         List<Task> tasks = query.setFirstResult(position).setMaxResults(3).getResultList();
 
-        logger.info("Get tasks by User Id");
+//        logger.info("Get tasks by User Id");
 
         return tasks;
     }
@@ -55,10 +54,10 @@ public class TaskDaoHibernate implements IDaoTask {
         try {
             Task task = query.getSingleResult();
             transaction.commit();
-            logger.info("Get task by Name and Id");
+//            logger.info("Get task by Name and Id");
             return task;
         } catch (NoResultException e) {
-            logger.info("Get task by Name and Id was FAILED");
+//            logger.info("Get task by Name and Id was FAILED");
             return null;
         }
     }
@@ -75,10 +74,10 @@ public class TaskDaoHibernate implements IDaoTask {
 
         try {
             Task task = query.getSingleResult();
-            logger.info("Get task By Id");
+//            logger.info("Get task By Id");
             return task;
         } catch (NoResultException e) {
-            logger.info("Get task by ID was FAILED");
+//            logger.info("Get task by ID was FAILED");
             return null;
         }
     }
@@ -91,10 +90,10 @@ public class TaskDaoHibernate implements IDaoTask {
         try {
             session.save(task);
             tx1.commit();
-            logger.info("Task was added successfully");
+//            logger.info("Task was added successfully");
             return getByUserAndId(task.getUser().getId(), task.getTaskName());
         } catch (ConstraintViolationException e) { // two the same tasks
-            logger.info("Task wasn't added (UNIQUE CONSTRAINT)");
+//            logger.info("Task wasn't added (UNIQUE CONSTRAINT)");
             return null;
         }
 
@@ -106,7 +105,7 @@ public class TaskDaoHibernate implements IDaoTask {
         Transaction tx1 = session.beginTransaction();
         session.delete(task);
         tx1.commit();
-        logger.info("Task was successfully deleted");
+//        logger.info("Task was successfully deleted");
         session.close();
         return 1;
     }
@@ -134,7 +133,7 @@ public class TaskDaoHibernate implements IDaoTask {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.update(task);
-        logger.info("Task was successfully updated");
+//        logger.info("Task was successfully updated");
         tx1.commit();
         session.close();
         return 1;

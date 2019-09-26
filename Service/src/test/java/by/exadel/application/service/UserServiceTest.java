@@ -1,3 +1,4 @@
+/*
 package by.exadel.application.service;
 
 import by.exadel.application.dao.UserDaoHibernate;
@@ -89,4 +90,4 @@ public class UserServiceTest {
     public void getByFilter() {
 
     }
-}
+}*/

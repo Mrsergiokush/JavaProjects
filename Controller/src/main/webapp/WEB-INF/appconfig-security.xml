@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context:beans xmlns="http://www.springframework.org/schema/security"
+               xmlns:context="http://www.springframework.org/schema/beans"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http auto-config="true">
+        <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+<!--        <intercept-url pattern="/user/0" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>-->
+        <form-login login-page="/login" default-target-url="/user/0" authentication-failure-url="/login?error"
+                    username-parameter="username" password-parameter="password"/>
+
+        <logout logout-success-url="/login?logout"/>
+    </http>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder ref="encoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <context:bean id="userDetailsService"
+                  class="by.exadel.application.service.UserDetailServiceImpl"/>
+
+    <context:bean id="encoder"
+                  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <context:constructor-arg name="strength" value="11"/>
+    </context:bean>
+</context:beans>

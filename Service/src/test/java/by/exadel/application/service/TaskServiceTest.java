@@ -1,3 +1,4 @@
+/*
 package by.exadel.application.service;
 
 import by.exadel.application.dao.TaskDaoHibernate;
@@ -82,4 +83,4 @@ public class TaskServiceTest {
     public void update() {
 
     }
-}
+}*/

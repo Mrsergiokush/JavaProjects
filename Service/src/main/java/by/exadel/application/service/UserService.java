@@ -1,16 +1,20 @@
 package by.exadel.application.service;
 
 import by.exadel.application.dao.IDaoUser;
+import by.exadel.application.dao.RoleDao;
 import by.exadel.application.model.Filter;
+import by.exadel.application.model.Role;
 import by.exadel.application.model.User;
-import org.apache.log4j.Logger;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService implements IService<User> {
@@ -18,18 +22,24 @@ public class UserService implements IService<User> {
     @Autowired
     private IDaoUser userDao;
 
-    public static final Logger logger = Logger.getLogger(UserService.class);
+    @Autowired
+    private RoleDao roleDao;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+//    public static final Logger logger = Logger.getLogger(UserService.class);
 
     @Override
     public User add(User user) throws Exception {
 
-        logger.info("Trying add user");
+//        logger.info("Trying add user");
 
         if (userDao.getByEmail(user.getEmail()) != null) {
-            logger.info("User is already exist");
+//            logger.info("User is already exist");
             return null;
         } else if (userDao.add(user) == null) {
-            logger.info("Unique constraint user");
+//            logger.info("Unique constraint user");
             return null;
         } else return user;
     }
@@ -37,7 +47,7 @@ public class UserService implements IService<User> {
     @Override
     public boolean delete(User user) throws Exception {
         try {
-            logger.info("Trying delete user");
+//            logger.info("Trying delete user");
             userDao.delete(user);
         } catch (DataIntegrityViolationException e) {
             return false;
@@ -50,7 +60,7 @@ public class UserService implements IService<User> {
     @Override
     public List<User> getAll(Integer position) throws Exception {
 
-        logger.info("Getting all user");
+//        logger.info("Getting all user");
         return userDao.getAll(position);
     }
 
@@ -61,16 +71,16 @@ public class UserService implements IService<User> {
 
     public void update(User user) throws Exception {
 
-        logger.info("update user");
+//        logger.info("update user");
         userDao.update(user);
     }
 
-    public User getById(Integer id) throws Exception {
-        logger.info("Get by Id User");
+    public User getById(Integer id) {
+//        logger.info("Get by Id User");
         return userDao.getByUserID(id);
     }
 
-    public List<User> getByFilter(Filter filter, Integer from) throws Exception { //from - элемент паггинации(если нацденных знаений много, то извекать будем по частям)
+    public List<User> getByFilter(Filter filter, Integer from) { //from - элемент паггинации(если нацденных знаений много, то извекать будем по частям)
 
         String type = filter.getType();
         String value = filter.getValue();
@@ -85,5 +95,17 @@ public class UserService implements IService<User> {
             default:
                 return null;
         }
+    }
+
+    public void save(User user) throws Exception {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Set<Role> roles = new HashSet<>();
+        roles.add((roleDao.getOne(1)));
+        user.setRoles(roles);
+        userDao.add(user);
+    }
+
+    public User getByEmail(String email) {
+        return userDao.getByEmail(email);
     }
 }

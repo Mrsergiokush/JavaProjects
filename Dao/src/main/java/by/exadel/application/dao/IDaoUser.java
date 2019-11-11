@@ -13,4 +13,6 @@ public interface IDaoUser extends IDao<User> {
     User getByEmail(String email);
 
     List<User> getByAge(Integer age, Integer from);
+
+    List<User> getAll(Integer pos);
 }

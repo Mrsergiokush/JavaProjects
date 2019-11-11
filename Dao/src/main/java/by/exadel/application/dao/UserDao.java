@@ -38,25 +38,19 @@ public class UserDao implements IDaoUser {
         Root<User> root = cr.from(User.class);
         cr.select(root).where(criteriaBuilder.equal(root.get("id"), userId));
         Query<User> query = session.createQuery(cr);
-        User user = query.getSingleResult();
-        return user;
+        return query.getSingleResult();
     }
 
     @Override
     public User getByEmail(String email) {
-
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<User> cr = criteriaBuilder.createQuery(User.class);
         Root<User> root = cr.from(User.class);
         cr.select(root).where(criteriaBuilder.equal(root.get("email"), email));
-
         Query<User> query = session.createQuery(cr);
-
         try {
-            User user = query.getSingleResult();
-            return user;
+            return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
@@ -70,8 +64,10 @@ public class UserDao implements IDaoUser {
         Root<User> root = cr.from(User.class);
         cr.select(root).where(criteriaBuilder.equal(root.get("age"), age));
         Query<User> query = session.createQuery(cr);
-        List<User> users = query.setFirstResult(from).setMaxResults(3).getResultList();
-        return users;
+        return query
+                .setFirstResult(from)
+                .setMaxResults(3)
+                .getResultList();
     }
 
     @Override

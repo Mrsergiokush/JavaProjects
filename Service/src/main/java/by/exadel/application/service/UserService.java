@@ -28,18 +28,11 @@ public class UserService implements IService<User> {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    public static final Logger logger = Logger.getLogger(UserService.class);
-
     @Override
     public User add(User user) throws Exception {
-
-//        logger.info("Trying add user");
-
         if (userDao.getByEmail(user.getEmail()) != null) {
-//            logger.info("User is already exist");
             return null;
         } else if (userDao.add(user) == null) {
-//            logger.info("Unique constraint user");
             return null;
         } else return user;
     }
@@ -47,7 +40,6 @@ public class UserService implements IService<User> {
     @Override
     public boolean delete(User user) throws Exception {
         try {
-//            logger.info("Trying delete user");
             userDao.delete(user);
         } catch (DataIntegrityViolationException e) {
             return false;
@@ -57,10 +49,7 @@ public class UserService implements IService<User> {
         return true;
     }
 
-    @Override
     public List<User> getAll(Integer position) throws Exception {
-
-//        logger.info("Getting all user");
         return userDao.getAll(position);
     }
 
@@ -70,21 +59,16 @@ public class UserService implements IService<User> {
     }
 
     public void update(User user) throws Exception {
-
-//        logger.info("update user");
         userDao.update(user);
     }
 
     public User getById(Integer id) {
-//        logger.info("Get by Id User");
         return userDao.getByUserID(id);
     }
 
-    public List<User> getByFilter(Filter filter, Integer from) { //from - элемент паггинации(если нацденных знаений много, то извекать будем по частям)
-
+    public List<User> getByFilter(Filter filter, Integer from) {
         String type = filter.getType();
         String value = filter.getValue();
-
         switch (type) {
             case "name":
                 return userDao.getByUserName(value, from);

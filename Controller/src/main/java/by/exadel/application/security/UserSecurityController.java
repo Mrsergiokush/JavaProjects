@@ -66,4 +66,9 @@ public class UserSecurityController {
     public String admin(Model model) {
         return "admin";
     }
+
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public String accessDenied(){
+        return "accessDenied";
+    }
 }

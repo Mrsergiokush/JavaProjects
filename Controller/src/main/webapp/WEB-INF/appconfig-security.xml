@@ -7,14 +7,16 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http auto-config="true">
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/resources/css/*" access="permitAll()"/>
+        <intercept-url pattern="/resources/js/*" access="permitAll()"/>
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/user/**" access="authenticated"/>
+        <access-denied-handler error-page="/accessDenied"/>
         <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>
-
         <logout logout-success-url="/login?logout"/>
     </http>
 

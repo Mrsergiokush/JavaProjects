@@ -87,11 +87,6 @@ public class TaskDao implements IDaoTask {
     }
 
     @Override
-    public List<Task> getAll(Integer pos) {
-        return null;
-    }
-
-    @Override
     public Integer getSize() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -99,7 +94,7 @@ public class TaskDao implements IDaoTask {
         Root<Task> root = criteriaQuery.from(Task.class);
         criteriaQuery.select(criteriaBuilder.count(root));
         Query<Long> query = session.createQuery(criteriaQuery);
-        long count = query.getSingleResult();
+        Long count = query.getSingleResult();
         return Math.toIntExact(count); //to Int
     }
 

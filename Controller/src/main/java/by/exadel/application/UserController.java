@@ -2,9 +2,9 @@ package by.exadel.application;
 
 import by.exadel.application.model.Filter;
 import by.exadel.application.model.User;
+import by.exadel.application.service.UserDetailServiceImpl;
 import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +22,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
-    @Secured("ROLE_USER")
     @RequestMapping(value = "/{from}", method = RequestMethod.GET)
     public String getAllUsers(@PathVariable Integer from, Model model) throws Exception {
         List<User> users = userService.getAll(from);
@@ -33,7 +31,6 @@ public class UserController {
         return "user";
     }
 
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addNewUserPage() {
         return "addNewUser";
@@ -53,7 +50,6 @@ public class UserController {
             return "redirect:0";
     }
 
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public String deleteItem(@PathVariable Integer id) throws Exception {
         User user = new User();
@@ -63,25 +59,36 @@ public class UserController {
     }
 
     @RequestMapping(value = "{id}/edit")
-    public String editForm(@PathVariable Integer id, Model model) throws Exception {
+    public String editForm(@PathVariable Integer id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
         return "userEditForm";
     }
 
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public String save(@ModelAttribute("user") User user) throws Exception {
         userService.update(user);
         return "redirect:/user/0";
     }
 
-    @Secured("ROLE_USER")
     @RequestMapping(value = "/{from}", method = RequestMethod.POST) //filter
     public String filter(@PathVariable Integer from, Filter filter, Model model) throws Exception {
-        List<User> users = userService.getByFilter(filter , from);
+        List<User> users = userService.getByFilter(filter, from);
         model.addAttribute("userList", users);
         model.addAttribute("from", from);
         return "user";
+    }
+
+    @RequestMapping(value = "/validate", method = RequestMethod.GET)
+    public String getCurrentUser() {
+        UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
+        String userEmail = userDetailService.getEmailOfCurrentUser();
+        Integer id = userService.getByEmail(userEmail).getId();
+        return "redirect:"+id.toString()+"/task/0";
+    }
+
+    boolean isHasPermission(String email){
+            UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
+        return email.equals(userDetailService.getEmailOfCurrentUser());
     }
 }

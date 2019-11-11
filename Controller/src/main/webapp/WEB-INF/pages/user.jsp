@@ -73,7 +73,7 @@
         </div>
     </div>
 </div>
-<form class="form" method="post" action="0">
+<form:form class="form" method="post" action="0">
     <div class="input-group mb-3">
         <select name="type" class="custom-select" id="inputGroupSelect02">
             <option value="name">Name</option>
@@ -92,20 +92,7 @@
         <input class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
                value="value" name="value"/>
     </div>
-</form>
-
-<div class="container">
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-
-        <%--        <a onclick="document.forms['logoutForm'].submit()">Logout</a>--%>
-        <a class="btn btn-primary">Logout</a>
-        <%--        <a class="btn btn-primary" href=${from+3}>Next</a>--%>
-
-    </c:if>
-</div>
+</form:form>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -16,5 +16,6 @@
 
         <mapping class="by.exadel.application.model.User"/>
         <mapping class="by.exadel.application.model.Task"/>
+        <mapping class="by.exadel.application.model.Role"/>
     </session-factory>
 </hibernate-configuration>

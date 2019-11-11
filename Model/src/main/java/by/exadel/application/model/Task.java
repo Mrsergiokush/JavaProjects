@@ -1,5 +1,6 @@
 package by.exadel.application.model;
 
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -7,6 +8,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "task")
 public class Task {
 
@@ -28,18 +31,18 @@ public class Task {
     @Column(name = "task_priority")
     private String priority;
 
+    @Column(name = "task_isdone")
+    private boolean isDone;
+
+    public Task() {
+    }
+
     public String getPriority() {
         return priority;
     }
 
     public void setPriority(String priority) {
         this.priority = priority;
-    }
-
-    @Column(name = "task_isdone")
-    private boolean isDone;
-
-    public Task() {
     }
 
     public boolean isDone() {
@@ -118,3 +121,5 @@ public class Task {
                 '}';
     }
 }
+
+

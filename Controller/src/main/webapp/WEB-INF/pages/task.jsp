@@ -44,8 +44,11 @@
                         <td>${task.done}</td>
 
                         <td><a class="btn btn-primary" href="${task.id}/edit"><i class="fa fa-pencil-alt"/></a></td>
-                        <form:form method="DELETE" action="${task.id}">
-                            <td><button class="btn btn-primary" type="submit"/><i class="fa fa-trash-alt"/></td>
+                        <form:form method="delete" action="${task.id}">
+                            <td>
+                                <button class="btn btn-primary" type="submit"/>
+                                <i class="fa fa-trash-alt"/>
+                            </td>
                         </form:form>
                     </tr>
                 </c:forEach>
@@ -58,8 +61,8 @@
                 <a class="btn btn-primary" href=${from-3}>Back</a>
             </c:if>
 
-            <a  class="btn btn-primary" href="add">Add new task</a>
-            <a class="btn btn-primary" href="/JavaProjects/user/0">Show users</a>
+            <a class="btn btn-primary" href="add">Add new task</a>
+            <a class="btn btn-primary" href="/JavaProject/user/0">Show users</a>
         </div>
     </div>
 </div>

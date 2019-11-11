@@ -1,12 +1,10 @@
 package by.exadel.application;
 
-
 import by.exadel.application.model.Task;
 import by.exadel.application.service.TaskService;
 import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +21,8 @@ public class TaskController {
     @Autowired
     private UserService userService;
 
-    @Secured("ROLE_USER")
     @RequestMapping(value = "/{from}", method = RequestMethod.GET)
     public String getAllUsers(@PathVariable Integer from, @PathVariable Integer id, Model model) throws Exception {
-
         List<Task> tasks = taskService.getAll(id, from);
         model.addAttribute("size", taskService.getSize());
         model.addAttribute("from", from);
@@ -34,13 +30,11 @@ public class TaskController {
         return "task";
     }
 
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addNewTaskPage() {
         return "addNewTask";
     }
 
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addTask(@PathVariable Integer id, @RequestParam(value = "taskName") String taskName,
                           @RequestParam(value = "deadLine") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadLine,
@@ -64,7 +58,6 @@ public class TaskController {
             return "redirect:0";
     }
 
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)
     public String deleteTask(@PathVariable Integer taskId) throws Exception {
         Task task = new Task();
@@ -73,7 +66,6 @@ public class TaskController {
         return "redirect:0";
     }
 
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "{taskId}/edit")
     public String editForm(@PathVariable Integer taskId, Model model) throws Exception {
         Task task = taskService.getById(taskId);
@@ -81,15 +73,13 @@ public class TaskController {
         return "taskEditForm";
     }
 
-    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "{taskId}", method = RequestMethod.PUT)
-    public String save(@PathVariable Integer id, @ModelAttribute("task") Task task, @RequestParam(value = "isDone") String isDone) throws Exception {
-
+    public String save(@PathVariable Integer id, @PathVariable Integer taskId, @ModelAttribute("task") Task task, @RequestParam(value = "isDone") String isDone) throws Exception {
+        task.setId(taskId);
         if (isDone.equals("Done"))
             task.setDone(true);
         else
             task.setDone(false);
-
         task.setUser(userService.getById(id));
         taskService.update(task);
         return "redirect:0";

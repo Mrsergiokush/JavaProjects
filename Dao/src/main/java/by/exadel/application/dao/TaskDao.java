@@ -15,25 +15,21 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-@Repository
-public class TaskDaoHibernate implements IDaoTask {
+import static org.hibernate.criterion.Restrictions.eq;
 
-//    public static final Logger logger = Logger.getLogger(TaskDaoHibernate.class);
+@Repository
+public class TaskDao implements IDaoTask {
 
     @Override
     public List<Task> getTaskByUserId(Integer userId, Integer position) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Task> cr = criteriaBuilder.createQuery(Task.class);
         Root<Task> root = cr.from(Task.class);
-
         cr.select(root).where(criteriaBuilder.equal(root.get("user"), userId));
         Query<Task> query = session.createQuery(cr);
         List<Task> tasks = query.setFirstResult(position).setMaxResults(3).getResultList();
-
-//        logger.info("Get tasks by User Id");
-
+        session.close();
         return tasks;
     }
 
@@ -44,59 +40,40 @@ public class TaskDaoHibernate implements IDaoTask {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Task> cr = criteriaBuilder.createQuery(Task.class);
         Root<Task> root = cr.from(Task.class);
-
         Predicate[] predicates = new Predicate[2];
         predicates[0] = criteriaBuilder.equal(root.get("user"), userId);
         predicates[1] = criteriaBuilder.equal(root.get("taskName"), taskName);
         cr.select(root).where(predicates);
-
         Query<Task> query = session.createQuery(cr);
         try {
             Task task = query.getSingleResult();
             transaction.commit();
-//            logger.info("Get task by Name and Id");
             return task;
         } catch (NoResultException e) {
-//            logger.info("Get task by Name and Id was FAILED");
             return null;
         }
     }
 
+    ////TODO This method can return null value so I must think about solution of this problem
     @Override
     public Task getById(Integer id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Task> cr = criteriaBuilder.createQuery(Task.class);
-        Root<Task> root = cr.from(Task.class);
-        cr.select(root).where(criteriaBuilder.equal(root.get("id"), id));
-
-        Query<Task> query = session.createQuery(cr);
-
-        try {
-            Task task = query.getSingleResult();
-//            logger.info("Get task By Id");
-            return task;
-        } catch (NoResultException e) {
-//            logger.info("Get task by ID was FAILED");
-            return null;
-        }
+        return (Task) session.createCriteria(Task.class)
+                .add(eq("id", id))
+                .uniqueResult();
     }
 
     @Override
     public Task add(Task task) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-
         try {
             session.save(task);
             tx1.commit();
-//            logger.info("Task was added successfully");
             return getByUserAndId(task.getUser().getId(), task.getTaskName());
-        } catch (ConstraintViolationException e) { // two the same tasks
-//            logger.info("Task wasn't added (UNIQUE CONSTRAINT)");
+        } catch (ConstraintViolationException e) {
             return null;
         }
-
     }
 
     @Override
@@ -105,7 +82,6 @@ public class TaskDaoHibernate implements IDaoTask {
         Transaction tx1 = session.beginTransaction();
         session.delete(task);
         tx1.commit();
-//        logger.info("Task was successfully deleted");
         session.close();
         return 1;
     }
@@ -119,7 +95,6 @@ public class TaskDaoHibernate implements IDaoTask {
     public Integer getSize() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        //Count number of tasks
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<Task> root = criteriaQuery.from(Task.class);
         criteriaQuery.select(criteriaBuilder.count(root));
@@ -129,11 +104,10 @@ public class TaskDaoHibernate implements IDaoTask {
     }
 
     @Override
-    public Integer update(Task task) throws Exception {
+    public Integer update(Task task) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.update(task);
-//        logger.info("Task was successfully updated");
         tx1.commit();
         session.close();
         return 1;

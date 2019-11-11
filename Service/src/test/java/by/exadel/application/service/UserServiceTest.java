@@ -1,5 +1,4 @@
-/*
-package by.exadel.application.service;
+/*package by.exadel.application.service;
 
 import by.exadel.application.dao.UserDaoHibernate;
 import by.exadel.application.model.User;
@@ -9,38 +8,34 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:hibernate.cfg.xml")
 public class UserServiceTest {
 
     UserDaoHibernate dao = new UserDaoHibernate();
 
-    public User userInit() {
-        User user = new User();
 
-        user.setUserName("Test");
-        user.setAge(23);
-        user.setEmail("test@gmail.com");
-
-        return user;
+    public User initUser() {
+        return User.builder().username("Alex")
+                .email("alex@gmail.com")
+                .age(12)
+                .password("12345678")
+                .roles()
+                .build();
     }
 
     @Test
     public void add() {
-        User user = userInit();
-
+        User user = initUser();
         dao.add(user);
-
         Assert.assertEquals(user, dao.getByEmail(user.getEmail()));
-
         dao.delete(user);
     }
 
 
     @Test
     public void add_USER_WITH_SAME_EMAIL() {
-        User user = userInit();
+        User user = initUser();
 
         dao.add(user);
 
@@ -51,7 +46,7 @@ public class UserServiceTest {
 
     @Test
     public void delete() {
-        User user = userInit();
+        User user = initUser();
 
         dao.add(user);
 
@@ -62,7 +57,7 @@ public class UserServiceTest {
 
     @Test
     public void update() {
-        User user = userInit();
+        User user = initUser();
 
         dao.add(user);
 
@@ -78,7 +73,7 @@ public class UserServiceTest {
 
     @Test
     public void getById() {
-        User user = userInit();
+        User user = initUser();
         dao.add(user);
 
         Assert.assertEquals(user.getEmail(), dao.getByUserID(user.getId()).getEmail());

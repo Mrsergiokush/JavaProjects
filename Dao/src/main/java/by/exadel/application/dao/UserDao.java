@@ -17,35 +17,33 @@ import java.util.List;
 import static org.hibernate.criterion.Restrictions.eq;
 
 @Repository
-public class UserDaoHibernate implements IDaoUser {
-
-//    public static final Logger logger = Logger.getLogger(UserDaoHibernate.class);
+public class UserDao implements IDaoUser {
 
     @Override
-    public List<User> getByUserName(String userName, Integer from) {  //SELECT * FROM public.user WHERE user_name = ? LIMIT 3 OFFSET from
+    @SuppressWarnings("unchecked")
+    public List<User> getByUserName(String userName, Integer from) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         return (List<User>) session.createCriteria(User.class)
-                .add(eq("userName", userName))
+                .add(eq("username", userName))
                 .setMaxResults(3)
                 .setFirstResult(from)
                 .list();
     }
 
     @Override
-    public User getByUserID(Integer userId) { //select * from user where user_id = userId
+    public User getByUserID(Integer userId) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<User> cr = criteriaBuilder.createQuery(User.class);
         Root<User> root = cr.from(User.class);
         cr.select(root).where(criteriaBuilder.equal(root.get("id"), userId));
-
         Query<User> query = session.createQuery(cr);
         User user = query.getSingleResult();
         return user;
     }
 
     @Override
-    public User getByEmail(String email) { //select * from user where user_email = email;
+    public User getByEmail(String email) {
 
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
 
@@ -70,8 +68,6 @@ public class UserDaoHibernate implements IDaoUser {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<User> cr = criteriaBuilder.createQuery(User.class);
         Root<User> root = cr.from(User.class);
-
-
         cr.select(root).where(criteriaBuilder.equal(root.get("age"), age));
         Query<User> query = session.createQuery(cr);
         List<User> users = query.setFirstResult(from).setMaxResults(3).getResultList();
@@ -80,28 +76,22 @@ public class UserDaoHibernate implements IDaoUser {
 
     @Override
     public User add(User user) {
-
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-
         try {
             session.save(user);
             tx1.commit();
-//            logger.info("User was successfully added");
             return getByEmail(user.getEmail());
         } catch (ConstraintViolationException e) {
-//            logger.info("User wasn't successfully added");
             return null;
         }
-
     }
 
     @Override
-    public Integer delete(User user) { //User на этапе удаления имеет только поле Id
+    public Integer delete(User user) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(getByUserID(user.getId()));
-//        logger.info("User was successfully deleted");
         tx1.commit();
         session.close();
         return 1;
@@ -114,18 +104,17 @@ public class UserDaoHibernate implements IDaoUser {
         CriteriaQuery<User> cr = cb.createQuery(User.class);
         Root<User> root = cr.from(User.class);
         cr.select(root);
-
         Query<User> query = session.createQuery(cr);
-        List<User> results = query.setFirstResult(pos).setMaxResults(3).getResultList();
-        return results;
+        return query
+                .setFirstResult(pos)
+                .setMaxResults(3)
+                .getResultList();
     }
 
     @Override
     public Integer getSize() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-
-        //Count number of users
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<User> root = criteriaQuery.from(User.class);
         criteriaQuery.select(criteriaBuilder.count(root));
@@ -140,9 +129,7 @@ public class UserDaoHibernate implements IDaoUser {
         Transaction tx1 = session.beginTransaction();
         session.update(user);
         tx1.commit();
-//        logger.info("User was successfully updated");
         session.close();
         return 1;
     }
 }
-//INMEMORY BASE

@@ -13,6 +13,11 @@ import org.hibernate.query.Query;
 
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
 
+/**
+ * @param <T>
+ * @author Sergej Kushner
+ */
+
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
     @SuppressWarnings("unchecked")
@@ -33,13 +38,12 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public Integer delete(T entity) {
+    public void delete(T entity) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(entity);
         tx1.commit();
         session.close();
-        return 1;
     }
 
     @Override
@@ -55,12 +59,11 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public Integer update(T entity) {
+    public void update(T entity) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.update(entity);
         tx1.commit();
         session.close();
-        return 1;
     }
 }

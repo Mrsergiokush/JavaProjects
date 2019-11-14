@@ -2,7 +2,10 @@ package by.exadel.application.service;
 
 import by.exadel.application.dao.IDaoTask;
 import by.exadel.application.model.Task;
+
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,10 +25,13 @@ public class TaskService implements IService<Task> {
     }
 
     @Override
-    public boolean delete(Task task) throws Exception {
-        if (taskDao.delete(task) == 1)
-            return true;
-        else return false;
+    public boolean delete(Task task) throws Exception{
+        try {
+            taskDao.delete(task);
+        } catch (DataIntegrityViolationException | PSQLException e) {
+            return false;
+        }
+        return true;
     }
 
     public List<Task> getAll(Integer Id, Integer pos) throws Exception {

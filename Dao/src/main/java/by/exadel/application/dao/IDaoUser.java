@@ -4,7 +4,7 @@ import by.exadel.application.model.User;
 
 import java.util.List;
 
-public interface IDaoUser extends IDao<User> {
+public interface IDaoUser extends GenericDao<User> {
 
     List<User> getByUserName(String UserName, Integer from);
 

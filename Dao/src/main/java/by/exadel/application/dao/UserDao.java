@@ -2,6 +2,7 @@ package by.exadel.application.dao;
 
 import by.exadel.application.model.User;
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -12,12 +13,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
 import java.util.List;
 
 import static org.hibernate.criterion.Restrictions.eq;
 
 @Repository
-public class UserDao implements IDaoUser {
+public class UserDao extends GenericDaoImpl<User> implements IDaoUser {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -71,29 +73,6 @@ public class UserDao implements IDaoUser {
     }
 
     @Override
-    public User add(User user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        try {
-            session.save(user);
-            tx1.commit();
-            return getByEmail(user.getEmail());
-        } catch (ConstraintViolationException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public Integer delete(User user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(getByUserID(user.getId()));
-        tx1.commit();
-        session.close();
-        return 1;
-    }
-
-    @Override
     public List<User> getAll(Integer pos) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -107,25 +86,4 @@ public class UserDao implements IDaoUser {
                 .getResultList();
     }
 
-    @Override
-    public Integer getSize() {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        criteriaQuery.select(criteriaBuilder.count(root));
-        Query<Long> query = session.createQuery(criteriaQuery);
-        long count = query.getSingleResult();
-        return Math.toIntExact(count);
-    }
-
-    @Override
-    public Integer update(User user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(user);
-        tx1.commit();
-        session.close();
-        return 1;
-    }
 }

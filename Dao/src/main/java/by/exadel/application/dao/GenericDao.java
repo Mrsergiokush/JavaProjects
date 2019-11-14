@@ -1,7 +1,6 @@
 package by.exadel.application.dao;
 
-public interface IDao <T>{
-
+public interface GenericDao<T> {
     T add(T type) throws Exception;
 
     Integer delete(T type) throws Exception;
@@ -9,6 +8,4 @@ public interface IDao <T>{
     Integer getSize() throws Exception;
 
     Integer update(T type) throws Exception;
-
 }
-

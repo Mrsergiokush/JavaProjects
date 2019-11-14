@@ -4,7 +4,7 @@ import by.exadel.application.model.Task;
 
 import java.util.List;
 
-public interface IDaoTask extends IDao<Task> {
+public interface IDaoTask extends GenericDao<Task> {
 
     List<Task> getTaskByUserId(Integer userId, Integer position) throws Exception;
 

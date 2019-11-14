@@ -5,7 +5,7 @@
 <c:set var="size" value="${size}"/>
 <html>
 <head>
-    <title>Title</title>
+    <title>Task List</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -54,11 +54,11 @@
                 </c:forEach>
             </table>
 
-            <c:if test="${from < size-3}">
-                <a class="btn btn-primary" href=${from+3}>Next</a>
+            <c:if test="${from < size-5}">
+                <a class="btn btn-primary" href=${from+5}>Next</a>
             </c:if>
             <c:if test="${from > 0}">
-                <a class="btn btn-primary" href=${from-3}>Back</a>
+                <a class="btn btn-primary" href=${from-5}>Back</a>
             </c:if>
 
             <a class="btn btn-primary" href="add">Add new task</a>

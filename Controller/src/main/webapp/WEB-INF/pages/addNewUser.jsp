@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: sergio
@@ -23,7 +24,7 @@
     </style>
 </head>
 <body>
-<form class="form-inline" action="add" method="POST">
+<form:form class="form-inline" action="add" method="POST">
     <div class="form-group mx-sm-3 mb-2">
         <label></label>
         <input class="form-control" placeholder="Name:" type="text" name="userName">
@@ -37,6 +38,6 @@
         <input type="number" name="age" class="form-control" placeholder="Age">
     </div>
     <input class="btn btn-primary mb-2" type="submit" value="Add new user">
-</form>
+</form:form>
 </body>
 </html>

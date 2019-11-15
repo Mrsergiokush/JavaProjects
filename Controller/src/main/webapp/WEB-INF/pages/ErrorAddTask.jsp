@@ -6,13 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Something goes wrong</title>
-</head>
-<body>
-OOOOPS....Something goes wrong.
-Help: you can't add the same task to one user.
-<a href="/JavaProjects/user/0">Show users</a>
-</body>
-</html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<div class="page-wrap d-flex flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <span class="display-1 d-block">500</span>
+                <div class="mb-4 lead">You can't add the the same task to one user</div>
+                <a href="javascript:history.back()" class="btn btn-link">Back</a>
+            </div>
+        </div>
+    </div>
+</div>

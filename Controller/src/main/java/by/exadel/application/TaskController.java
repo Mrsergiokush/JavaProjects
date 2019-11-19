@@ -1,6 +1,8 @@
 package by.exadel.application;
 
 import by.exadel.application.model.Task;
+import by.exadel.application.service.IServiceTask;
+import by.exadel.application.service.IServiceUser;
 import by.exadel.application.service.TaskService;
 import by.exadel.application.service.UserDetailServiceImpl;
 import by.exadel.application.service.UserService;
@@ -18,9 +20,9 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    private TaskService taskService;
+    private IServiceTask taskService;
     @Autowired
-    private UserService userService;
+    private IServiceUser userService;
 
     @RequestMapping(value = "/{from}", method = RequestMethod.GET)
     public String getAllUsers(@PathVariable Integer from, @PathVariable Integer id, Model model) throws Exception {

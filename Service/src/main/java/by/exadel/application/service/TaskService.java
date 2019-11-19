@@ -7,11 +7,12 @@ import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class TaskService implements IService<Task> {
+public class TaskService implements IServiceTask {
 
     @Autowired
     private IDaoTask taskDao;
@@ -25,7 +26,7 @@ public class TaskService implements IService<Task> {
     }
 
     @Override
-    public boolean delete(Task task) throws Exception{
+    public boolean delete(Task task) throws Exception {
         try {
             taskDao.delete(task);
         } catch (DataIntegrityViolationException | PSQLException e) {
@@ -34,7 +35,8 @@ public class TaskService implements IService<Task> {
         return true;
     }
 
-    public List<Task> getAll(Integer Id, Integer pos) throws Exception {
+    @Override
+    public List<Task> getAll(Integer Id, Integer pos) {
         return taskDao.getTaskByUserId(Id, pos);
     }
 
@@ -43,11 +45,13 @@ public class TaskService implements IService<Task> {
         return taskDao.getSize();
     }
 
+    @Override
     public void update(Task task) throws Exception {
         taskDao.update(task);
     }
 
-    public Task getById(Integer task_id) throws Exception {
+    @Override
+    public Task getById(Integer task_id) {
         return taskDao.getById(task_id);
     }
 }

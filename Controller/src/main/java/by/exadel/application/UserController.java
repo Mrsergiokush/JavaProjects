@@ -2,6 +2,7 @@ package by.exadel.application;
 
 import by.exadel.application.model.Filter;
 import by.exadel.application.model.User;
+import by.exadel.application.service.IServiceUser;
 import by.exadel.application.service.UserDetailServiceImpl;
 import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private final IServiceUser userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(IServiceUser userService) {
         this.userService = userService;
     }
 
@@ -87,7 +89,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/validate", method = RequestMethod.GET)
-    public String getCurrentUser() {
+    public String getCurrentUser(Principal user) {
+        user.getName();
         UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
         String userEmail = userDetailService.getEmailOfCurrentUser();
         Integer id = userService.getByEmail(userEmail).getId();

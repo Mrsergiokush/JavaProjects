@@ -1,6 +1,7 @@
 package by.exadel.application.rest;
 
 import by.exadel.application.model.User;
+import by.exadel.application.service.IServiceUser;
 import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,10 @@ import java.util.List;
 @RequestMapping("/api")
 public class RestFullControllerUser {
 
-    private final UserService userService;
+    private final IServiceUser userService;
 
     @Autowired
-    public RestFullControllerUser(UserService userService) {
+    public RestFullControllerUser(IServiceUser userService) {
         this.userService = userService;
     }
 

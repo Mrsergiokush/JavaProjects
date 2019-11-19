@@ -8,4 +8,8 @@ public interface IService<T> {
 
     Integer getSize() throws Exception;
 
+    void update(T type) throws Exception;
+
+    T getById(Integer id);
+
 }

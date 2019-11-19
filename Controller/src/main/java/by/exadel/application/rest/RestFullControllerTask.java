@@ -1,6 +1,7 @@
 package by.exadel.application.rest;
 
 import by.exadel.application.model.Task;
+import by.exadel.application.service.IServiceTask;
 import by.exadel.application.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,10 @@ import java.util.List;
 @RequestMapping("api/{userId}/task")
 public class RestFullControllerTask {
 
-    private final TaskService taskService;
+    private final IServiceTask taskService;
 
     @Autowired
-    public RestFullControllerTask(TaskService taskService) {
+    public RestFullControllerTask(IServiceTask taskService) {
         this.taskService = taskService;
     }
 

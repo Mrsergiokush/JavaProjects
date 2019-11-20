@@ -46,8 +46,14 @@ public class TaskService implements IServiceTask {
     }
 
     @Override
-    public void update(Task task) throws Exception {
-        taskDao.update(task);
+    public boolean update(Task task) throws Exception {
+        if (taskDao.getByUserAndId(task.getUser().getId(), task.getTaskName()) != null) {
+            return false;
+        } else {
+            taskDao.update(task);
+            return true;
+        }
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package by.exadel.application.security;
 
 import by.exadel.application.model.User;
+import by.exadel.application.service.IServiceUser;
 import by.exadel.application.service.UserService;
 import by.exadel.application.service.security.SecurityService;
 import by.exadel.application.service.validator.UserValidator;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserSecurityController {
 
     @Autowired
-    private UserService userService;
+    private IServiceUser userService;
 
     @Autowired
     private SecurityService securityService;

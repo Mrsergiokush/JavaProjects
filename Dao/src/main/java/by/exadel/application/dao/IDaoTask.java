@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IDaoTask extends GenericDao<Task> {
 
-    List<Task> getTaskByUserId(Integer userId, Integer position) throws Exception;
+    List<Task> getTaskByUserId(Integer userId, Integer position);
 
     Task getByUserAndId(Integer userId, String taskName) throws Exception;
 
-    Task getById(Integer id) throws Exception;
+    Task getById(Integer id);
 }

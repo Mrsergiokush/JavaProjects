@@ -1,6 +1,7 @@
 package by.exadel.application.service.validator;
 
 import by.exadel.application.model.User;
+import by.exadel.application.service.IServiceUser;
 import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import org.springframework.validation.Validator;
 public class UserValidator implements Validator {
 
     @Autowired
-    UserService userService;
+    IServiceUser userService;
 
     @Override
     public boolean supports(Class<?> aClass) {

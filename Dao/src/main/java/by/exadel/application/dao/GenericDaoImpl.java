@@ -14,18 +14,18 @@ import org.hibernate.query.Query;
 import by.exadel.application.utils.HibernateSessionFactoryUtil;
 
 /**
- * @param <T>
+ * @param <ENTITY>
  * @author Sergej Kushner
  */
 
-public abstract class GenericDaoImpl<T> implements GenericDao<T> {
+public abstract class GenericDaoImpl<ENTITY> implements GenericDao<ENTITY> {
 
     @SuppressWarnings("unchecked")
-    private Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+    private Class<ENTITY> entityClass = (Class<ENTITY>) ((ParameterizedType) getClass().getGenericSuperclass())
             .getActualTypeArguments()[0];
 
     @Override
-    public T add(T entity) {
+    public ENTITY add(ENTITY entity) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         try {
@@ -38,7 +38,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public void delete(T entity) {
+    public void delete(ENTITY entity) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(entity);
@@ -51,7 +51,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<T> root = criteriaQuery.from(entityClass);
+        Root<ENTITY> root = criteriaQuery.from(entityClass);
         criteriaQuery.select(criteriaBuilder.count(root));
         Query<Long> query = session.createQuery(criteriaQuery);
         long count = query.getSingleResult();
@@ -59,7 +59,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public void update(T entity) {
+    public void update(ENTITY entity) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.update(entity);

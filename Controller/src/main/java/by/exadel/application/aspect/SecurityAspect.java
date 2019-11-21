@@ -19,7 +19,7 @@ public class SecurityAspect {
     @Autowired
     private SecurityService securityService;
 
-    @Pointcut("@annotation(by.exadel.application.annotaions.SecurityContext) && args(id)")
+    @Pointcut("@annotation(SecurityContext) && args(id,..)")
     public void callSecurityAnnotation(Integer id) {
     }
 

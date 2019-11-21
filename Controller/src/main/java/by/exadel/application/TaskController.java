@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import by.exadel.application.annotaions.SecurityContext;
+import by.exadel.application.aspect.SecurityContext;
 import by.exadel.application.model.Task;
 import by.exadel.application.service.IServiceTask;
 import by.exadel.application.service.IServiceUser;
 import by.exadel.application.service.security.SecurityService;
 
-@SecurityContext
 @Controller
 @RequestMapping("user/{id}/task")
 public class TaskController {
@@ -33,7 +32,7 @@ public class TaskController {
 
     @SecurityContext
     @RequestMapping(value = "/{from}", method = RequestMethod.GET)
-    public String getAllUsers(@PathVariable Integer from, @PathVariable Integer id, Model model) throws Exception {
+    public String getAllUsers(@PathVariable Integer id, @PathVariable Integer from, Model model) throws Exception {
         /*if (!isHasPermission(id))
             return "accessDenied";*/
         List<Task> tasks = taskService.getAll(id, from);
@@ -43,6 +42,7 @@ public class TaskController {
         return "task";
     }
 
+    @SecurityContext
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addNewTaskPage(@PathVariable Integer id) {
         /*if (!isHasPermission(id))
@@ -50,6 +50,7 @@ public class TaskController {
         return "addNewTask";
     }
 
+    @SecurityContext
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addTask(@PathVariable Integer id, @RequestParam(value = "taskName") String taskName,
             @RequestParam(value = "deadLine") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadLine,
@@ -75,6 +76,7 @@ public class TaskController {
             return "redirect:0";
     }
 
+    @SecurityContext
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)
     public String deleteTask(@PathVariable Integer id, @PathVariable Integer taskId) throws Exception {
 /*        if (!isHasPermission(id))
@@ -85,6 +87,7 @@ public class TaskController {
         return "redirect:0";
     }
 
+    @SecurityContext
     @RequestMapping(value = "{taskId}/edit")
     public String editForm(@PathVariable Integer id, @PathVariable Integer taskId, Model model) throws Exception {
 /*        if (!isHasPermission(id))
@@ -94,6 +97,7 @@ public class TaskController {
         return "taskEditForm";
     }
 
+    @SecurityContext
     @RequestMapping(value = "{taskId}", method = RequestMethod.PUT)
     public String save(@PathVariable Integer id, @PathVariable Integer taskId, @ModelAttribute("task") Task task, @RequestParam(value = "isDone") String isDone) throws Exception {
         /*if (!isHasPermission(id))

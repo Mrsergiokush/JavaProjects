@@ -1,5 +1,7 @@
 package by.exadel.application.aspect;
 
+import static by.exadel.application.security.UserSecurityController.ADMIN_EMAIL;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import by.exadel.application.model.Filter;
 import by.exadel.application.model.User;
 import by.exadel.application.service.IServiceUser;
-import by.exadel.application.service.UserDetailServiceImpl;
 import by.exadel.application.service.security.SecurityService;
 
 @Controller
@@ -49,6 +48,8 @@ public class UserController {
         return "addNewUser";
     }
 
+
+    //TODO Model Atribute
     @Secured(value = "ROLE_ADMIN")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addNewUser(@RequestParam(value = "userName") String userName
@@ -89,7 +90,7 @@ public class UserController {
         return "redirect:/user/0";
     }
 
-    @RequestMapping(value = "/{from}", method = RequestMethod.POST) //filter
+    @RequestMapping(value = "/{from}", method = RequestMethod.POST)
     public String filter(@PathVariable Integer from, Filter filter, Model model) throws Exception {
         List<User> users = userService.getByFilter(filter, from);
         model.addAttribute("userList", users);
@@ -100,14 +101,8 @@ public class UserController {
     @RequestMapping(value = "/validate", method = RequestMethod.GET)
     public String getCurrentUser(Principal user) {
         user.getName();
-        UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
         String userEmail = securityService.findLoggedInUsername();
         Integer id = userService.getByEmail(userEmail).getId();
         return "redirect:" + id.toString() + "/task/0";
-    }
-
-    boolean isHasPermission(String email) {
-        UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
-        return email.equals(securityService.findLoggedInUsername());
     }
 }

@@ -1,10 +1,8 @@
 package by.exadel.application;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,22 +43,12 @@ public class TaskController {
 
     @SecurityContext
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addTask(@PathVariable Integer id, @RequestParam(value = "taskName") String taskName,
-            @RequestParam(value = "deadLine") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadLine,
-            @RequestParam(value = "isDone") String isDone,
-            @RequestParam(value = "priority") String priority) throws Exception {
-        Task task = new Task();
-        task.setTaskName(taskName);
-
+    public String addTask(@PathVariable Integer id, @ModelAttribute("task") Task task, @RequestParam(value = "isDone") String isDone) throws Exception {
         if (isDone.equals("Done"))
             task.setDone(true);
         else
             task.setDone(false);
-
-        task.setDeadline(deadLine);
-        task.setPriority(priority);
         task.setUser(userService.getById(id));
-
         if (taskService.add(task) == null)
             return "ErrorAddTask";
         else

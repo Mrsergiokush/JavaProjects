@@ -17,7 +17,6 @@ import by.exadel.application.aspect.SecurityContext;
 import by.exadel.application.model.Task;
 import by.exadel.application.service.IServiceTask;
 import by.exadel.application.service.IServiceUser;
-import by.exadel.application.service.security.SecurityService;
 
 @Controller
 @RequestMapping("user/{id}/task")
@@ -27,14 +26,10 @@ public class TaskController {
     private IServiceTask taskService;
     @Autowired
     private IServiceUser userService;
-    @Autowired
-    private SecurityService securityService;
 
     @SecurityContext
     @RequestMapping(value = "/{from}", method = RequestMethod.GET)
     public String getAllUsers(@PathVariable Integer id, @PathVariable Integer from, Model model) throws Exception {
-        /*if (!isHasPermission(id))
-            return "accessDenied";*/
         List<Task> tasks = taskService.getAll(id, from);
         model.addAttribute("size", taskService.getSize());
         model.addAttribute("from", from);
@@ -45,8 +40,6 @@ public class TaskController {
     @SecurityContext
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addNewTaskPage(@PathVariable Integer id) {
-        /*if (!isHasPermission(id))
-            return "accessDenied";*/
         return "addNewTask";
     }
 
@@ -56,8 +49,6 @@ public class TaskController {
             @RequestParam(value = "deadLine") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadLine,
             @RequestParam(value = "isDone") String isDone,
             @RequestParam(value = "priority") String priority) throws Exception {
-/*        if (!isHasPermission(id))
-            return "accessDenied";*/
         Task task = new Task();
         task.setTaskName(taskName);
 
@@ -79,8 +70,6 @@ public class TaskController {
     @SecurityContext
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)
     public String deleteTask(@PathVariable Integer id, @PathVariable Integer taskId) throws Exception {
-/*        if (!isHasPermission(id))
-            return "accessDenied";*/
         Task task = new Task();
         task.setId(taskId);
         taskService.delete(task);
@@ -90,8 +79,6 @@ public class TaskController {
     @SecurityContext
     @RequestMapping(value = "{taskId}/edit")
     public String editForm(@PathVariable Integer id, @PathVariable Integer taskId, Model model) throws Exception {
-/*        if (!isHasPermission(id))
-            return "accessDenied";*/
         Task task = taskService.getById(taskId);
         model.addAttribute("task", task);
         return "taskEditForm";
@@ -100,8 +87,6 @@ public class TaskController {
     @SecurityContext
     @RequestMapping(value = "{taskId}", method = RequestMethod.PUT)
     public String save(@PathVariable Integer id, @PathVariable Integer taskId, @ModelAttribute("task") Task task, @RequestParam(value = "isDone") String isDone) throws Exception {
-        /*if (!isHasPermission(id))
-            return "accessDenied";*/
         task.setId(taskId);
         if (isDone.equals("Done")) {
             task.setDone(true);
@@ -114,10 +99,4 @@ public class TaskController {
             return "ErrorAddTask";
         return "redirect:0";
     }
-
-/*    ////TODO add precondition of admin user
-    boolean isHasPermission(Integer id) {
-        String emailOfCurrentUser = userService.getById(id).getEmail();
-        return emailOfCurrentUser.equals(securityService.findLoggedInUsername());
-    }*/
 }

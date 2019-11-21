@@ -25,6 +25,8 @@ public class UserSecurityController {
     @Autowired
     private UserValidator userValidator;
 
+    public static final String ADMIN_EMAIL = "admin@gmail.com";
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());

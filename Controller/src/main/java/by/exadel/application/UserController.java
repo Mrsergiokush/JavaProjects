@@ -1,18 +1,22 @@
 package by.exadel.application;
 
-import by.exadel.application.model.Filter;
-import by.exadel.application.model.User;
-import by.exadel.application.service.IServiceUser;
-import by.exadel.application.service.UserDetailServiceImpl;
-import by.exadel.application.service.UserService;
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
-import java.util.List;
+import by.exadel.application.model.Filter;
+import by.exadel.application.model.User;
+import by.exadel.application.service.IServiceUser;
+import by.exadel.application.service.security.SecurityService;
 
 @Controller
 @RequestMapping("/user")
@@ -20,9 +24,12 @@ public class UserController {
 
     private final IServiceUser userService;
 
+    private final SecurityService securityService;
+
     @Autowired
-    public UserController(IServiceUser userService) {
+    public UserController(IServiceUser userService, SecurityService securityService) {
         this.userService = userService;
+        this.securityService = securityService;
     }
 
     @Secured(value = "ROLE_ADMIN")
@@ -41,6 +48,8 @@ public class UserController {
         return "addNewUser";
     }
 
+
+    //TODO Model Atribute
     @Secured(value = "ROLE_ADMIN")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addNewUser(@RequestParam(value = "userName") String userName
@@ -76,11 +85,12 @@ public class UserController {
     @Secured(value = "ROLE_ADMIN")
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public String save(@ModelAttribute("user") User user) throws Exception {
-        userService.update(user);
+        if (!userService.update(user))
+            return "ErrorAddUser";
         return "redirect:/user/0";
     }
 
-    @RequestMapping(value = "/{from}", method = RequestMethod.POST) //filter
+    @RequestMapping(value = "/{from}", method = RequestMethod.POST)
     public String filter(@PathVariable Integer from, Filter filter, Model model) throws Exception {
         List<User> users = userService.getByFilter(filter, from);
         model.addAttribute("userList", users);
@@ -91,14 +101,8 @@ public class UserController {
     @RequestMapping(value = "/validate", method = RequestMethod.GET)
     public String getCurrentUser(Principal user) {
         user.getName();
-        UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
-        String userEmail = userDetailService.getEmailOfCurrentUser();
+        String userEmail = securityService.findLoggedInUsername();
         Integer id = userService.getByEmail(userEmail).getId();
         return "redirect:" + id.toString() + "/task/0";
-    }
-
-    boolean isHasPermission(String email) {
-        UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
-        return email.equals(userDetailService.getEmailOfCurrentUser());
     }
 }

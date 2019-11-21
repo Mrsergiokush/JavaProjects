@@ -17,9 +17,9 @@
 <div class="container">
     <form:form class="well form-horizontal" action="add" method="post" id="contact_form">
         <fieldset>
-                <div>
-                    <h2><b>Add your own task</b></h2>
-                </div>
+            <div>
+                <h2><b>Add your own task</b></h2>
+            </div>
             <br>
             <div class="form-group">
                 <label class="col-md-4 control-label">Taskname</label>
@@ -36,7 +36,7 @@
                 <div class="col-md-4 inputGroupContainer">
                     <div class="input-group">
                         <span class="input-group-addon"></span>
-                        <input name="deadLine" placeholder="Taskname" class="form-control" type="date">
+                        <input name="deadline" placeholder="Deadline" class="form-control" type="date">
                     </div>
                 </div>
             </div>

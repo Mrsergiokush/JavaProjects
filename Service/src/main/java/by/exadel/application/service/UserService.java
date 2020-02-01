@@ -1,22 +1,20 @@
 package by.exadel.application.service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.postgresql.util.PSQLException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import by.exadel.application.dao.IDaoRole;
 import by.exadel.application.dao.IDaoUser;
 import by.exadel.application.model.Filter;
 import by.exadel.application.model.Role;
 import by.exadel.application.model.User;
+import org.postgresql.util.PSQLException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService implements IServiceUser {
@@ -43,9 +41,7 @@ public class UserService implements IServiceUser {
     public boolean delete(User user) throws Exception {
         try {
             userDao.delete(user);
-        } catch (DataIntegrityViolationException e) {
-            return false;
-        } catch (PSQLException e) {
+        } catch (DataIntegrityViolationException | PSQLException e) {
             return false;
         }
         return true;

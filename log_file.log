@@ -3485,3 +3485,64 @@
 2019-11-11 21:51:46 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
 2019-11-11 21:51:46 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2019-11-11 21:51:47 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-15 12:44:14 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-11-15 12:44:14 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-11-15 12:44:14 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-15 12:44:14 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-11-15 12:44:14 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-11-15 12:44:14 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-11-15 12:44:14 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-15 12:44:15 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-11-15 12:44:16 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-15 21:56:29 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-11-15 21:56:29 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-11-15 21:56:30 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-15 21:56:30 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-11-15 21:56:30 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-11-15 21:56:30 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-11-15 21:56:30 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-15 21:56:30 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-11-15 21:56:31 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-23 13:18:17 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-11-23 13:18:17 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-11-23 13:18:17 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-23 13:18:17 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-11-23 13:18:17 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-11-23 13:18:17 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-11-23 13:18:17 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-23 13:18:18 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-11-23 13:18:19 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-11-29 08:31:21 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-11-29 08:31:21 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-11-29 08:31:21 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-11-29 08:31:21 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-11-29 08:31:21 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-11-29 08:31:21 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-11-29 08:31:21 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-11-29 08:31:22 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-11-29 08:31:23 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-12-14 16:52:59 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-12-14 16:52:59 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-12-14 16:52:59 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-12-14 16:52:59 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-12-14 16:52:59 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-12-14 16:52:59 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-12-14 16:52:59 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-12-14 16:53:00 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-12-14 16:53:01 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2019-12-14 17:07:26 WARN  deprecation:1914 - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+2019-12-14 17:07:32 WARN  deprecation:1914 - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+2019-12-14 17:07:43 WARN  deprecation:1914 - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+2019-12-14 17:07:50 WARN  deprecation:1914 - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+2019-12-14 17:08:01 WARN  deprecation:1914 - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+2019-12-14 17:08:41 WARN  deprecation:1914 - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+2019-12-14 17:09:08 WARN  deprecation:1914 - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+2019-12-18 11:48:13 INFO  Version:46 - HHH000412: Hibernate Core {5.4.2.Final}
+2019-12-18 11:48:14 INFO  Version:49 - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2019-12-18 11:48:14 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2019-12-18 11:48:14 INFO  pooling:115 - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/myapp]
+2019-12-18 11:48:14 INFO  pooling:124 - HHH10001001: Connection properties: {user=myuser, password=****, pool_size=1}
+2019-12-18 11:48:14 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2019-12-18 11:48:14 INFO  DriverManagerConnectionProviderImpl:239 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2019-12-18 11:48:14 INFO  Dialect:158 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-12-18 11:48:15 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]

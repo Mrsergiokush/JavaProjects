@@ -4,7 +4,6 @@ import by.exadel.application.model.Filter;
 import by.exadel.application.model.User;
 import by.exadel.application.service.IServiceUser;
 import by.exadel.application.service.UserDetailServiceImpl;
-import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -100,5 +99,10 @@ public class UserController {
     boolean isHasPermission(String email) {
         UserDetailServiceImpl userDetailService = new UserDetailServiceImpl();
         return email.equals(userDetailService.getEmailOfCurrentUser());
+    }
+
+    public void unusedMethod(){
+        int a = 4;
+        int b = 5;
     }
 }

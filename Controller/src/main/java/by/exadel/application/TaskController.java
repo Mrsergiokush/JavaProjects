@@ -3,9 +3,7 @@ package by.exadel.application;
 import by.exadel.application.model.Task;
 import by.exadel.application.service.IServiceTask;
 import by.exadel.application.service.IServiceUser;
-import by.exadel.application.service.TaskService;
 import by.exadel.application.service.UserDetailServiceImpl;
-import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -97,6 +95,8 @@ public class TaskController {
             task.setDone(false);
         }
         task.setUser(userService.getById(id));
+        /*if (taskService.update(task))
+            return "ErrorAddTask";*/
         taskService.update(task);
         return "redirect:0";
     }

@@ -58,8 +58,13 @@ public class UserService implements IServiceUser {
     }
 
     @Override
-    public void update(User user) throws Exception {
-        userDao.update(user);
+    public boolean update(User user) throws Exception {
+        if (userDao.getByEmail(user.getEmail()) != null)
+            return false;
+        else {
+            userDao.update(user);
+            return true;
+        }
     }
 
     @Override

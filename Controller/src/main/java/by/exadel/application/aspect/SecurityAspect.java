@@ -1,13 +1,16 @@
 package by.exadel.application.aspect;
 
-import by.exadel.application.service.IServiceUser;
-import by.exadel.application.service.security.SecurityService;
+import static by.exadel.application.security.UserSecurityController.ADMIN_EMAIL;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import by.exadel.application.service.IServiceUser;
+import by.exadel.application.service.security.SecurityService;
 
 @Aspect
 @Component
@@ -23,16 +26,11 @@ public class SecurityAspect {
     }
 
     @Around("callSecurityAnnotation(id)")
-    public Object SecurityContext(ProceedingJoinPoint pjp,
-                                            Integer id) throws Throwable {
-        String emailOfCurrentUser = userService
-                                    .getById(id)
-                                    .getEmail();
-
-        if (!emailOfCurrentUser.equals(securityService
-                                    .findLoggedInUsername()))
+    public Object aroundCallSecurityContext(ProceedingJoinPoint proceedingJoinPoint, Integer id) throws Throwable {
+        String emailOfCurrentUser = userService.getById(id).getEmail();
+        if (!emailOfCurrentUser.equals(securityService.findLoggedInUsername()))
             return "accessDenied";
-        return pjp.proceed();
+        return proceedingJoinPoint.proceed();
 
     }
 

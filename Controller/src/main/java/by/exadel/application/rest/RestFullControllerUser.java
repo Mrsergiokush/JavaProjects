@@ -2,7 +2,6 @@ package by.exadel.application.rest;
 
 import by.exadel.application.model.User;
 import by.exadel.application.service.IServiceUser;
-import by.exadel.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +41,9 @@ public class RestFullControllerUser {
         if (userService.add(user) == null)
             return null;
         else return user;
+    }
+
+    public void gitTest(){
+        return;
     }
 }
